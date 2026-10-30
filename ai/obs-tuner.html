@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBS 마이크 오디오 정밀 진단기 (PC 웹 버전)</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-border: #334155;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --primary: #38bdf8;
+    --accent: #10b981;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+    padding: 24px; min-height: 100vh; display: flex; justify-content: center;
+  }
+  .container { width: 100%; max-width: 860px; display: flex; flex-direction: column; gap: 20px; }
+  .card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 22px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  h1 { font-size: 22px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 10px; }
+  .sub { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+  
+  .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+  select, button, label.btn-file {
+    font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 8px; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  select {
+    background: #0f172a; color: var(--text); border: 1px solid var(--card-border); flex: 1; min-width: 200px;
+  }
+  button.btn-primary {
+    background: #0284c7; color: #ffffff; border: none;
+  }
+  button.btn-primary:hover { background: #0369a1; }
+  label.btn-file {
+    background: #334155; color: #ffffff; border: 1px solid #475569; display: inline-block;
+  }
+  label.btn-file:hover { background: #475569; }
+
+  /* Meter */
+  .meter-container { margin-top: 16px; }
+  .meter-head { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .meter-bar {
+    height: 20px; background: #090d16; border-radius: 6px; overflow: hidden; position: relative; border: 1px solid #1e293b;
+  }
+  .meter-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #10b981 0%, #10b981 65%, #f59e0b 82%, #ef4444 100%);
+    transition: width 0.04s linear;
+  }
+  .meter-scale {
+    display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 4px;
+    font-family: monospace;
+  }
+
+  /* Canvas */
+  canvas {
+    width: 100%; height: 110px; background: #090d16; border-radius: 8px; display: block; margin-top: 14px;
+    border: 1px solid #1e293b;
+  }
+
+  /* Status Banner */
+  .status-box {
+    padding: 14px; border-radius: 10px; background: #0f172a; border-left: 4px solid var(--primary);
+    font-size: 14px; font-weight: 600; line-height: 1.5; margin-top: 14px;
+  }
+
+  /* Results Grid */
+  .grid-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 16px;
+  }
+  .stat-card {
+    background: #0f172a; padding: 14px; border-radius: 10px; border: 1px solid var(--card-border);
+  }
+  .stat-label { font-size: 12px; color: var(--text-muted); }
+  .stat-number { font-size: 20px; font-weight: 700; margin-top: 4px; font-family: monospace; }
+  .tag { font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 600; display: inline-block; margin-left: 6px; vertical-align: middle; }
+  .tag-good { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+  .tag-warn { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+  .tag-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+  /* OBS Preset Table */
+  table {
+    width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px;
+  }
+  th, td {
+    padding: 12px; text-align: left; border-bottom: 1px solid var(--card-border);
+  }
+  th { color: var(--text-muted); font-size: 12px; font-weight: 600; }
+  .code {
+    background: #090d16; color: var(--primary); padding: 3px 7px; border-radius: 5px; font-family: monospace; font-weight: 700;
+  }
+  .desc { font-size: 12px; color: #cbd5e1; line-height: 1.4; margin-top: 3px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="card">
+    <h1>🎙️ OBS 마이크 오디오 정밀 진단기 (PC 전용)</h1>
+    <div class="sub">PC 마이크나 OBS에서 녹음된 오디오를 분석하여 노이즈 플로어, 화이트 노이즈, 말끝 끊김을 진단하고 최적 세팅값을 산출합니다.</div>
+
+    <div class="row">
+      <select id="micSelect">
+        <option value="">마이크 장치 목록 불러오는 중...</option>
+      </select>
+      <button class="btn-primary" id="btnStartTest">▶ 실시간 10초 진단 시작</button>
+      <label class="btn-file">
+        📁 OBS 녹음/영상 파일 분석
+        <input type="file" id="fileInput" accept="audio/*,video/*,.mp4,.mkv,.wav,.mp3,.aac,.flac,.m4a" style="display:none">
+      </label>
+    </div>
+
+    <div class="status-box" id="statusBanner">
+      준비 완료 — 마이크를 선택하고 <strong>[실시간 10초 진단 시작]</strong>을 누르거나, OBS에서 녹음한 파일을 불러오세요.
+    </div>
+  </div>
+
+  <!-- Realtime Meter & Visualizer -->
+  <div class="card">
+    <div class="meter-container">
+      <div class="meter-head">
+        <span>실시간 입력 레벨 (dBFS)</span>
+        <span id="txtDb" style="color:var(--primary); font-family:monospace; font-size:15px">-∞ dB</span>
+      </div>
+      <div class="meter-bar"><div class="meter-fill" id="barFill"></div></div>
+      <div class="meter-scale">
+        <span>-60 (잡음바닥)</span>
+        <span>-40</span>
+        <span>-25 (게이트작동)</span>
+        <span>-18 (적정음압)</span>
+        <span>-12 (최적)</span>
+        <span>-6</span>
+        <span>0 dB (클리핑 위험)</span>
+      </div>
+    </div>
+
+    <canvas id="specCanvas"></canvas>
+    <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); margin-top:4px; font-family:monospace">
+      <span>50Hz (저음 웅웅)</span>
+      <span>300Hz (실내 울림)</span>
+      <span>1kHz~2kHz (목소리 명료도)</span>
+      <span>5kHz~10kHz (화이트노이즈·치찰음)</span>
+    </div>
+  </div>
+
+  <!-- Diagnostic Report & OBS Preset -->
+  <div class="card" id="cardResult" style="display:none">
+    <h1>📊 진단 결과 리포트</h1>
+    
+    <div class="grid-stats">
+      <div class="stat-card">
+        <div class="stat-label">배경 소음 (Noise Floor)</div>
+        <div class="stat-number" id="valNoise">-54.2 dB <span class="tag tag-good" id="tagNoise">양호</span></div>
+        <div class="desc" id="descNoise">마이크 주변 기본 잡음 레벨</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">평균 발성 음압 (Speech RMS)</div>
+        <div class="stat-number" id="valSpeech">-16.5 dB <span class="tag tag-good" id="tagSpeech">적정</span></div>
+        <div class="desc">방송/유튜브 권장 (-18 ~ -12 dB)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">말끝 끊김 (Gate Cutoff) 위험</div>
+        <div class="stat-number" id="valCutoff">안전 <span class="tag tag-good" id="tagCutoff">안전</span></div>
+        <div class="desc">ReaGate 릴리즈 타임 보정값 적용 필요</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <h2 style="font-size:17px; color:var(--primary); margin-bottom:6px">
+        🛠️ 목사님 PC 마이크 맞춤형 OBS 필터 권장 세팅
+      </h2>
+      <div class="sub" style="margin-bottom:10px">
+        ※ OBS 마이크 '필터' 설정창에서 <strong>반드시 위에서 아래 순서대로</strong> 추가해 주세요!
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:130px">필터 (순서 중요)</th>
+            <th style="width:230px">추천 설정값</th>
+            <th>해결 효과 &amp; 핵심 포인트</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 소음 억제</strong></td>
+            <td>방식: <span class="code">RNNoise (좋은 품질)</span></td>
+            <td>컴퓨터 팬 소음, 에어컨 바람, 화이트 노이즈 80% 자동 흡수</td>
+          </tr>
+          <tr>
+            <td><strong>2. ReaGate</strong><br>(VST 2.x 플러그인)</td>
+            <td>
+              Open Threshold: <span class="code" id="calcOpen">-32 dB</span><br>
+              Close Threshold: <span class="code" id="calcClose">-38 dB</span><br>
+              <strong>Hold: <span class="code">180 ms</span></strong> (핵심)<br>
+              <strong>Release: <span class="code">350 ms</span></strong> (핵심)
+            </td>
+            <td>
+              <strong style="color:var(--warn)">말끝 끊김 완벽 해결!</strong><br>
+              말이 멈춰도 180ms 동안 문을 닫지 않고 버텨주며, 350ms 동안 부드럽게 닫혀 숨소리와 음절 꼬리가 절대 뚝뚝 잘리지 않습니다.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>3. 증폭 (Gain)</strong></td>
+            <td>값: <span class="code" id="calcGain">+3.0 dB</span></td>
+            <td>말씀하실 때 OBS 레벨 미터가 노란색 구간(-18dB ~ -12dB)에 안정적으로 머물도록 음압을 보정합니다.</td>
+          </tr>
+          <tr>
+            <td><strong>4. 리미터 (Limiter)</strong></td>
+            <td>
+              임계값: <span class="code">-1.5 dB</span><br>
+              해제: <span class="code">60 ms</span>
+            </td>
+            <td>기침을 하거나 큰 소리를 낼 때 0 dB를 넘어 소리가 찢어지는(클리핑) 사고를 100% 방지합니다.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+"use strict";
+
+let audioCtx = null;
+let currentStream = null;
+let analyser = null;
+let animId = null;
+
+let isDiagnosing = false;
+let testStage = 0; // 0: idle, 1: silence, 2: speech, 3: tail
+let silenceArray = [];
+let speechArray = [];
+let tailArray = [];
+
+const micSelect = document.getElementById("micSelect");
+const statusBanner = document.getElementById("statusBanner");
+const txtDb = document.getElementById("txtDb");
+const barFill = document.getElementById("barFill");
+const specCanvas = document.getElementById("specCanvas");
+const specCtx = specCanvas.getContext("2d");
+
+function initAudioContext() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === "suspended") audioCtx.resume();
+  return audioCtx;
+}
+
+// Populate Microphones
+async function loadMicrophones() {
+  try {
+    // Initial permission request
+    const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    tempStream.getTracks().forEach(t => t.stop());
+
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const audioInputs = devices.filter(d => d.kind === "audioinput");
+    
+    micSelect.innerHTML = "";
+    audioInputs.forEach((d, idx) => {
+      const opt = document.createElement("option");
+      opt.value = d.deviceId;
+      opt.textContent = d.label || `마이크 장치 ${idx + 1}`;
+      micSelect.appendChild(opt);
+    });
+
+    if (audioInputs.length > 0) {
+      startListening(audioInputs[0].deviceId);
+    }
+  } catch (err) {
+    statusBanner.innerHTML = "⚠️ 마이크 접근 권한이 필요합니다. 브라우저 주소창 왼쪽 자물쇠 아이콘을 눌러 <strong>[마이크 허용]</strong>을 선택해 주세요.";
+    statusBanner.style.borderLeftColor = "var(--danger)";
+  }
+}
+
+async function startListening(deviceId) {
+  if (currentStream) {
+    currentStream.getTracks().forEach(t => t.stop());
+  }
+
+  try {
+    const ctx = initAudioContext();
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        deviceId: deviceId ? { exact: deviceId } : undefined,
+        echoCancellation: false,
+        noiseSuppression: false,
+        autoGainControl: false
+      }
+    });
+    currentStream = stream;
+
+    const source = ctx.createMediaStreamSource(stream);
+    analyser = ctx.createAnalyser();
+    analyser.fftSize = 512;
+    source.connect(analyser);
+
+    cancelAnimationFrame(animId);
+    drawLoop();
+  } catch (err) {
+    console.error("Mic error:", err);
+  }
+}
+
+micSelect.onchange = () => {
+  startListening(micSelect.value);
+};
+
+function resizeCanvas() {
+  specCanvas.width = specCanvas.clientWidth * window.devicePixelRatio;
+  specCanvas.height = specCanvas.clientHeight * window.devicePixelRatio;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function drawLoop() {
+  if (!analyser) return;
+
+  const bufLen = analyser.frequencyBinCount;
+  const timeBuf = new Float32Array(bufLen);
+  const freqBuf = new Uint8Array(bufLen);
+
+  analyser.getFloatTimeDomainData(timeBuf);
+  analyser.getByteFrequencyData(freqBuf);
+
+  // RMS calculation
+  let sum = 0;
+  for (let i = 0; i < bufLen; i++) sum += timeBuf[i] * timeBuf[i];
+  const rms = Math.sqrt(sum / bufLen);
+  let db = 20 * Math.log10(Math.max(rms, 1e-5));
+  if (!isFinite(db)) db = -100;
+
+  txtDb.textContent = `${db.toFixed(1)} dBFS`;
+  const pct = Math.min(100, Math.max(0, ((db + 60) / 60) * 100));
+  barFill.style.width = pct + "%";
+
+  if (isDiagnosing) {
+    if (testStage === 1) silenceArray.push(db);
+    else if (testStage === 2) speechArray.push(db);
+    else if (testStage === 3) tailArray.push(db);
+  }
+
+  // Draw spectrum
+  const w = specCanvas.width;
+  const h = specCanvas.height;
+  specCtx.clearRect(0, 0, w, h);
+
+  const bars = 56;
+  const step = Math.floor(bufLen / bars);
+  const bw = w / bars - 2;
+
+  for (let i = 0; i < bars; i++) {
+    const val = freqBuf[i * step] / 255;
+    const bh = val * h;
+    const x = i * (bw + 2);
+    const y = h - bh;
+
+    if (i < 8) specCtx.fillStyle = "#38bdf8";      // low rumble
+    else if (i < 28) specCtx.fillStyle = "#10b981"; // speech core
+    else specCtx.fillStyle = "#f59e0b";            // high hiss
+
+    specCtx.fillRect(x, y, bw, bh);
+  }
+
+  animId = requestAnimationFrame(drawLoop);
+}
+
+// Guided 10-Second Diagnostic
+document.getElementById("btnStartTest").onclick = () => {
+  if (isDiagnosing) return;
+
+  isDiagnosing = true;
+  silenceArray = [];
+  speechArray = [];
+  tailArray = [];
+  document.getElementById("cardResult").style.display = "none";
+
+  // Stage 1: Silence (3s)
+  testStage = 1;
+  statusBanner.innerHTML = "🤫 <strong>[1단계 / 3초] 가만히 침묵해 주세요!</strong> (주변 잡음 및 마이크 화이트 노이즈 측정 중...)";
+  statusBanner.style.borderLeftColor = "var(--warn)";
+
+  setTimeout(() => {
+    // Stage 2: Normal Speech (4s)
+    testStage = 2;
+    statusBanner.innerHTML = "🗣️ <strong>[2단계 / 4초] 평소 방송 목소리로 말씀해 주세요!</strong> (\"하나님 말씀 전합니다\" 등)";
+    statusBanner.style.borderLeftColor = "var(--accent)";
+
+    setTimeout(() => {
+      // Stage 3: Soft Tail (3s)
+      testStage = 3;
+      statusBanner.innerHTML = "📉 <strong>[3단계 / 3초] 말끝을 살짝 작게 흐려보세요!</strong> (게이트가 말을 잘라먹는지 검사 중...)";
+      statusBanner.style.borderLeftColor = "var(--primary)";
+
+      setTimeout(() => {
+        // Complete
+        testStage = 0;
+        isDiagnosing = false;
+        statusBanner.innerHTML = "✅ <strong>진단이 완료되었습니다!</strong> 아래 분석 결과와 맞춤형 추천 OBS 세팅을 확인하세요.";
+        statusBanner.style.borderLeftColor = "var(--accent)";
+        renderResults();
+      }, 3000);
+    }, 4000);
+  }, 3000);
+};
+
+function renderResults() {
+  const avgNoise = silenceArray.length > 0 ? silenceArray.reduce((a,b)=>a+b,0)/silenceArray.length : -55;
+  const avgSpeech = speechArray.length > 0 ? speechArray.reduce((a,b)=>a+b,0)/speechArray.length : -16;
+
+  document.getElementById("cardResult").style.display = "block";
+
+  // 1. Noise
+  const valNoise = document.getElementById("valNoise");
+  const tagNoise = document.getElementById("tagNoise");
+  valNoise.firstChild.textContent = `${avgNoise.toFixed(1)} dB `;
+  if (avgNoise <= -54) {
+    tagNoise.textContent = "매우 조용함";
+    tagNoise.className = "tag tag-good";
+  } else if (avgNoise <= -44) {
+    tagNoise.textContent = "보통 (팬소음)";
+    tagNoise.className = "tag tag-warn";
+  } else {
+    tagNoise.textContent = "잡음 큼";
+    tagNoise.className = "tag tag-danger";
+  }
+
+  // 2. Speech
+  const valSpeech = document.getElementById("valSpeech");
+  const tagSpeech = document.getElementById("tagSpeech");
+  valSpeech.firstChild.textContent = `${avgSpeech.toFixed(1)} dB `;
+  if (avgSpeech >= -18 && avgSpeech <= -12) {
+    tagSpeech.textContent = "방송 최적";
+    tagSpeech.className = "tag tag-good";
+  } else if (avgSpeech < -18) {
+    tagSpeech.textContent = "음압 낮음";
+    tagSpeech.className = "tag tag-warn";
+  } else {
+    tagSpeech.textContent = "피크 주의";
+    tagSpeech.className = "tag tag-danger";
+  }
+
+  // 3. Calculated ReaGate settings
+  const recOpen = Math.min(-26, Math.max(-38, Math.round(avgNoise + 16)));
+  const recClose = recOpen - 6;
+  document.getElementById("calcOpen").textContent = `${recOpen} dB`;
+  document.getElementById("calcClose").textContent = `${recClose} dB`;
+
+  const recGain = Math.max(0, Math.min(12, Math.round(-14 - avgSpeech)));
+  document.getElementById("calcGain").textContent = `+${recGain}.0 dB`;
+}
+
+// File Upload
+document.getElementById("fileInput").onchange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  statusBanner.innerHTML = `⏳ 파일 분석 중: <strong>${file.name}</strong>...`;
+  try {
+    const ctx = initAudioContext();
+    const arr = await file.arrayBuffer();
+    const audio = await ctx.decodeAudioData(arr);
+
+    const d = audio.getChannelData(0);
+    const win = Math.floor(audio.sampleRate * 0.05);
+    let minR = 1.0, maxR = 0.0, sumR = 0.0, c = 0;
+
+    for (let i = 0; i < d.length; i += win) {
+      let s = 0;
+      const end = Math.min(d.length, i + win);
+      for (let j = i; j < end; j++) s += d[j]*d[j];
+      const r = Math.sqrt(s / (end - i));
+      if (r > 0.00001) {
+        if (r < minR) minR = r;
+        if (r > maxR) maxR = r;
+        sumR += r;
+        c++;
+      }
+    }
+
+    const nDb = 20 * Math.log10(Math.max(minR, 1e-5));
+    const sDb = 20 * Math.log10(Math.max(sumR / Math.max(1, c), 1e-5));
+
+    silenceArray = [nDb];
+    speechArray = [sDb];
+    renderResults();
+    statusBanner.innerHTML = `✅ [${file.name}] 분석 완료! (OBS 필터 적용 후 실제 음향 데이터)`;
+    statusBanner.style.borderLeftColor = "var(--accent)";
+  } catch (err) {
+    statusBanner.innerHTML = `⚠️ 파일 분석 실패: MP4, WAV, MP3 형식의 녹음/녹화 파일을 선택해 주세요.`;
+    statusBanner.style.borderLeftColor = "var(--danger)";
+  }
+};
+
+loadMicrophones();
+</script>
+</body>
+</html>

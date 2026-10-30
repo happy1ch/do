@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>하이델베르크 교리문답과 교회의 미래 | 작성 역사, 핵심, 400년의 교훈과 교육의 본질</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a5f;
+      --primary-light: #2c5282;
+      --accent: #b7791f;
+      --accent-light: #f6e05e;
+      --bg-page: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-warm: #fbf8f3;
+      --text-main: #2d3748;
+      --text-muted: #718096;
+      --text-bright: #1a202c;
+      --border: #e2e8f0;
+      --border-warm: #eedcc6;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.8;
+      font-size: 16px;
+      word-break: keep-all;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 6rem;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #0f233e 0%, #1e3a5f 100%);
+      color: #ffffff;
+      padding: 4.5rem 1.5rem 3.5rem;
+      text-align: center;
+      position: relative;
+      border-bottom: 4px solid var(--accent);
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: rgba(183, 121, 31, 0.25);
+      color: #fbd38d;
+      border: 1px solid rgba(251, 211, 141, 0.4);
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+    }
+
+    header h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    header p.subtitle {
+      font-size: 1.15rem;
+      color: #cbd5e0;
+      max-width: 680px;
+      margin: 0 auto;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* Floating Navigation */
+    .nav-wrapper {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-link {
+      white-space: nowrap;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+      background: #edf2f7;
+    }
+
+    /* Hero Quote Card (Question 1) */
+    .hero-card {
+      background: var(--bg-warm);
+      border: 1px solid var(--border-warm);
+      border-left: 6px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      margin: 2.5rem 0 3.5rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .hero-card::before {
+      content: "“";
+      position: absolute;
+      top: 0.5rem;
+      left: 1.25rem;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 4.5rem;
+      color: rgba(183, 121, 31, 0.15);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .hero-card .q-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .hero-card .q-answer {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.1rem;
+      color: #2d3748;
+      line-height: 1.85;
+      font-weight: 400;
+    }
+
+    .hero-card .q-meta {
+      margin-top: 1.25rem;
+      font-size: 0.875rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* Section Styling */
+    section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 1rem;
+    }
+
+    .section-num {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    h2 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.65rem;
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      color: var(--primary-light);
+      margin: 1.75rem 0 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h3::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    p {
+      margin-bottom: 1.15rem;
+      color: #4a5568;
+    }
+
+    p strong {
+      color: var(--text-bright);
+    }
+
+    /* Timeline / Grid Cards */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .info-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.35rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-2px);
+      border-color: #cbd5e0;
+    }
+
+    .info-card .card-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .info-card .card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .info-card p {
+      font-size: 0.925rem;
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    /* Triad Structure Cards */
+    .triad-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .triad-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .triad-box {
+      background: #ffffff;
+      border-radius: var(--radius-sm);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .triad-box::top {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .triad-box.misery { border-top: 5px solid #e53e3e; }
+    .triad-box.deliverance { border-top: 5px solid #3182ce; }
+    .triad-box.gratitude { border-top: 5px solid #38a169; }
+
+    .triad-step {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+    }
+
+    .triad-box.misery .triad-step { color: #e53e3e; }
+    .triad-box.deliverance .triad-step { color: #3182ce; }
+    .triad-box.gratitude .triad-step { color: #38a169; }
+
+    .triad-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .triad-range {
+      display: inline-block;
+      font-size: 0.8rem;
+      background: #edf2f7;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      color: #4a5568;
+      margin-bottom: 0.85rem;
+    }
+
+    .triad-desc {
+      font-size: 0.875rem;
+      color: #4a5568;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    /* Comparison Box (Fruits vs Pitfalls) */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.75rem 0;
+    }
+
+    @media (max-width: 680px) {
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .compare-col {
+      padding: 1.5rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid;
+    }
+
+    .compare-col.positive {
+      background: #f0fff4;
+      border-color: #c6f6d5;
+    }
+
+    .compare-col.negative {
+      background: #fff5f5;
+      border-color: #fed7d7;
+    }
+
+    .compare-col h4 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .compare-col.positive h4 { color: #22543d; }
+    .compare-col.negative h4 { color: #742a2a; }
+
+    .compare-col ul {
+      list-style-type: none;
+    }
+
+    .compare-col li {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.85rem;
+      font-size: 0.925rem;
+      line-height: 1.6;
+    }
+
+    .compare-col.positive li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #38a169;
+      font-weight: bold;
+    }
+
+    .compare-col.negative li::before {
+      content: "✕";
+      position: absolute;
+      left: 0;
+      color: #e53e3e;
+      font-weight: bold;
+    }
+
+    /* Callout Box */
+    .callout {
+      background: #ebf8ff;
+      border-left: 4px solid #3182ce;
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+      color: #2b6cb0;
+    }
+
+    .callout strong {
+      color: #2c5282;
+    }
+
+    /* Application Pillars */
+    .pillar-item {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+      padding: 1.25rem;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .pillar-icon {
+      width: 48px;
+      height: 48px;
+      background: #ebf4ff;
+      color: var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .pillar-body h4 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+
+    .pillar-body p {
+      font-size: 0.925rem;
+      margin-bottom: 0;
+      color: #4a5568;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+      background: #ffffff;
+    }
+
+    .footer-quote {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      color: var(--primary-light);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    @media print {
+      body { background: #fff; }
+      header { background: #fff; color: #000; border-bottom: 2px solid #000; }
+      .nav-wrapper { display: none; }
+      section { box-shadow: none; border: 1px solid #ccc; margin-bottom: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-badge">Reformed Confessional Heritage & Pastoral Vision</div>
+    <h1>하이델베르크 교리문답과 교회의 미래</h1>
+    <p class="subtitle">1563년 작성 역사부터 400년의 교회사적 명암, 그리고 오늘날 교회가 가르쳐야 할 본질에 대하여</p>
+  </header>
+
+  <!-- Navigation -->
+  <div class="nav-wrapper">
+    <nav class="nav-container">
+      <a href="#intro" class="nav-link">유일한 위로</a>
+      <a href="#history" class="nav-link">1. 작성 역사 (1563)</a>
+      <a href="#core" class="nav-link">2. 핵심과 독창성</a>
+      <a href="#legacy" class="nav-link">3. 400년 교회의 결과</a>
+      <a href="#future" class="nav-link">4. 우리는 무엇을 가르칠 것인가</a>
+    </nav>
+  </div>
+
+  <div class="container">
+
+    <!-- Intro: Question 1 -->
+    <div class="hero-card" id="intro">
+      <div class="q-title">제 1문 : 살아서나 죽어서나 당신의 유일한 위로는 무엇입니까?</div>
+      <div class="q-answer">
+        “살아서나 죽어서나 나는 나의 것이 아니요, 몸도 영혼도 나의 신실하신 구주 예수 그리스도의 것입니다.<br><br>
+        그분은 보배로운 피로 나의 모든 죗값을 온전히 치르셨고, 악마의 모든 권세에서 나를 해방하셨습니다. 
+        또한 하늘에 계신 나의 아버지의 뜻이 아니면 머리털 하나도 떨어지지 않도록 나를 보존하시며, 참으로 모든 것이 합력하여 나의 구원을 이루도록 하십니다.<br><br>
+        그러므로 그분은 성령으로 말미암아 나에게 영생을 확신시켜 주시고, 이제부터 마음을 다하여 기꺼이 그분을 위해 살도록 만드십니다.”
+      </div>
+      <div class="q-meta">— 하이델베르크 요리문답(Heidelberg Catechism, 1563) 제1문</div>
+    </div>
+
+    <!-- Section 1: History -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2>하이델베르크 교리문답의 작성 역사</h2>
+      </div>
+
+      <p>
+        하이델베르크 교리문답은 <strong>1563년 1월</strong>, 독일 남서부 팔츠(Pfalz) 선제후국의 수도 하이델베르크에서 탄생했습니다. 
+        이 문답서는 단순한 신학자의 상아탑 연구물이 아니라, 극심한 종교적 갈등 속에서 <strong>교회의 일치와 성도들의 목회적 유익</strong>을 위해 국가적·교회적 결단으로 마련된 역사적 산물입니다.
+      </p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="card-label">역사적 배경</div>
+          <div class="card-title">신학적 분열과 갈등의 치유</div>
+          <p>종교개혁 이후 팔츠 지역은 엄격한 루터파(Gnesio-Lutheran), 멜란히톤 온건파(Philippist), 츠빙글리와 칼빈의 개혁파가 성만찬 논쟁 등으로 첨예하게 대립하고 있었습니다.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-label">발의자</div>
+          <div class="card-title">선제후 프리드리히 3세 (경건공)</div>
+          <p>팔츠를 다스리던 프리드리히 3세(Friedrich III)는 분열을 종식시키고 교회와 학교에서 청소년과 성도들이 한목소리로 고백할 수 있는 공통의 신앙 지침서를 주문했습니다.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-label">주요 작성자</div>
+          <div class="card-title">우르시누스와 올레비아누스</div>
+          <p>28세의 신학 교수 <strong>자카리아스 우르시누스</strong>(체계적 학문성)와 26세의 궁정 설교자 <strong>카스파르 올레비아누스</strong>(뜨거운 목회적 문체)가 젊은 열정으로 결합되었습니다.</p>
+        </div>
+      </div>
+
+      <h3>문답서의 특징과 목적</h3>
+      <p>
+        프리드리히 3세는 이 문답서를 공포하며 세 가지 분명한 목적을 세웠습니다:
+      </p>
+      <ul>
+        <li><strong>청소년과 평신도 교육:</strong> 교회의 기초인 다음 세대에게 일관되고 성경적인 기독교 진리를 쉽게 가르치기 위함.</li>
+        <li><strong>목회자와 교사의 일치:</strong> 강단에서 설교자마다 제각각 다른 주장을 펴서 성도들을 혼란스럽게 하지 않도록 설교의 공통 표준 마련.</li>
+        <li><strong>주일 설교 체계:</strong> 전체 129개 문답을 <strong>52주일(Lord's Day)</strong>로 나누어, 1년 동안 주일 오후 예배마다 전 교인이 교리를 배우고 묵상하도록 구성.</li>
+      </ul>
+    </section>
+
+    <!-- Section 2: Core Structure -->
+    <section id="core">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2>교리문답의 핵심과 독창성</h2>
+      </div>
+
+      <p>
+        다른 시대의 신조들이 주로 "하나님은 누구인가", "교회는 무엇인가"라는 객관적 정의로 시작하는 반면, 
+        하이델베르크 교리문답은 <strong>"나의 유일한 위로는 무엇인가?"</strong>라는 실존적이고 인격적인 물음으로 출발합니다.
+      </p>
+
+      <h3>로마서에 기초한 삼중 구조 (Misery - Deliverance - Gratitude)</h3>
+      <p>
+        문답서는 사도 바울의 로마서 구조(죄-구원-삶)를 그대로 따라 전체가 유기적으로 흐릅니다.
+      </p>
+
+      <div class="triad-container">
+        <div class="triad-box misery">
+          <div class="triad-step">제 1 부</div>
+          <div class="triad-title">인간의 비참함</div>
+          <div class="triad-range">제 3문 ~ 11문</div>
+          <div class="triad-desc">
+            율법의 거울 앞에서 자신의 죄와 비참함, 하나님의 공의로운 진노를 깨닫습니다. 절망이 목적이 아니라 구주의 필요성을 절감하게 합니다.
+          </div>
+        </div>
+
+        <div class="triad-box deliverance">
+          <div class="triad-step">제 2 부</div>
+          <div class="triad-title">인간의 구속 (구원)</div>
+          <div class="triad-range">제 12문 ~ 85문</div>
+          <div class="triad-desc">
+            유일한 중보자 예수 그리스도, 믿음으로 얻는 칭의, 사도신경 강해와 성례(세례와 성찬)를 통해 베푸시는 풍성한 은혜를 확인합니다.
+          </div>
+        </div>
+
+        <div class="triad-box gratitude">
+          <div class="triad-step">제 3 부</div>
+          <div class="triad-title">감사의 삶</div>
+          <div class="triad-range">제 86문 ~ 129문</div>
+          <div class="triad-desc">
+            구원받기 위한 조건이 아니라, 값없이 구원받은 자가 하나님께 드리는 '감사'로서의 선행, 십계명 순종, 주기도문 기도를 다룹니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>💡 핵심 독창성: 도덕주의의 극복</strong><br>
+        하이델베르크는 십계명을 제1부(정죄)가 아닌 <strong>제3부(감사)</strong>에 배치했습니다. 이는 그리스도인에게 율법이 더 이상 저주의 멍에가 아니라, 구속받은 자녀가 기쁨으로 하나님을 닮아가는 '감사의 길'임을 선포한 혁명적 구성입니다.
+      </div>
+    </section>
+
+    <!-- Section 3: 400-Year Legacy -->
+    <section id="legacy">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2>그 이후 400년간 교리를 가르쳤던 교회의 결과는?</h2>
+      </div>
+
+      <p>
+        하이델베르크 교리문답이 공포된 1563년 이후 400여 년 동안 유럽(독일·네덜란드), 영미권, 그리고 한국을 비롯한 세계 개혁교회는 이 교리를 가르쳤습니다. 
+        그 역사는 위대한 결실과 동시에 뼈아픈 부작용이라는 양면을 보여줍니다.
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-col positive">
+          <h4>🌟 풍성한 역사적 열매 (Fruits)</h4>
+          <ul>
+            <li><strong>신앙의 뼈대 형성:</strong> 종교전쟁, 박해, 계몽주의의 거센 물결 속에서도 교회가 성경적 정체성을 잃지 않는 방파제가 됨.</li>
+            <li><strong>신앙의 세대전수:</strong> 가정과 교회 학교에서 체계적 문답 교육을 통해 자녀들을 세속 문화로부터 지켜냄.</li>
+            <li><strong>고난 속의 실존적 위로:</strong> 세계대전과 전염병, 개인적 질병과 사별 앞에서 성도들이 "나는 나의 것이 아니요"를 읊조리며 소망을 지킴.</li>
+            <li><strong>건전한 교회 연합:</strong> 날카로운 교리적 정죄보다 온건하고 목회적인 성격 덕분에 다양한 개혁교회의 사랑을 받는 공통 고백이 됨.</li>
+          </ul>
+        </div>
+
+        <div class="compare-col negative">
+          <h4>⚠️ 부작용과 위기 (Pitfalls)</h4>
+          <ul>
+            <li><strong>메마른 교리주의(Dead Orthodoxy):</strong> 살아있는 신앙고백이 '머리로만 암기하는 명제적 지식'으로 전락함.</li>
+            <li><strong>지적 교만과 정죄의 도구:</strong> 교리가 이웃을 사랑하고 하나님을 찬양하기 위한 도구가 아니라 상대를 이단시하고 정죄하는 무기로 오용됨.</li>
+            <li><strong>삶과 행위의 실종:</strong> "감사"로서의 거룩한 삶이 사라지고 지적 동의(Assensus)만 있으면 구원받았다는 값싼 구원론 만연.</li>
+            <li><strong>경건주의와 자유주의의 반동:</strong> 교리의 차가움에 지친 성도들이 신학을 내팽개치고 주관적 체험에만 매달리거나(극단적 경건주의), 현대에 이르러 교리 무용론(실용주의)에 빠짐.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>
+        역사가 증명하는 분명한 사실은 하나입니다. 
+        <strong>"교리 자체가 문제가 아니라, 교리를 다루는 태도(생명 없는 지식화)가 문제였다"</strong>는 점입니다. 
+        교리가 심장에 불을 붙이지 못하고 머리에 머물렀을 때 교회는 생명력을 잃었고, 반대로 교리를 아예 내버렸을 때 교회는 세속 사조에 뿌리째 흔들렸습니다.
+      </p>
+    </section>
+
+    <!-- Section 4: What Should We Teach? -->
+    <section id="future">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2>그렇다면 우리는 오늘 무엇을 가르쳐야 하는가?</h2>
+      </div>
+
+      <p>
+        현대 교회는 교리를 포기할 것이 아니라, 400년 전 우르시누스와 올레비아누스가 가졌던 <strong>복음의 생명력과 목회적 온기</strong>를 담아 다음과 같이 다시 가르쳐야 합니다.
+      </p>
+
+      <div class="pillar-item">
+        <div class="pillar-icon">🕊️</div>
+        <div class="pillar-body">
+          <h4>1. '시험용 정보'가 아닌 '살아있는 그리스도와의 연합과 위로'</h4>
+          <p>교리는 정답 맞히기 암기 과목이 아닙니다. 불안과 외로움, 고난과 죽음의 공포에 짓눌린 성도들에게 "너는 네 것이 아니라 그리스도의 피로 사신 바 된 존귀한 존재"라는 실존적 소속감과 위로(Comfort)를 가르쳐야 합니다.</p>
+        </div>
+      </div>
+
+      <div class="pillar-item">
+        <div class="pillar-icon">❤️</div>
+        <div class="pillar-body">
+          <h4>2. '의무와 정죄'가 아닌 '은혜에 빚진 자의 벅찬 감사'</h4>
+          <p>순종을 율법주의적 굴레로 가르치지 않고, 측량할 수 없는 십자가의 용서를 맛본 자가 흘리는 눈물의 자발적 감사(Gratitude)로 가르쳐야 합니다. 진정한 윤리와 거룩은 오직 십자가의 사랑에 감격할 때만 터져 나옵니다.</p>
+        </div>
+      </div>
+
+      <div class="pillar-item">
+        <div class="pillar-icon">⚖️</div>
+        <div class="pillar-body">
+          <h4>3. '신학(Doctrine)'과 '찬양(Doxology)'과 '삶(Discipleship)'의 통합</h4>
+          <p>아는 것(지성)이 예배(감정)로 이어지고, 예배가 세상 속에서의 거룩한 공적 순종과 사랑(의지)으로 흘러가는 통합적 제자도를 길러내야 합니다. 교리는 일상의 삶을 해석하는 렌즈가 되어야 합니다.</p>
+        </div>
+      </div>
+
+      <div class="pillar-item">
+        <div class="pillar-icon">💬</div>
+        <div class="pillar-body">
+          <h4>4. 일방적 주입을 넘어선 '질문하고 경청하는 대화적 교육'</h4>
+          <p>교리문답(Catechism)의 본래 뜻은 '소리 내어 묻고 대답하는 것'이었습니다. 현대 성도들과 다음 세대가 던지는 치열한 삶의 의문, 회의, 아픔을 피하지 않고 성경의 진리로 따뜻하게 품어주는 대화의 장을 회복해야 합니다.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="border-left-color: var(--accent); background: #fefcbf; color: #744210;">
+        <strong>맺음말: 다시 강단과 식탁에서</strong><br>
+        교리를 잃어버린 교회는 시류에 흔들리고, 온기를 잃어버린 교리는 사람을 다치게 합니다. 
+        우리가 가르쳐야 할 것은 차가운 조문(條文)이 아니라, <strong>십자가에서 피 흘리신 예수 그리스도의 사랑과 그분께 속한 자의 담대한 기쁨</strong>입니다.
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-quote">
+      “우리의 교리가 심장에 닿을 때까지, 우리의 지식이 찬양이 될 때까지.”
+    </div>
+    <p>© 2026 하이델베르크 교리문답 강해 및 교육 나눔 · 목회와 사역을 위한 리소스</p>
+  </footer>
+
+</body>
+</html>
