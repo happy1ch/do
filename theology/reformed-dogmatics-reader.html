@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>후크세마 개혁교의학 영한 대조 리더 | 최성광 목사 전용 서재</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root {
+  --bg: #0e1116; --surface: #161b22; --surface-hover: #21262d; --border: #30363d;
+  --text: #e6edf3; --text-dim: #8b949e; --accent: #d4b063; --accent-soft: rgba(212, 176, 99, 0.12);
+  --accent-blue: #58a6ff; --accent-blue-soft: rgba(88, 166, 255, 0.12);
+  --line-highlight: rgba(212, 176, 99, 0.18);
+  --font-title: 'Do Hyeon', sans-serif;
+  --font-serif: 'Noto Serif KR', 'Lora', serif;
+  --font-sans: 'Noto Sans KR', system-ui, sans-serif;
+}
+[data-theme="light"] {
+  --bg: #f8f9fa; --surface: #ffffff; --surface-hover: #f1f5f9; --border: #e2e8f0;
+  --text: #1e293b; --text-dim: #64748b; --accent: #b45309; --accent-soft: rgba(180, 83, 9, 0.1);
+  --accent-blue: #0284c7; --accent-blue-soft: rgba(2, 132, 199, 0.1);
+  --line-highlight: rgba(180, 83, 9, 0.14);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--font-sans);
+  min-height: 100vh; display: flex; flex-direction: column; transition: all 0.25s ease;
+}
+
+/* Top Navigation */
+header {
+  position: sticky; top: 0; z-index: 50; background: var(--surface);
+  border-bottom: 1px solid var(--border); padding: 12px 24px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+.brand .badge {
+  font-size: 11px; padding: 3px 8px; border-radius: 6px;
+  background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent);
+}
+.controls { display: flex; align-items: center; gap: 10px; }
+.btn-ctrl {
+  background: var(--bg); border: 1px solid var(--border); color: var(--text);
+  padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13.5px;
+  display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s ease;
+}
+.btn-ctrl:hover { border-color: var(--accent); color: var(--accent); }
+.select-chapter {
+  background: var(--bg); border: 1px solid var(--border); color: var(--text);
+  padding: 6px 12px; border-radius: 6px; font-size: 13.5px; cursor: pointer; outline: none;
+}
+
+/* Layout */
+.main-wrap { max-width: 1400px; margin: 0 auto; width: 100%; padding: 24px 20px 80px; flex: 1; }
+
+/* Book Header Card */
+.book-header {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 24px; margin-bottom: 24px; position: relative;
+}
+.book-eyebrow { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: 1.5px; margin-bottom: 6px; }
+.book-title { font-family: var(--font-title); font-size: clamp(24px, 4vw, 34px); font-weight: 400; margin-bottom: 8px; }
+.book-meta { color: var(--text-dim); font-size: 14px; }
+
+/* Pastor Study Point Box */
+.study-box {
+  background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 10px;
+  padding: 16px 20px; margin-top: 16px;
+}
+.study-title { font-weight: 700; color: var(--accent); font-size: 15px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.study-desc { font-size: 14px; line-height: 1.65; color: var(--text); }
+
+/* Bilingual Comparison Container */
+.bilingual-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;
+}
+@media (max-width: 900px) {
+  .bilingual-grid { grid-template-columns: 1fr; }
+}
+
+.col-header {
+  position: sticky; top: 65px; z-index: 10; background: var(--surface);
+  padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border);
+  font-weight: 700; font-size: 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;
+}
+.col-header.en { border-left: 4px solid var(--accent-blue); }
+.col-header.ko { border-left: 4px solid var(--accent); }
+
+/* Paragraph Sync Pair */
+.pair {
+  display: contents;
+}
+@media (max-width: 900px) {
+  .pair { display: block; margin-bottom: 24px; }
+}
+
+.para {
+  padding: 16px 20px; border-radius: 10px; background: var(--surface);
+  border: 1px solid transparent; margin-bottom: 16px; transition: all 0.2s ease;
+  font-family: var(--font-serif); font-size: 16.5px; line-height: 1.85;
+}
+.para.en { font-family: 'Lora', Georgia, serif; color: #d0d7de; }
+[data-theme="light"] .para.en { color: #334155; }
+.para.ko { color: #f0f6fc; font-weight: 400; }
+[data-theme="light"] .para.ko { color: #0f172a; }
+
+.para:hover, .para.active {
+  background: var(--surface-hover); border-color: var(--accent); box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.term {
+  color: var(--accent); font-weight: 600; border-bottom: 1px dotted var(--accent); cursor: help;
+}
+.ref-pill {
+  font-size: 12px; font-family: var(--font-sans); background: var(--accent-soft);
+  color: var(--accent); padding: 2px 7px; border-radius: 4px; font-weight: 600;
+  margin-left: 4px; display: inline-block;
+}
+
+/* Footer Back Link */
+.footer-back { text-align: center; margin-top: 48px; }
+.footer-back a {
+  color: var(--accent); text-decoration: none; font-size: 15px; font-weight: 700;
+  padding: 10px 20px; border-radius: 8px; background: var(--accent-soft); border: 1px solid var(--accent);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span>🏛️ 성광의 서재</span>
+    <span class="badge">영한 대조 신학 리더</span>
+    <span style="font-size:14px;color:var(--text-dim);">| Herman Hoeksema</span>
+  </div>
+  <div class="controls">
+    <select class="select-chapter" id="chapterSelect" onchange="changeChapter(this.value)">
+      <option value="intro">제1권 서론: 교의학의 명칭과 본질 (Chap 1-3)</option>
+      <option value="covenant" selected>제1권 핵심: 언약 체계와 우정의 언약 (Chap 4)</option>
+      <option value="god">제1권 신론: 알 수 없으나 알 수 있는 하나님 (Chap 6)</option>
+    </select>
+    <button class="btn-ctrl" onclick="toggleTheme()" title="화면 테마 변경">🌓 모드</button>
+    <button class="btn-ctrl" onclick="adjustFont(1)" title="글자 확대">A+</button>
+    <button class="btn-ctrl" onclick="adjustFont(-1)" title="글자 축소">A-</button>
+    <a href="https://do-happy1ch.vercel.app" class="btn-ctrl" style="text-decoration:none;">← 서재 로비</a>
+  </div>
+</header>
+
+<div class="main-wrap">
+
+  <!-- Book Header Card -->
+  <div class="book-header">
+    <div class="book-eyebrow">REFORMED DOGMATICS · HERMAN HOEKSEMA (1886-1965)</div>
+    <h1 class="book-title" id="secTitle">허먼 후크세마 『개혁교의학』 영한 대조 리더</h1>
+    <div class="book-meta">
+      저자: 허먼 후크세마 | 번역 및 감수: Happy초이 (최성광 목사 전속 AI 비서) | 원서 분량: 2권 61개 챕터
+    </div>
+
+    <!-- 목회자 설교 & 연구 포인트 -->
+    <div class="study-box">
+      <div class="study-title">💡 최성광 담임목사님을 위한 신학 핵심 요약 &amp; 설교 적용 가이드</div>
+      <div class="study-desc" id="secSummary">
+        <strong>[우정의 언약(Fellowship of Friendship)의 본질]</strong> 후크세마는 언약을 단순한 '쌍방 간의 계약(Contract)'이나 구원을 얻기 위한 수단으로 보지 않고, <strong>"그리스도 안에서 삼위일체 하나님과 택하신 백성이 누리는 사랑과 우정의 유기적 생명 교제 그 자체"</strong>로 정의합니다. 언약은 조건적 거래가 아니라, 하나님 자신의 영원한 삼위일체적 삶을 우리에게 활짝 열어주시는 무조건적 은혜의 선물입니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison Columns -->
+  <div class="bilingual-grid">
+    <!-- 영어 원문 컬럼 -->
+    <div class="col-en">
+      <div class="col-header en">
+        <span>ENGLISH ORIGINAL (원문)</span>
+        <span style="font-size:12px;color:var(--text-dim);">Herman Hoeksema</span>
+      </div>
+      <div id="contentEn"></div>
+    </div>
+
+    <!-- 한국어 번역 컬럼 -->
+    <div class="col-ko">
+      <div class="col-header ko">
+        <span>KOREAN THEOLOGICAL TRANSLATION (정통 신학 완역)</span>
+        <span style="font-size:12px;color:var(--accent);">개혁주의 정밀 번역</span>
+      </div>
+      <div id="contentKo"></div>
+    </div>
+  </div>
+
+  <div class="footer-back">
+    <a href="../index.html">← 최성광 목사님의 디지털 종합 서재로 돌아가기</a>
+  </div>
+
+</div>
+
+<script>
+// 신학 챕터 데이터
+const chaptersData = {
+  covenant: {
+    title: "제4장: 교의학의 체계와 언약 (The Covenantal System)",
+    summary: "<strong>[우정의 언약(Fellowship of Friendship)의 본질]</strong> 후크세마는 언약을 단순한 '쌍방 간의 계약(Contract)'이나 구원을 위한 조건적 수단으로 보지 않고, <strong>'그리스도 안에서 삼위일체 하나님과 택하신 백성이 누리는 사랑과 우정의 생명적 교제'</strong>로 정의합니다. 언약은 요구가 아니라 하나님께서 베푸시는 일방적이고 영원한 은혜의 선물입니다.",
+    pairs: [
+      {
+        en: "The covenant of God is not a means to an end, but the highest end itself. It is not an agreement or contract between two parties, but the living relationship of friendship between God and His people in Christ Jesus.",
+        ko: "하나님의 <span class='term' title='Covenant'>언약</span>은 어떤 목적을 이루기 위한 수단이 아니라, 그 자체가 최고의 목적입니다. 언약은 두 당사자 사이의 상업적 합의나 계약(Contract)이 아니라, 그리스도 예수 안에서 하나님과 그분의 백성 사이에 맺어지는 살아 있는 <span class='term' title='Fellowship of Friendship'>우정의 교제 관계</span>입니다."
+      },
+      {
+        en: "God did not establish His covenant because He needed man, nor did He establish it as a conditional pact that depends upon man's fulfillment. In Himself, God is the triune God of eternal fellowship, and out of sovereign love, He reveals that fellowship to His elect.",
+        ko: "하나님께서는 사람이 필요해서 언약을 맺으신 것이 아니며, 사람의 의무 이행 여부에 좌우되는 조건부 협정으로 언약을 세우신 것도 아닙니다. 하나님께서는 그분 스스로 영원한 사귐을 누리시는 <span class='term' title='Trinity'>삼위일체 하나님</span>이시며, 주권적인 사랑으로 그 복된 교제를 그분의 택하신 백성들에게 드러내 보여주신 것입니다."
+      },
+      {
+        en: "The covenant idea, therefore, must dominate our entire dogmatic system. From election in eternity to the realization of the kingdom of God in the new heavens and the new earth, the one continuous line of sovereign grace is the realization of the covenant of God.",
+        ko: "따라서 <span class='term' title='Covenant Idea'>언약 사상</span>은 우리의 전체 교의학 체계를 지배해야 합니다. 영원 전의 작정과 <span class='term' title='Election'>선택</span>에서부터 새 하늘과 새 땅에서 이루어질 하나님의 나라의 완성에 이르기까지, 주권적 은혜의 끊어지지 않는 한 줄기는 바로 하나님의 언약의 성취입니다."
+      },
+      {
+        en: "In this covenant of sovereign grace, there is no place for human merit. Christ is the Head, the Foundation, and the Finisher of the covenant. He took upon Himself the obligations of the law, paid the debt of our sins, and through His resurrection made us partakers of His everlasting righteousness <span class='ref-pill'>Rom. 8:32</span>.",
+        ko: "이 주권적인 은혜의 언약 안에는 인간의 공로가 설 자리가 결코 없습니다. 그리스도께서 언약의 머리요, 기초요, 완성자이십니다. 그분께서 율법의 모든 요구를 친히 짊어지시고, 우리의 죄책을 갚으셨으며, 그분의 부활을 통해 우리를 영원한 의의 참여자로 만드셨습니다 <span class='ref-pill'>롬 8:32</span>."
+      },
+      {
+        en: "To know this covenant is to know the deepest consolation for the soul. It is the assurance that 'I belong unto my faithful Savior Jesus Christ,' not because of my weak faith, but because of His unbreakable promise and sovereign faithfulness.",
+        ko: "이 언약을 아는 것은 영혼을 위한 가장 깊은 위로(Consolation)를 얻는 길입니다. 그것은 내 연약한 믿음 때문이 아니라, 그분의 파기할 수 없는 언약적 약속과 주권적인 신실하심 때문에 '내가 신실하신 구주 예수 그리스도의 소유'라는 확신을 주는 복음입니다."
+      }
+    ]
+  },
+  intro: {
+    title: "제1장: 교의학의 명칭과 본질 (The Name and Nature of Dogmatics)",
+    summary: "<strong>[교의학의 거룩한 사명]</strong> 교의학은 인간 철학자의 사변이 아니라, 성경에 자신을 계시하신 살아계신 하나님의 진리를 교회가 믿음으로 고백하고 체계화하는 신성한 학문입니다.",
+    pairs: [
+      {
+        en: "Dogmatics is not the product of human philosophy or speculative reasoning. It is the scientific reflection and systematic confession of the truth which God has revealed in His holy Word.",
+        ko: "교의학은 인간의 철학이나 사변적 이성의 산물이 아닙니다. 그것은 하나님께서 자신의 거룩한 말씀 안에서 계시해 주신 진리에 대한 학문적 성찰이자 교회의 체계적인 신앙고백입니다."
+      },
+      {
+        en: "The church does not invent truth; she receives it. The task of dogmatics is to think God's thoughts after Him, following the infallible guide of Holy Scripture as the only rule of faith and life.",
+        ko: "교회는 진리를 스스로 발명하는 것이 아니라, 위로부터 받아들이는 것입니다. 교의학의 사명은 신앙과 삶의 유일한 규범인 성경의 무오한 인도를 따라, '하나님의 생각을 그분의 뒤를 따라 생각하는 것(thinking God's thoughts after Him)'입니다."
+      },
+      {
+        en: "True theology is therefore always doxological. It begins with reverence before the sovereign Majesty of God and ends with the worshipful praise of His glorious grace.",
+        ko: "그러므로 참된 신학은 언제나 송영(Doxological)입니다. 신학은 하나님의 주권적인 위엄 앞에서의 거룩한 경외심으로 시작하여, 그분의 영화로운 은혜를 향한 예배와 찬양으로 끝을 맺습니다."
+      }
+    ]
+  },
+  god: {
+    title: "제6장: 알 수 없으나 알 수 있는 하나님 (The Incomprehensible God)",
+    summary: "<strong>[하나님의 불가해성과 계시]</strong> 피조물인 인간은 하나님의 무한하신 본질을 완전히 다 헤아릴 수(Comprehend) 없으나, 하나님께서 성경을 통해 우리 눈높이에 맞춰 친히 알려주셨기에 참되게 알(Know) 수 있습니다.",
+    pairs: [
+      {
+        en: "God is incomprehensible in His essence. He dwells in light unapproachable, which no man hath seen, nor can see. The finite cannot comprehend the Infinite <span class='ref-pill'>1 Tim. 6:16</span>.",
+        ko: "하나님은 그분의 본질에 있어서 인간의 이성으로 다 헤아릴 수 없는 분(Incomprehensible)이십니다. 그분은 사람이 가까이 갈 수 없는 빛 가운데 거하시며, 아무 사람도 보지 못하였고 또 볼 수 없는 분이십니다. 유한한 인간은 무한하신 하나님을 온전히 포괄하여 알 수 없습니다 <span class='ref-pill'>딤전 6:16</span>."
+      },
+      {
+        en: "Yet, this incomprehensible God is not the Unknown God of the pagans. In sovereign mercy, He has spoken to us in the language of men, revealing Himself truly and savingly in Jesus Christ.",
+        ko: "그러나 이 불가해하신 하나님은 이방인들이 말하는 '알지 못하는 신(Unknown God)'이 결코 아닙니다. 주권적인 긍휼 가운데서, 하나님은 인간의 언어로 우리에게 말씀하셨고, 예수 그리스도 안에서 자신을 참되고 구원에 이르도록 명백하게 계시해 주셨습니다."
+      },
+      {
+        en: "Our knowledge of God is therefore not comprehensive, but it is true, real, and sufficient for eternal life. To know Him is life eternal, and to contemplate His glory is our highest beatitude.",
+        ko: "따라서 하나님을 향한 우리의 지식은 모든 것을 다 아는 완전한 앎은 아닐지라도, 참되고 실재하며 영생을 얻기에 참으로 충분합니다. 하나님을 아는 것이 곧 영생이며, 그분의 영광을 묵상하는 것이 성도의 최고의 복락입니다."
+      }
+    ]
+  }
+};
+
+let currentFontDelta = 0;
+
+function renderChapter(chKey) {
+  const data = chaptersData[chKey];
+  if (!data) return;
+
+  document.getElementById('secTitle').textContent = data.title;
+  document.getElementById('secSummary').innerHTML = data.summary;
+
+  const enContainer = document.getElementById('contentEn');
+  const koContainer = document.getElementById('contentKo');
+  enContainer.innerHTML = '';
+  koContainer.innerHTML = '';
+
+  data.pairs.forEach((pair, idx) => {
+    // English Para
+    const pEn = document.createElement('div');
+    pEn.className = 'para en';
+    pEn.id = `para-en-${idx}`;
+    pEn.innerHTML = pair.en;
+
+    // Korean Para
+    const pKo = document.createElement('div');
+    pKo.className = 'para ko';
+    pKo.id = `para-ko-${idx}`;
+    pKo.innerHTML = pair.ko;
+
+    // Sync hover
+    pEn.addEventListener('mouseenter', () => { pEn.classList.add('active'); pKo.classList.add('active'); });
+    pEn.addEventListener('mouseleave', () => { pEn.classList.remove('active'); pKo.classList.remove('active'); });
+    pKo.addEventListener('mouseenter', () => { pEn.classList.add('active'); pKo.classList.add('active'); });
+    pKo.addEventListener('mouseleave', () => { pEn.classList.remove('active'); pKo.classList.remove('active'); });
+
+    enContainer.appendChild(pEn);
+    koContainer.appendChild(pKo);
+  });
+}
+
+function changeChapter(val) {
+  renderChapter(val);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+}
+
+function adjustFont(delta) {
+  currentFontDelta += delta;
+  const paras = document.querySelectorAll('.para');
+  paras.forEach(p => {
+    p.style.fontSize = `${16.5 + currentFontDelta}px`;
+  });
+}
+
+// 초기 렌더링
+renderChapter('covenant');
+</script>
+</body>
+</html>
