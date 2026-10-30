@@ -79,7 +79,15 @@ class BookSplitter:
                     text = re.sub(r'<[^>]+>', ' ', raw)
                     text = re.sub(r'\s+', ' ', text).strip()
                     if len(text) > 200:  # 너무 짧은 네비게이션 제외
-                        chapters.append({"file": filename, "text": text})
+                        idx = len(chapters) + 1
+                        chapters.append({
+                            "id": f"ch_{idx:02d}",
+                            "title": filename.replace(".xhtml", "").replace(".html", "").replace(".htm", "").split("/")[-1],
+                            "start_page": idx,
+                            "end_page": idx,
+                            "pages": [{"page": idx, "text": text}],
+                            "file": filename,
+                        })
         return chapters
 
     @staticmethod
