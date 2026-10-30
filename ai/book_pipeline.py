@@ -336,9 +336,29 @@ def run_pipeline(file_path: str, output_dir: str = "pipeline_output", max_worker
 
 
 if __name__ == "__main__":
-    # 예제 테스트 실행 (허먼 후크세마 PDF 대상)
-    sample_pdf = "attachments/2026-10-30/The Triple knowledge  an exposition of the Heidelberg catechism (Hoeksema, Herman)-3e56a20035de4a8f8a9b96cbb36a689b.pdf"
-    if os.path.exists(sample_pdf):
-        run_pipeline(sample_pdf, output_dir="pipeline_output_demo", max_workers=6)
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(
+        description="최성광 목사님의 4단계 대용량 전자책(PDF/EPUB) 병렬 추출·검증 파이프라인"
+    )
+    parser.add_argument("file", nargs="?", help="추출할 PDF 또는 EPUB 파일 경로")
+    parser.add_argument("-o", "--output", default="output", help="결과물이 저장될 폴더 경로 (기본값: output)")
+    parser.add_argument("-w", "--workers", type=int, default=4, help="동시 병렬 처리 스레드 수 (기본값: 4)")
+
+    args = parser.parse_args()
+
+    if args.file:
+        if not os.path.exists(args.file):
+            print(f"❌ 오류: 파일을 찾을 수 없습니다 -> {args.file}")
+            sys.exit(1)
+        run_pipeline(args.file, output_dir=args.output, max_workers=args.workers)
     else:
-        print("테스트용 PDF 파일이 없습니다.")
+        # 인자 없이 실행 시 기본 테스트 파일 확인
+        sample_pdf = "attachments/2026-10-30/The Triple knowledge  an exposition of the Heidelberg catechism (Hoeksema, Herman)-3e56a20035de4a8f8a9b96cbb36a689b.pdf"
+        if os.path.exists(sample_pdf):
+            print("💡 인자가 지정되지 않아 기본 테스트 PDF로 파이프라인을 실행합니다.")
+            run_pipeline(sample_pdf, output_dir="pipeline_output_demo", max_workers=6)
+        else:
+            parser.print_help()
+            print("\n💡 사용 예시: python book_pipeline.py my_theology_book.pdf -o result -w 4")
