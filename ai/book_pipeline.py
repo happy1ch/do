@@ -302,9 +302,20 @@ class ResultExporter:
 # =====================================================================
 # 메인 실행 파이프라인 (Orchestrator)
 # =====================================================================
-def run_pipeline(file_path: str, output_dir: str = "pipeline_output", max_workers: int = 4):
+def get_book_output_dir(base_output_dir: str, file_path: str) -> str:
+    """책 제목으로 독립된 하위 폴더 경로 생성 (책별 자료 격리 보존)"""
+    base_name = os.path.splitext(os.path.basename(file_path))[0]
+    safe_name = re.sub(r'[\\/*?:"<>|]', "", base_name).strip()
+    if not safe_name:
+        safe_name = "extracted_book"
+    return os.path.join(base_output_dir, safe_name)
+
+
+def run_pipeline(file_path: str, output_dir: str = "output", max_workers: int = 4, create_book_subfolder: bool = True):
     """도서 파일을 입력받아 4단계 파이프라인을 완전 자동 실행"""
+    target_output_dir = get_book_output_dir(output_dir, file_path) if create_book_subfolder else output_dir
     print(f"🚀 [파이프라인 시작] 대상 파일: {file_path}")
+    print(f"📁 [저장 폴더] 책별 전용 폴더: {target_output_dir}")
     t_start = time.time()
 
     # 1단계: 분할
@@ -334,7 +345,7 @@ def run_pipeline(file_path: str, output_dir: str = "pipeline_output", max_worker
 
     # 4단계: 결과물 빌드
     print(f"👉 [4단계] 다중 포맷 출력 파일 빌드 중 -> {output_dir}")
-    paths = ResultExporter.export(output_dir, processed, qa_report)
+    paths = ResultExporter.export(target_output_dir, processed, qa_report)
     
     elapsed = time.time() - t_start
     print(f"🎉 [파이프라인 완료!] 총 소요 시간: {elapsed:.2f}초")
@@ -353,8 +364,19 @@ if __name__ == "__main__":
     parser.add_argument("file", nargs="?", help="추출할 PDF 또는 EPUB 파일 경로")
     parser.add_argument("-o", "--output", default="output", help="결과물이 저장될 폴더 경로 (기본값: output)")
     parser.add_argument("-w", "--workers", type=int, default=4, help="동시 병렬 처리 스레드 수 (기본값: 4)")
+    parser.add_argument("--web", action="store_true", help="웹 브라우저 GUI 스튜디오 실행")
 
     args = parser.parse_args()
+
+    if args.web:
+        try:
+            import web_pipeline
+            web_pipeline.run_web_studio()
+        except ImportError:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import web_pipeline
+            web_pipeline.run_web_studio()
+        sys.exit(0)
 
     if args.file:
         if not os.path.exists(args.file):
