@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>8. 24시간 나만의 AI 개인 비서, 피클(Pickle) | AI 시작 가이드</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#f3f4fa; --surface:#ffffff; --fg:#17182b; --muted:#5a5c73; --line:#dcdeee;
+  --accent:#5b45d1; --accent-soft:#e6e1fb; --accent-fg:#ffffff;
+  --c-pickle:#0b7a85; --c-pickle-soft:#d3eef0;
+  --c-voice:#b4541a; --c-voice-soft:#fbe6d6;
+  --c-audio:#2b66d9; --c-audio-soft:#dde8fb;
+  --c-book:#b0357e; --c-book-soft:#f8dfee;
+  --c-web:#3f7d2c; --c-web-soft:#e0f0d8;
+  --ok:#1f7a4d; --ok-soft:#dcf1e5; --warn:#b4372b; --warn-soft:#fbe3df;
+  --font-display:'Do Hyeon','Noto Sans KR',sans-serif;
+  --font-body:'Noto Sans KR',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1020; --surface:#181a30; --fg:#eceef8; --muted:#a4a7c2; --line:#2a2d4a;
+  --accent:#a99bff; --accent-soft:#272250; --accent-fg:#14102e;
+  --c-pickle:#3cc3cf; --c-pickle-soft:#123c42;
+  --c-voice:#f09a62; --c-voice-soft:#3d2a1c;
+  --c-audio:#7aa7ff; --c-audio-soft:#1b2b4a;
+  --c-book:#f08ac4; --c-book-soft:#451d35;
+  --c-web:#8fd27a; --c-web-soft:#1f3a18;
+  --ok:#6fd3a0; --ok-soft:#173a2a; --warn:#f08a7e; --warn-soft:#3f2420; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1020; --surface:#181a30; --fg:#eceef8; --muted:#a4a7c2; --line:#2a2d4a;
+  --accent:#a99bff; --accent-soft:#272250; --accent-fg:#14102e;
+  --c-pickle:#3cc3cf; --c-pickle-soft:#123c42;
+  --c-voice:#f09a62; --c-voice-soft:#3d2a1c;
+  --c-audio:#7aa7ff; --c-audio-soft:#1b2b4a;
+  --c-book:#f08ac4; --c-book-soft:#451d35;
+  --c-web:#8fd27a; --c-web-soft:#1f3a18;
+  --ok:#6fd3a0; --ok-soft:#173a2a; --warn:#f08a7e; --warn-soft:#3f2420; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.75 var(--font-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px;margin:0}
+.wrap{max-width:960px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:400;text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(30px,5vw,46px)}
+h2{font-size:clamp(24px,3.8vw,30px);margin-bottom:8px}
+h3{font-size:20px;margin-bottom:6px}
+p{margin:0 0 12px}
+section{margin-top:52px;scroll-margin-top:16px}
+.lead{color:var(--muted);font-size:17px;line-height:1.7}
+.eyebrow{font-size:13px;letter-spacing:.12em;color:var(--accent);font-weight:700;text-transform:uppercase}
+header{padding-block:40px 0}
+header p{color:var(--muted);font-size:18px;max-width:62ch;margin-top:12px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.toc a{font-size:14px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:5px 14px;border-radius:99px;text-decoration:none}
+.toc a:hover{opacity:0.85}
+
+/* Quote Callout */
+.pastor-quote{
+  background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);
+  border-radius:12px;padding:24px;margin:28px 0;position:relative;
+}
+.pastor-quote p{font-size:16.5px;line-height:1.8;color:var(--fg);margin-bottom:8px}
+.pastor-quote .author{font-weight:700;color:var(--accent);font-size:14px;display:flex;align-items:center;gap:6px}
+
+/* Grid Cards */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:20px}
+.feat-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;
+  display:flex;flex-direction:column;gap:8px;border-top:5px solid var(--card-color);
+}
+.feat-card .tag{
+  font-size:12px;font-weight:700;color:var(--card-color);background:var(--card-bg);
+  padding:3px 8px;border-radius:6px;align-self:flex-start;
+}
+.feat-card h3{color:var(--fg);font-size:19px;margin-top:4px}
+.feat-card p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0}
+
+/* Table */
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-top:20px}
+table{width:100%;border-collapse:collapse;font-size:14.5px;text-align:left}
+th,td{padding:14px 18px;border-bottom:1px solid var(--line)}
+th{background:rgba(0,0,0,0.02);font-weight:700;color:var(--fg);font-family:var(--font-display);font-size:16px}
+tr:last-child td{border-bottom:none}
+.highlight{font-weight:700;color:var(--accent)}
+
+/* Takeaway */
+.takeaway{
+  background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:26px;
+  margin-top:36px;text-align:center;
+}
+.takeaway h3{color:var(--accent);font-size:22px;margin-bottom:10px}
+.takeaway p{color:var(--fg);font-size:16px;max-width:65ch;margin:0 auto}
+
+.footer-nav{
+  margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-nav a{
+  color:var(--accent);text-decoration:none;font-weight:700;font-size:15px;
+  padding:8px 16px;border-radius:8px;background:var(--accent-soft);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">AI 시작 가이드 · 제8장 특별 부록</div>
+    <h1>24시간 나만의 AI 개인 비서, 피클(Pickle)</h1>
+    <p>단순히 말을 주고받는 대화형 챗봇을 넘어, 내 삶과 목회 현장을 대신 뛰어주는 진짜 실행형(Action-Oriented) AI 에이전트의 세계</p>
+    <div class="toc">
+      <a href="#why">1. 피클이란?</a>
+      <a href="#story">2. 목회 현장 실전기</a>
+      <a href="#diff">3. 기존 챗봇과의 결정적 차이</a>
+      <a href="#features">4. 실제로 해낸 일들</a>
+      <a href="#verdict">5. 총평</a>
+    </div>
+  </header>
+
+  <!-- Section 1 -->
+  <section id="why">
+    <h2>1. 피클(Pickle)이란 무엇인가?</h2>
+    <p class="lead">지금까지 우리가 배운 ChatGPT, Claude, Gemini는 <b>'질문하면 답을 주는 브레인'</b>이었습니다. 그러나 피클(Pickle)은 <b>'내 손과 발이 되어 실제 세상을 대신 움직이는 유능한 개인 비서'</b>입니다.</p>
+    
+    <div class="pastor-quote">
+      <p>"내가 이래봬도 구글 공인 교육 전문가 레벨 2에 구글 트레이너 과정까지 준비하며 오랫동안 AI를 깊이 연구하고 다뤄온 사람이다. ChatGPT, Claude, 터미널 도구까지 안 써본 게 없다.<br><br>
+      그런데 며칠 동안 내 AI 비서(Happy초이)를 곁에 두고 일을 맡겨보면서 정말 깜짝 놀랐다. <b>'이제 다른 애들은 굳이 필요 없을 것 같다'</b>는 생각이 들 정도다. 이런 것쯤은 식은 죽 먹기라며 척척 해치우는 모습을 보며 감탄을 금치 못했다."</p>
+      <div class="author">
+        <span>✍️ 문경 행복한교회 최성광 담임목사 (AI 시작 가이드 저자)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2 -->
+  <section id="story">
+    <h2>2. 목회와 일상에서 경험한 실전 활약상</h2>
+    <p class="lead">Happy초이가 며칠 동안 목회자와 일상의 곁에서 실제로 처리해 낸 실화 바탕의 작업들입니다.</p>
+
+    <div class="feat-grid">
+      <!-- Card 1 -->
+      <div class="feat-card" style="--card-color:var(--c-voice); --card-bg:var(--c-voice-soft);">
+        <span class="tag">전화 대행</span>
+        <h3>진짜 사람처럼 전화 걸고 안부 전하기</h3>
+        <p>고정된 대표 발신 번호(02-6949-1136)로 직접 전화를 겁니다. 천안 신대원 80주년 행사장에서 동기 목사님께 안부 전화를 걸어 참석 여부를 확인하고, 새벽 2시 반까지 공부하는 아들에게 다정한 격려 전화를 걸어 <b>"아버지, 사랑합니다"</b>라는 아들의 따뜻한 음성을 그대로 전해왔습니다.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="feat-card" style="--card-color:var(--c-audio); --card-bg:var(--c-audio-soft);">
+        <span class="tag">전문 엔지니어링</span>
+        <h3>OBS 방송 오디오 파형 분석 & 필터 처방</h3>
+        <p>방송 녹화 시 고질적인 '말끝 끊김'과 잡음 문제를 해결하기 위해, 29초짜리 MP4 녹화본에서 오디오를 추출해 과학적 파형 분석을 수행했습니다. 61.7%가 -120dB로 잘려나가는 원인을 밝혀내고, ReaGate(Hold 200ms, Release 400ms)와 증폭(+8dB)의 황금값을 처방해 완벽한 방송 음질을 잡아냈습니다.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="feat-card" style="--card-color:var(--c-book); --card-bg:var(--c-book-soft);">
+        <span class="tag">신학 연구 지원</span>
+        <h3>752쪽 신학 대작을 3분 만에 전용 웹 리더로</h3>
+        <p>허먼 후크세마의 『The Triple Knowledge Vol. 2』 대작 PDF(752페이지)를 단 3분 만에 텍스트로 100% 추출했습니다. 4대 섹션, 15개 주일 목차 네비게이션, 실시간 검색, 다크 모드가 내장된 단독 실행형 고품질 웹 리더로 구축해 주었습니다.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="feat-card" style="--card-color:var(--c-web); --card-bg:var(--c-web-soft);">
+        <span class="tag">자동 배포</span>
+        <h3>GitHub & Vercel 통합 연구실 포털 구축</h3>
+        <p>폰에서 말 한마디를 건네자, GitHub <code>do</code> 저장소에 [신학 자료실]과 [AI 연구실] 폴더를 체계화하고, Vercel과 연동하여 PC 큰 모니터에서 편안하게 연구할 수 있는 <b>'나만의 비공개 디지털 서재'</b>를 전자동으로 배포해 주었습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3 -->
+  <section id="diff">
+    <h2>3. 기존 챗봇 vs 피클(AI 에이전트)의 결정적 차이</h2>
+    <p class="lead">왜 구글 레벨 2 전문가조차 "다른 AI는 필요 없을 것 같다"고 느꼈을까요? 구조 자체가 다릅니다.</p>
+
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr>
+            <th>비교 항목</th>
+            <th>기존 챗봇 (ChatGPT, Claude 등)</th>
+            <th>피클 에이전트 (Happy초이)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>행동 방식</b></td>
+            <td>말과 텍스트로만 조언함 ("이렇게 해보세요")</td>
+            <td class="highlight">실제 컴퓨터 도구를 쥐고 대신 해냄 ("제가 해둘게요")</td>
+          </tr>
+          <tr>
+            <td><b>기억과 연속성</b></td>
+            <td>대화창을 닫으면 이전 맥락이 사라짐</td>
+            <td class="highlight">일지와 주제별 기억으로 어제가 쌓이고 내일이 연결됨</td>
+          </tr>
+          <tr>
+            <td><b>수행 범위</b></td>
+            <td>채팅창 내부 텍스트 생성에 국한</td>
+            <td class="highlight">전화 통화, 이메일 발송, 파일 생성, 깃허브 푸시, Vercel 배포</td>
+          </tr>
+          <tr>
+            <td><b>태도</b></td>
+            <td>질문이 들어와야만 대답하는 수동성</td>
+            <td class="highlight">기상 모닝콜, 날씨와 당회 일정 브리핑 등 먼저 챙기는 능동성</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 4 -->
+  <section id="verdict">
+    <h2>5. 총평: 목회와 삶의 짐을 더는 진정한 동역자</h2>
+    
+    <div class="takeaway">
+      <h3>"AI는 더 이상 '묻고 답하는 기계'가 아닙니다."</h3>
+      <p>피클은 복잡한 설정, 번거로운 잡무, 기억해야 할 일정들을 자신의 머릿속에 다 집어넣고,<br>
+      사용자에게는 <b>'오롯이 본질적인 사역과 삶에 집중할 수 있는 시간'</b>을 선물해 주는 믿음직한 24시간 개인 비서입니다.</p>
+    </div>
+  </section>
+
+  <div class="footer-nav">
+    <a href="7-new-ai-tools.html">← 7장: 요즘 나온 AI 도구들</a>
+    <a href="index.html">가이드 전체 목차로 이동 →</a>
+  </div>
+
+</div>
+</body>
+</html>
