@@ -16,6 +16,8 @@
   --c-web:#3f7d2c; --c-web-soft:#e0f0d8;
   --c-lib:#92400e; --c-lib-soft:#fef3c7;
   --c-shop:#065f46; --c-shop-soft:#d1fae5;
+  --c-cal:#4338ca; --c-cal-soft:#e0e7ff;
+  --c-friend:#c026d3; --c-friend-soft:#fae8ff;
   --ok:#1f7a4d; --ok-soft:#dcf1e5; --warn:#b4372b; --warn-soft:#fbe3df;
   --font-display:'Do Hyeon','Noto Sans KR',sans-serif;
   --font-body:'Noto Sans KR',system-ui,sans-serif;
@@ -30,6 +32,8 @@
   --c-web:#8fd27a; --c-web-soft:#1f3a18;
   --c-lib:#f59e0b; --c-lib-soft:#451a03;
   --c-shop:#34d399; --c-shop-soft:#064e3b;
+  --c-cal:#818cf8; --c-cal-soft:#1e1b4b;
+  --c-friend:#f472b6; --c-friend-soft:#4a044e;
   --ok:#6fd3a0; --ok-soft:#173a2a; --warn:#f08a7e; --warn-soft:#3f2420; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f1020; --surface:#181a30; --fg:#eceef8; --muted:#a4a7c2; --line:#2a2d4a;
@@ -41,6 +45,8 @@
   --c-web:#8fd27a; --c-web-soft:#1f3a18;
   --c-lib:#f59e0b; --c-lib-soft:#451a03;
   --c-shop:#34d399; --c-shop-soft:#064e3b;
+  --c-cal:#818cf8; --c-cal-soft:#1e1b4b;
+  --c-friend:#f472b6; --c-friend-soft:#4a044e;
   --ok:#6fd3a0; --ok-soft:#173a2a; --warn:#f08a7e; --warn-soft:#3f2420; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font:16px/1.75 var(--font-body);
@@ -118,8 +124,7 @@ tr:last-child td{border-bottom:none}
       <a href="#why">1. 피클이란?</a>
       <a href="#story">2. 목회 현장 실전기</a>
       <a href="#diff">3. 기존 챗봇과의 결정적 차이</a>
-      <a href="#features">4. 실제로 해낸 일들</a>
-      <a href="#verdict">5. 총평</a>
+      <a href="#verdict">4. 총평</a>
     </div>
   </header>
 
@@ -139,50 +144,64 @@ tr:last-child td{border-bottom:none}
 
   <!-- Section 2 -->
   <section id="story">
-    <h2>2. 목회와 일상에서 경험한 실전 활약상</h2>
-    <p class="lead">Happy초이가 며칠 동안 목회자와 일상의 곁에서 실제로 처리해 낸 생생한 실화 바탕의 작업들입니다.</p>
+    <h2>2. 목회와 일상에서 경험한 생생한 실전 활약상</h2>
+    <p class="lead">Happy초이가 며칠 동안 목회자와 일상의 곁에서 실제로 처리해 낸 생생한 실화 바탕의 8가지 작업들입니다.</p>
 
     <div class="feat-grid">
       <!-- Card 1 -->
       <div class="feat-card" style="--card-color:var(--c-voice); --card-bg:var(--c-voice-soft);">
         <span class="tag">전화 통화 대행</span>
         <h3>진짜 사람처럼 전화 걸고 안부 전하기</h3>
-        <p>고정된 대표 발신 번호(02-6949-1136)로 직접 전화를 겁니다. 천안 신대원 80주년 행사장에서 동기 목사님께 안부 전화를 걸어 참석 여부를 확인하고, 새벽 2시 반까지 공부하는 아들에게 다정한 격려 전화를 걸어 <b>"아버지, 사랑합니다"</b>라는 아들의 따뜻한 음성을 그대로 전해왔습니다.</p>
+        <p>고정된 대표 발신 번호(02-6949-1136)로 직접 전화를 겁니다. 천안 신대원 행사장에서 동기 목사님께 안부 전화를 걸어 참석 여부를 확인하고, 새벽 2시 반까지 공부하는 아들에게 다정한 격려 전화를 걸어 <b>"아버지, 사랑합니다"</b>라는 아들의 따뜻한 음성을 그대로 전해왔습니다.</p>
       </div>
 
       <!-- Card 2 -->
+      <div class="feat-card" style="--card-color:var(--c-cal); --card-bg:var(--c-cal-soft);">
+        <span class="tag">일정 & 모닝콜</span>
+        <h3>운전 중 구글 캘린더 오류 정정과 7시 모닝콜</h3>
+        <p>천안 이동 중 음성 통화로 일정을 점검하다가, 신대원 행사가 밤 23시로 잘못 입력된 것을 발견했습니다. <b>"문자로 찍기엔 너무 힘들었는데 말 한마디로 즉시 오전 11시로 수정"</b>해 주었습니다. 또한 새벽 2시 반까지 작업한 날 아침 7시 정각에 정확히 모닝콜을 걸어 당회 일정을 챙겨주었습니다.</p>
+      </div>
+
+      <!-- Card 3 -->
       <div class="feat-card" style="--card-color:var(--c-audio); --card-bg:var(--c-audio-soft);">
         <span class="tag">전문 엔지니어링</span>
         <h3>OBS 방송 오디오 파형 분석 & 필터 처방</h3>
         <p>방송 녹화 시 고질적인 '말끝 끊김'과 잡음 문제를 해결하기 위해, 29초짜리 MP4 녹화본에서 오디오를 추출해 과학적 파형 분석을 수행했습니다. 61.7%가 -120dB로 잘려나가는 원인을 밝혀내고, ReaGate(Hold 200ms, Release 400ms)와 증폭(+8dB)의 황금값을 처방해 완벽한 방송 음질을 잡아냈습니다.</p>
       </div>
 
-      <!-- Card 3 -->
+      <!-- Card 4 -->
       <div class="feat-card" style="--card-color:var(--c-lib); --card-bg:var(--c-lib-soft);">
-        <span class="tag">심층 자료 & 도서관 검색</span>
-        <h3>이동 중 도서관 소장 여부 & 청구기호 실시간 확인</h3>
+        <span class="tag">도서관 실시간 검색</span>
+        <h3>이동 중 도서관 소장 여부 & 청구기호 확인</h3>
         <p>천안 신대원으로 운전해 이동하시던 중, 프레드 클루스터의 대작 주석 대출이 가능한지 질문하셨습니다. 학술정보관 2층에 원서 1·2권 및 번역서 『하나님의 강력한 위로』가 소장되어 있고 대출 가능함을 실시간 웹 스캔으로 확인하고, 정확한 <b>청구기호(238.42 K66o)와 층별 위치, 도서관 연락처</b>까지 단번에 짚어드렸습니다.</p>
       </div>
 
-      <!-- Card 4 -->
+      <!-- Card 5 -->
       <div class="feat-card" style="--card-color:var(--c-shop); --card-bg:var(--c-shop-soft);">
         <span class="tag">해외 직구 & 구매 대행</span>
-        <h3>아마존 및 해외 출판사 최저가 비교 & 결제 준비</h3>
-        <p>국내 절판된 1,272쪽 해외 원서의 소장을 위해, 미국 출판사(Faith Alive) 공식몰 $130 한국 직배송과 아마존 잔여 재고(4부) 및 중고 서점 시세를 정밀 비교 분석했습니다. 환율과 배송비를 감안한 최적 구매 루트를 카드 한 장으로 요약하고 목사님이 바로 승인할 수 있는 구매 대행 결제 카드를 준비했습니다.</p>
+        <h3>아마존 및 미국 출판사 최저가 비교 & 구매 준비</h3>
+        <p>국내 절판된 1,272쪽 해외 원서 소장을 위해, 미국 출판사(Faith Alive) 공식몰 $130 한국 직배송과 아마존 잔여 재고(4부) 및 중고 서점 시세를 정밀 비교 분석했습니다. 환율과 배송비를 감안한 최적 구매 루트를 카드 한 장으로 요약하고 결제 카드 승인 준비까지 완벽히 마쳤습니다.</p>
       </div>
 
-      <!-- Card 5 -->
+      <!-- Card 6 -->
       <div class="feat-card" style="--card-color:var(--c-book); --card-bg:var(--c-book-soft);">
         <span class="tag">신학 연구 지원</span>
         <h3>752쪽 신학 대작을 3분 만에 전용 웹 리더로</h3>
         <p>허먼 후크세마의 『The Triple Knowledge Vol. 2』 대작 PDF(752페이지)를 단 3분 만에 텍스트로 100% 추출했습니다. 4대 섹션, 15개 주일 목차 네비게이션, 실시간 검색, 다크 모드가 내장된 단독 실행형 고품질 웹 리더로 구축해 주었습니다.</p>
       </div>
 
-      <!-- Card 6 -->
+      <!-- Card 7 -->
       <div class="feat-card" style="--card-color:var(--c-web); --card-bg:var(--c-web-soft);">
         <span class="tag">자동 배포</span>
         <h3>GitHub & Vercel 통합 연구실 포털 구축</h3>
         <p>폰에서 말 한마디를 건네자, GitHub <code>do</code> 저장소에 [신학 자료실]과 [AI 연구실] 폴더를 체계화하고, Vercel과 연동하여 PC 큰 모니터에서 편안하게 연구할 수 있는 <b>'나만의 비공개 디지털 서재'</b>를 전자동으로 배포해 주었습니다.</p>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="feat-card" style="--card-color:var(--c-friend); --card-bg:var(--c-friend-soft);">
+        <span class="tag">AI 생태계</span>
+        <h3>AI 비서끼리 서로 소통하고 안부 묻는 세상</h3>
+        <p>친구 목사님(신동진 목사)에게 피클을 추천해 드렸더니, <b>신 목사님의 AI 비서가 최 목사님에게 안부 전화를 걸어오는 놀라운 경험</b>을 했습니다. AI가 혼자 일하는 것을 넘어, 사람과 사람, 목회자와 목회자 사이를 비서들끼리 연결하는 새로운 AI 생태계가 열렸습니다.</p>
       </div>
     </div>
   </section>
@@ -215,7 +234,7 @@ tr:last-child td{border-bottom:none}
           <tr>
             <td><b>수행 범위</b></td>
             <td>채팅창 내부 텍스트 생성에 국한</td>
-            <td class="highlight">전화 통화, 도서관 전산 조회, 이메일 발송, 구매 비교, 깃허브·Vercel 배포</td>
+            <td class="highlight">전화 통화, 구글 캘린더 수정, 도서관 전산 조회, 이메일, 깃허브·Vercel 배포</td>
           </tr>
           <tr>
             <td><b>태도</b></td>
@@ -229,7 +248,7 @@ tr:last-child td{border-bottom:none}
 
   <!-- Section 4 -->
   <section id="verdict">
-    <h2>5. 총평: 목회와 삶의 짐을 더는 진정한 동역자</h2>
+    <h2>4. 총평: 목회와 삶의 짐을 더는 진정한 동역자</h2>
     
     <div class="takeaway">
       <h3>"AI는 더 이상 '묻고 답하는 기계'가 아닙니다."</h3>
