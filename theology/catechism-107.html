@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소요리문답 제107문 강의 프레젠테이션 | 행복한교회</title>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --bg-slide: #ffffff;
+            --primary-red: #dc2626;
+            --primary-red-hover: #b91c1c;
+            --primary-red-light: #fef2f2;
+            --primary-red-border: #fecaca;
+            --text-main: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --shadow-slide: 0 20px 45px -10px rgba(15, 23, 42, 0.12), 0 8px 16px -4px rgba(15, 23, 42, 0.04);
+            --font-size-base: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: #e2e8f0;
+            z-index: 1000;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 8.33%;
+            background: linear-gradient(90deg, #dc2626, #ef4444);
+            transition: width 0.35s ease;
+        }
+
+        /* Presentation Wrapper */
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 1320px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Slide Stage (16:9 Viewport) */
+        .slide-stage {
+            position: relative;
+            width: 100%;
+            background: var(--bg-slide);
+            border-radius: 20px;
+            box-shadow: var(--shadow-slide);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            overflow: hidden;
+            aspect-ratio: 16 / 9.2;
+            display: flex;
+            transition: transform 0.2s ease;
+        }
+
+        @media (max-width: 900px) {
+            .slide-stage {
+                aspect-ratio: auto;
+                min-height: 580px;
+            }
+        }
+
+        /* Slide Inner Layout */
+        .slide-content {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1.55fr 1fr;
+            padding: 48px 52px;
+            gap: 36px;
+            position: relative;
+            background: #ffffff;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide-content.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media (max-width: 900px) {
+            .slide-content {
+                grid-template-columns: 1fr;
+                padding: 32px 24px;
+                gap: 24px;
+            }
+        }
+
+        /* Left Side: Educational Content */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 2;
+        }
+
+        .slide-header {
+            margin-bottom: 20px;
+        }
+
+        .badge-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .catechism-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-red-light);
+            color: var(--primary-red);
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            border: 1px solid var(--primary-red-border);
+            letter-spacing: -0.2px;
+        }
+
+        .svg-icon-wrap {
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            color: var(--primary-red);
+        }
+        .svg-icon-wrap svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide-number-tag {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .slide-title {
+            font-size: 2.35rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.25;
+            letter-spacing: -0.8px;
+            margin-bottom: 8px;
+        }
+
+        .slide-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: -0.3px;
+        }
+
+        /* Highlight Red Styling */
+        .highlight {
+            color: var(--primary-red);
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+        .highlight::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 2px;
+            width: 100%;
+            height: 6px;
+            background-color: rgba(220, 38, 38, 0.15);
+            z-index: -1;
+            border-radius: 3px;
+        }
+
+        /* Slide Main Body */
+        .slide-body-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 18px;
+        }
+
+        /* Right Side: Pastor Choi Character & Talk Bubble */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #ffffff;
+        }
+
+        .talk-bubble {
+            position: relative;
+            background: #ffffff;
+            border: 2px solid var(--primary-red);
+            border-radius: 18px;
+            padding: 18px 22px;
+            box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.12);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 16px;
+            width: 100%;
+            max-width: 380px;
+            animation: bubblePulse 4s infinite ease-in-out;
+        }
+
+        .talk-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 12px 12px 0;
+            border-style: solid;
+            border-color: var(--primary-red) transparent;
+            display: block;
+            width: 0;
+        }
+
+        .talk-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -9px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: #ffffff transparent;
+            display: block;
+            width: 0;
+            z-index: 1;
+        }
+
+        .pastor-image-wrap {
+            width: 100%;
+            max-width: 320px;
+            height: 420px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+        }
+
+        .pastor-image {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            mix-blend-mode: multiply; /* Blends pure white background seamlessly */
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.06));
+            animation: gentleFloat 5s infinite ease-in-out;
+        }
+
+        .pastor-name-badge {
+            position: absolute;
+            bottom: 4px;
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            letter-spacing: -0.2px;
+        }
+
+        /* Key Animations */
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
+        }
+
+        @keyframes bubblePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Custom Cards for Theological Content */
+        .hero-quote-card {
+            background: var(--primary-red-light);
+            border: 2px solid var(--primary-red-border);
+            border-radius: 16px;
+            padding: 26px 30px;
+            text-align: center;
+        }
+        .verse-symbol {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+        .verse-text {
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 1.5;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+        .verse-ref {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: var(--primary-red);
+            font-weight: 700;
+        }
+
+        .slide-key-points {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .point-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #f8fafc;
+            border: 1px solid var(--border-light);
+            padding: 14px 20px;
+            border-radius: 12px;
+        }
+        .point-num {
+            background: var(--primary-red);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .point-text {
+            font-size: 1.15rem;
+            color: var(--text-body);
+            font-weight: 500;
+        }
+
+        /* Q&A Cards */
+        .qa-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .q-box {
+            background: #f1f5f9;
+            border-left: 5px solid #64748b;
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+        }
+        .q-label {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #475569;
+            margin-bottom: 4px;
+        }
+        .q-body {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .a-box {
+            background: var(--primary-red-light);
+            border-left: 5px solid var(--primary-red);
+            padding: 20px 22px;
+            border-radius: 0 14px 14px 0;
+        }
+        .a-label {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            margin-bottom: 6px;
+        }
+        .a-body {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        /* Etymology Grid */
+        .etymology-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .grid-card {
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+            background: #ffffff;
+            border: 2px solid;
+        }
+        .warning-border {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+        }
+        .success-border {
+            border-color: var(--primary-red);
+            background: var(--primary-red-light);
+        }
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 6px;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .card-desc {
+            font-size: 1rem;
+            color: var(--text-body);
+            line-height: 1.4;
+        }
+        .insight-banner {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .insight-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        .insight-text {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        /* Contrast Table */
+        .contrast-table {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 14px;
+        }
+        .col-side {
+            padding: 18px 20px;
+            border-radius: 12px;
+            border: 1px solid;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .danger-col {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+        .success-col {
+            background: var(--primary-red-light);
+            border-color: var(--primary-red-border);
+        }
+        .col-header {
+            font-size: 1.05rem;
+            font-weight: 800;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .danger-col .col-header { color: #64748b; }
+        .success-col .col-header { color: var(--primary-red); }
+        .col-item {
+            font-size: 1.05rem;
+            color: var(--text-body);
+            line-height: 1.4;
+        }
+        .col-result {
+            margin-top: 4px;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        .danger-col .col-result { color: #dc2626; }
+        .success-col .col-result { color: #15803d; }
+
+        .scripture-badge {
+            background: #f1f5f9;
+            border-left: 4px solid #0f172a;
+            padding: 14px 18px;
+            border-radius: 0 10px 10px 0;
+            font-size: 1.05rem;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        /* Three Pillars Grid */
+        .three-pillar-highlight {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+        .pillar-card {
+            padding: 16px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            text-align: center;
+            background: #ffffff;
+            transition: all 0.3s ease;
+        }
+        .active-pillar {
+            border-color: var(--primary-red);
+            background: var(--primary-red-light);
+            box-shadow: 0 8px 18px -4px rgba(220, 38, 38, 0.18);
+            transform: translateY(-4px);
+        }
+        .opacity-muted {
+            opacity: 0.55;
+            background: #f8fafc;
+        }
+        .pillar-badge {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            margin-bottom: 4px;
+        }
+        .pillar-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+        .pillar-desc {
+            font-size: 0.95rem;
+            color: var(--text-body);
+            line-height: 1.3;
+        }
+
+        .proclamation-card, .assurance-box, .glory-banner {
+            background: #ffffff;
+            border: 2px solid var(--primary-red-border);
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+        }
+        .proc-title, .assure-title, .soli-tag {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .proc-text, .assure-body, .glory-main {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+        .verse-sub {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Eternity Card */
+        .eternity-card-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 16px;
+        }
+        .pass-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px;
+        }
+        .pass-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        .pass-box ul {
+            padding-left: 20px;
+            color: var(--text-body);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .forever-box {
+            background: var(--primary-red);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.4);
+        }
+        .forever-title {
+            font-size: 1rem;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        .forever-core {
+            font-size: 1.45rem;
+            font-weight: 800;
+            line-height: 1.4;
+        }
+        .forever-core .highlight {
+            color: #fef08a;
+            background: none;
+        }
+        .forever-core .highlight::after { display: none; }
+        .rock-foundation {
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 14px 20px;
+            font-size: 1.15rem;
+            color: #1e293b;
+            text-align: center;
+        }
+
+        /* Mistake Grid */
+        .mistake-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+        .mistake-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .m-badge {
+            background: #e2e8f0;
+            color: #475569;
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+        }
+        .m-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #b91c1c;
+            margin-bottom: 6px;
+        }
+        .m-desc {
+            font-size: 0.95rem;
+            color: var(--text-body);
+            line-height: 1.4;
+        }
+        .confession-quote {
+            background: var(--primary-red-light);
+            border: 1px dashed var(--primary-red);
+            border-radius: 12px;
+            padding: 18px 24px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* Amen Pillars */
+        .amen-pillars {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .amen-col {
+            background: #ffffff;
+            border: 2px solid var(--border-light);
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .amen-badge {
+            color: var(--primary-red);
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .amen-header {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+        .amen-body {
+            font-size: 1.15rem;
+            color: var(--text-body);
+            line-height: 1.5;
+        }
+        .seal-statement {
+            background: #fef3c7;
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 1.15rem;
+            color: #92400e;
+        }
+
+        /* Journey Steps */
+        .journey-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .step-card {
+            flex: 1;
+            background: #f8fafc;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .final-step {
+            background: var(--primary-red-light);
+            border-color: var(--primary-red);
+        }
+        .step-num {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .final-step .step-num { color: var(--primary-red); }
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+        .step-desc {
+            font-size: 0.95rem;
+            color: var(--text-body);
+            line-height: 1.4;
+        }
+        .step-arrow {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            font-weight: 800;
+        }
+        .practical-quote {
+            background: #ffffff;
+            border: 2px solid var(--primary-red-border);
+            border-radius: 12px;
+            padding: 18px 22px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* Final Benediction Card */
+        .benediction-card {
+            background: #0f172a;
+            color: #ffffff;
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+        }
+        .b-verse {
+            font-size: 1.45rem;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+        .b-verse .highlight {
+            color: #f87171;
+            background: none;
+        }
+        .b-verse .highlight::after { display: none; }
+        .b-ref {
+            display: block;
+            margin-top: 8px;
+            font-size: 1rem;
+            color: #94a3b8;
+        }
+        .action-commitments {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .commit-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 12px 18px;
+        }
+        .c-check {
+            color: var(--primary-red);
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+        .c-text {
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+        .final-pastor-blessing {
+            background: var(--primary-red-light);
+            border-left: 4px solid var(--primary-red);
+            border-radius: 0 10px 10px 0;
+            padding: 14px 20px;
+            font-size: 1.15rem;
+            color: var(--text-main);
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* Bottom Controls Bar */
+        .control-bar {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 14px 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+        .btn-primary {
+            background: var(--primary-red);
+            color: #ffffff;
+            border-color: var(--primary-red);
+        }
+        .btn-primary:hover {
+            background: var(--primary-red-hover);
+            border-color: var(--primary-red-hover);
+        }
+
+        .slide-counter {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .aux-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            padding: 10px 14px;
+            font-size: 0.95rem;
+        }
+
+        /* Hotkey Tooltip Info */
+        .hotkey-hint {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .kbd {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        /* Presenter Notes Modal */
+        .notes-drawer {
+            display: none;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 1.05rem;
+            color: #92400e;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .notes-drawer.open {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        .notes-label {
+            font-weight: 800;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Slide Overview Grid Modal */
+        .overview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .overview-modal.open {
+            display: flex;
+            animation: fadeIn 0.25s ease;
+        }
+        .overview-content {
+            background: #ffffff;
+            width: 100%;
+            max-width: 1100px;
+            max-height: 85vh;
+            border-radius: 20px;
+            padding: 32px;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+        .overview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .overview-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .overview-card {
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .overview-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(220, 38, 38, 0.1);
+        }
+        .overview-card.current {
+            border-color: var(--primary-red);
+            background: var(--primary-red-light);
+        }
+        .ov-num {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--primary-red);
+        }
+        .ov-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Senior Friendly Font Zoom Mode */
+        body.font-large {
+            --font-size-base: 18px;
+        }
+        body.font-large .slide-title { font-size: 2.7rem; }
+        body.font-large .slide-subtitle { font-size: 1.45rem; }
+        body.font-large .verse-text { font-size: 1.85rem; }
+        body.font-large .q-body { font-size: 1.55rem; }
+        body.font-large .a-body { font-size: 1.45rem; }
+        body.font-large .talk-bubble { font-size: 1.3rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+        <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <div class="presentation-wrapper">
+
+        <!-- Main Slide Viewport -->
+        <div class="slide-stage" id="slideStage">
+            <div id="slideContent" class="slide-content active">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+
+        <!-- Presenter Preaching Notes Drawer -->
+        <div class="notes-drawer" id="notesDrawer">
+            <div class="notes-label">📖 목회자 설교 & 강의 가이드 (성도 화면에선 숨김 가능)</div>
+            <div id="notesText"></div>
+        </div>
+
+        <!-- Bottom Navigation & Tool Bar -->
+        <div class="control-bar">
+            <!-- Nav buttons -->
+            <div class="nav-buttons">
+                <button class="btn" id="btnPrev" title="이전 슬라이드 (◀ / PageUp)">◀ 이전</button>
+                <div class="slide-counter" id="slideCounter">01 / 12</div>
+                <button class="btn btn-primary" id="btnNext" title="다음 슬라이드 (▶ / Space / Enter)">다음 ▶</button>
+            </div>
+
+            <!-- Hotkey guide for elderly pastors & speakers -->
+            <div class="hotkey-hint">
+                <span>단축키:</span>
+                <span class="kbd">◀</span>
+                <span class="kbd">▶</span>
+                <span class="kbd">Space</span>
+                <span>전체화면:</span>
+                <span class="kbd">F</span>
+            </div>
+
+            <!-- Aux Controls -->
+            <div class="aux-buttons">
+                <button class="btn btn-icon" id="btnNotes" title="설교 노트 토글 (N)">📝 설교노트</button>
+                <button class="btn btn-icon" id="btnOverview" title="슬라이드 전체 목록 (O)">▦ 목록</button>
+                <button class="btn btn-icon" id="btnAutoplay" title="자동 넘김 토글 (A)">▶ 자동재생</button>
+                <button class="btn btn-icon" id="btnFontZoom" title="장년용 글씨 확대">A+ 글자크게</button>
+                <button class="btn btn-icon" id="btnFullscreen" title="전체화면 발표 모드 (F)">⛶ 전체화면</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Overview Modal -->
+    <div class="overview-modal" id="overviewModal">
+        <div class="overview-content">
+            <div class="overview-header">
+                <div class="overview-title">📋 소요리문답 제107문 전체 슬라이드 목록</div>
+                <button class="btn" id="btnCloseOverview">닫기 ✕</button>
+            </div>
+            <div class="overview-grid" id="overviewGrid">
+                <!-- Dynamically rendered -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = [{"num": 1, "badge": "소요리문답 제107문 · 표지", "title": "주기도문의 결론", "subtitle": "기도의 시작과 끝, <span class='highlight'>오직 하나님의 영광</span>", "character": "images/pastor/waving.jpg", "character_alt": "손을 흔들며 환하게 맞이하는 최목사", "talk": "성도 여러분, 반갑습니다! 오늘 주기도문의 가장 웅장한 결론을 함께 열어보겠습니다.", "icon": "bible-cross", "content_html": "\n            <div class=\"hero-quote-card\">\n                <div class=\"verse-symbol\">📜</div>\n                <div class=\"verse-text\">\n                    “대개 <span class='highlight'>나라</span>와 <span class='highlight'>권세</span>와 <span class='highlight'>영광</span>이<br>\n                    아버지께 <span class='highlight'>영원히</span> 있사옵나이다. <span class='highlight'>아멘</span>.”\n                </div>\n                <div class=\"verse-ref\">마태복음 6:13 (전통 주기도문)</div>\n            </div>\n            <div class=\"slide-key-points\">\n                <div class=\"point-box\">\n                    <span class=\"point-num\">1</span>\n                    <span class=\"point-text\">우리의 기도는 왜 <strong>찬양</strong>으로 마쳐야 할까요?</span>\n                </div>\n                <div class=\"point-box\">\n                    <span class=\"point-num\">2</span>\n                    <span class=\"point-text\">기도의 응답을 확신하는 <strong>절대적인 근거</strong>를 배웁니다.</span>\n                </div>\n            </div>\n        ", "notes": "도입: 주기도문의 마지막 구절(송영)은 예배와 삶의 마침표가 아닌 새로운 신앙의 출발점임을 환기합니다. 성도들에게 밝은 인사와 함께 오늘 배울 핵심 주제를 소개하세요."}, {"num": 2, "badge": "제107문 문답 낭독", "title": "소요리문답 제107문 전문", "subtitle": "질문과 대답을 성도들과 <span class='highlight'>다 함께 소리 내어</span> 읽습니다", "character": "images/pastor/bible.jpg", "character_alt": "성경책을 들고 말씀을 가르치는 최목사", "talk": "소요리문답의 대미를 장식하는 107문입니다. 한 글자 한 글자 깊이 새겨봅시다.", "icon": "scroll", "content_html": "\n            <div class=\"qa-container\">\n                <div class=\"q-box\">\n                    <div class=\"q-label\">문 (Question)</div>\n                    <div class=\"q-body\">주기도문의 결론은 우리에게 무엇을 가르칩니까?</div>\n                </div>\n                <div class=\"a-box\">\n                    <div class=\"a-label\">답 (Answer)</div>\n                    <div class=\"a-body\">\n                        주기도문의 결론인 <strong>“대개 나라와 권세와 영광이 아버지께 영원히 있사옵나이다 아멘”</strong>은,<br><br>\n                        1. 우리로 하여금 기도할 때에 <span class='highlight'>오직 하나님에게서만 힘을 얻고</span>,<br>\n                        2. 기도할 때에 하나님을 찬양하여 <span class='highlight'>나라와 권세와 영광을 주께 돌릴 것</span>을 가르치며,<br>\n                        3. 또한 우리가 구한 것을 주께서 들으실 줄 <span class='highlight'>확신하고 바라는 뜻으로 “아멘”</span>이라 하는 것입니다.\n                    </div>\n                </div>\n            </div>\n        ", "notes": "낭독 가이드: 문답 전체를 목회자가 선창하고 성도들이 화답하도록 유도합니다. 107문 답의 세 가지 골자(1. 하나님만 의지, 2. 영광 돌림, 3. 확신의 아멘)를 미리 짚어주세요."}, {"num": 3, "badge": "원문 어원 탐구", "title": "‘대개(大蓋)’는 무슨 뜻일까요?", "subtitle": "옛말의 오해를 풀면 <span class='highlight'>기도의 확고한 근거</span>가 보입니다", "character": "images/pastor/thinking.jpg", "character_alt": "턱을 괴고 말씀의 깊은 뜻을 묵상하는 최목사", "talk": "성도님들, '대개'가 '대충(대부분)'이란 뜻일까요? 전혀 아닙니다!", "icon": "search", "content_html": "\n            <div class=\"etymology-grid\">\n                <div class=\"grid-card warning-border\">\n                    <div class=\"card-icon\">❌</div>\n                    <div class=\"card-title\">흔한 오해</div>\n                    <div class=\"card-desc\">“대충”, “대부분(Mostly)”으로 오해하기 쉬운 한자어</div>\n                </div>\n                <div class=\"grid-card success-border\">\n                    <div class=\"card-icon\">⭕</div>\n                    <div class=\"card-title\">성경 원문의 진짜 뜻</div>\n                    <div class=\"card-desc\">헬라어 <strong>호티(ὅτι)</strong> = 영어 <strong>For</strong> = <span class='highlight'>“왜냐하면”</span></div>\n                </div>\n            </div>\n            <div class=\"insight-banner\">\n                <div class=\"insight-icon\">💡</div>\n                <div class=\"insight-text\">\n                    <strong>“우리가 앞의 간구들을 담대히 아뢸 수 있는 이유는,<br>\n                    <span class='highlight'>‘오직 아버지의 나라와 권세와 영광이 영원하기 때문’</span>입니다!”</strong>\n                </div>\n            </div>\n        ", "notes": "강의 팁: 장년 성도님들이 오랫동안 외워온 '대개'의 참뜻이 접속사 '왜냐하면'임을 친절히 설명하세요. 기도의 근거가 나의 형편이 아닌 하나님의 성품과 주권에 있음을 강조합니다."}, {"num": 4, "badge": "기도의 근거", "title": "오직 하나님만 의뢰함", "subtitle": "기도의 용기는 <span class='highlight'>내 공로가 아닌 주님의 크심</span>에서 나옵니다", "character": "images/pastor/praying.jpg", "character_alt": "두 손을 모으고 간절히 기도하는 최목사", "talk": "기도할 자격이 없다고 느껴질 때가 있죠? 그래서 '오직 하나님'만 바라봅니다.", "icon": "hands-praying", "content_html": "\n            <div class=\"contrast-table\">\n                <div class=\"col-side danger-col\">\n                    <div class=\"col-header\">내가 의지하는 잘못된 근거</div>\n                    <div class=\"col-item\">내 열심, 기도 시간, 금식의 공로</div>\n                    <div class=\"col-item\">“내가 이만큼 정성을 바쳤으니…”</div>\n                    <div class=\"col-result\">결과: 조금만 낙심해도 기도가 막힘</div>\n                </div>\n                <div class=\"col-side success-col\">\n                    <div class=\"col-header\">소요리문답이 가르치는 참된 근거</div>\n                    <div class=\"col-item\"><strong>언약에 신실하신 하나님의 사랑</strong></div>\n                    <div class=\"col-item\"><span class='highlight'>“아버지는 내 기도를 들으실 자비와 능력이 있다!”</span></div>\n                    <div class=\"col-result\">결과: 어떤 절망 속에서도 담대히 간구함</div>\n                </div>\n            </div>\n            <div class=\"scripture-badge\">\n                📖 “우리가 주 앞에 간구하옵는 것은 우리의 공의를 의지하여 하는 것이 아니요<br>\n                <strong>주의 큰 긍휼을 의지하여</strong> 함이니이다” (다니엘 9:18)\n            </div>\n        ", "notes": "설교 포인트: 다니엘 9장 18절을 인용하며, 참된 개혁주의 기도는 '자격 없는 자가 오직 그리스도의 보혈과 하나님의 자비하심만을 붙들고 나아가는 것'임을 심어줍니다."}, {"num": 5, "badge": "송영(1) · 주권", "title": "나라(Kingdom)가 아버지께!", "subtitle": "온 우주와 모든 역사의 <span class='highlight'>참된 통치자는 하나님</span>이십니다", "character": "images/pastor/welcoming.jpg", "character_alt": "두 손을 넓게 펼쳐 하나님의 통치를 선포하는 최목사", "talk": "세상이 아무리 어지러워도, 우리 아버지께서 온 땅을 다스리십니다!", "icon": "crown", "content_html": "\n            <div class=\"three-pillar-highlight\">\n                <div class=\"pillar-card active-pillar\">\n                    <div class=\"pillar-badge\">송영 1</div>\n                    <div class=\"pillar-title\">👑 나라 (Kingdom)</div>\n                    <div class=\"pillar-desc\"><strong>통치와 주권</strong>이 아버지의 것입니다</div>\n                </div>\n                <div class=\"pillar-card opacity-muted\">\n                    <div class=\"pillar-badge\">송영 2</div>\n                    <div class=\"pillar-title\">⚡ 권세 (Power)</div>\n                    <div class=\"pillar-desc\">모든 능력이 아버지의 것입니다</div>\n                </div>\n                <div class=\"pillar-card opacity-muted\">\n                    <div class=\"pillar-badge\">송영 3</div>\n                    <div class=\"pillar-title\">☀️ 영광 (Glory)</div>\n                    <div class=\"pillar-desc\">모든 찬송이 아버지의 것입니다</div>\n                </div>\n            </div>\n            <div class=\"proclamation-card\">\n                <div class=\"proc-title\">장년 성도를 위한 신앙 고백</div>\n                <div class=\"proc-text\">\n                    “세상 정치나 경제가 요동치고 내 가정이 어려움을 겪을지라도,<br>\n                    <span class='highlight'>내 인생의 보좌에는 오직 왕 되신 하나님만이 앉아 계십니다!</span>”\n                </div>\n            </div>\n        ", "notes": "강의 팁: 3중 송영(나라, 권세, 영광) 중 첫 번째인 '나라'를 집중 조명합니다. 나라가 주께 있다는 것은 우리의 일상과 역사 전체가 하나님의 다스림 아래 있다는 확신입니다."}, {"num": 6, "badge": "송영(2) · 능력", "title": "권세(Power)가 아버지께!", "subtitle": "우리가 구한 모든 것을 <span class='highlight'>이루실 능력</span>이 주께 있습니다", "character": "images/pastor/cheering.jpg", "character_alt": "주먹을 쥐고 파이팅하며 승리를 확신하는 최목사", "talk": "내 힘은 연약하지만, 아버지의 팔은 전능하십니다. 용기를 내십시오!", "icon": "lightning", "content_html": "\n            <div class=\"three-pillar-highlight\">\n                <div class=\"pillar-card opacity-muted\">\n                    <div class=\"pillar-badge\">송영 1</div>\n                    <div class=\"pillar-title\">👑 나라 (Kingdom)</div>\n                    <div class=\"pillar-desc\">통치와 주권이 아버지의 것입니다</div>\n                </div>\n                <div class=\"pillar-card active-pillar\">\n                    <div class=\"pillar-badge\">송영 2</div>\n                    <div class=\"pillar-title\">⚡ 권세 (Power)</div>\n                    <div class=\"pillar-desc\"><strong>모든 능력</strong>이 아버지의 것입니다</div>\n                </div>\n                <div class=\"pillar-card opacity-muted\">\n                    <div class=\"pillar-badge\">송영 3</div>\n                    <div class=\"pillar-title\">☀️ 영광 (Glory)</div>\n                    <div class=\"pillar-desc\">모든 찬송이 아버지의 것입니다</div>\n                </div>\n            </div>\n            <div class=\"assurance-box\">\n                <div class=\"assure-title\">능치 못함이 없으신 하나님</div>\n                <div class=\"assure-body\">\n                    인간의 의사나 재정이나 지혜는 한계에 부딪히지만,<br>\n                    <span class='highlight'>천지를 말씀으로 지으신 전능자의 권능</span>은 한계가 없습니다.<br>\n                    기도는 전능하신 아버지의 일하심을 신뢰하는 거룩한 모험입니다!\n                </div>\n                <div class=\"verse-sub\">“우리가 구하거나 생각하는 모든 것에 더 넘치도록 능히 하실 이” (엡 3:20)</div>\n            </div>\n        ", "notes": "설교 포인트: '권세'는 단순한 힘이 아니라 기도를 응답하시는 집행 능력(Omnipotence)입니다. 성도들의 질병, 가정의 근심, 자녀 문제를 주님의 권능에 맡기도록 격려하세요."}, {"num": 7, "badge": "송영(3) · 목적", "title": "영광(Glory)이 아버지께!", "subtitle": "기도의 시작도 응답도 <span class='highlight'>오직 주님의 이름만</span> 높입니다", "character": "images/pastor/thumbsup.jpg", "character_alt": "엄지 척을 올리며 하나님을 찬양하는 최목사", "talk": "응답을 받든 기다리든, 모든 결과의 영광은 오직 하나님 한 분께만!", "icon": "sun", "content_html": "\n            <div class=\"three-pillar-highlight\">\n                <div class=\"pillar-card opacity-muted\">\n                    <div class=\"pillar-badge\">송영 1</div>\n                    <div class=\"pillar-title\">👑 나라 (Kingdom)</div>\n                    <div class=\"pillar-desc\">통치와 주권이 아버지의 것입니다</div>\n                </div>\n                <div class=\"pillar-card opacity-muted\">\n                    <div class=\"pillar-badge\">송영 2</div>\n                    <div class=\"pillar-title\">⚡ 권세 (Power)</div>\n                    <div class=\"pillar-desc\">모든 능력이 아버지의 것입니다</div>\n                </div>\n                <div class=\"pillar-card active-pillar\">\n                    <div class=\"pillar-badge\">송영 3</div>\n                    <div class=\"pillar-title\">☀️ 영광 (Glory)</div>\n                    <div class=\"pillar-desc\"><strong>모든 찬송</strong>이 아버지의 것입니다</div>\n                </div>\n            </div>\n            <div class=\"glory-banner\">\n                <div class=\"soli-tag\">SOLI DEO GLORIA</div>\n                <div class=\"glory-main\">\n                    “기도의 응답은 내 자랑거리가 아니라,<br>\n                    <span class='highlight'>하나님의 선하심을 온 세상에 드러내는 통로</span>입니다.”\n                </div>\n            </div>\n        ", "notes": "핵심 교리: 개혁주의 신앙의 핵심인 '오직 하나님께 영광(Soli Deo Gloria)'을 설명합니다. 응답을 받았을 때 자신이 의로워서 받았다는 유혹을 경계하고 오직 감사로 돌려야 합니다."}, {"num": 8, "badge": "불변의 반석", "title": "영원히 있사옵나이다", "subtitle": "세상 권세는 사라지나 <span class='highlight'>주의 나라는 영원무궁</span>합니다", "character": "images/pastor/bible.jpg", "character_alt": "성경책을 들고 영원한 약속을 증언하는 최목사", "talk": "세상 유행과 부귀는 바람처럼 지나가지만, 주님의 약속은 영원합니다.", "icon": "infinity", "content_html": "\n            <div class=\"eternity-card-wrap\">\n                <div class=\"pass-box\">\n                    <div class=\"pass-title\">지나가는 세상 것</div>\n                    <ul>\n                        <li>풀의 꽃과 같은 인간의 부귀영화</li>\n                        <li>언젠가는 무너지는 세상 권력과 제국</li>\n                        <li>순식간에 쇠락하는 육신의 건강과 물질</li>\n                    </ul>\n                </div>\n                <div class=\"forever-box\">\n                    <div class=\"forever-title\">영원무궁한 아버지의 것</div>\n                    <div class=\"forever-core\">\n                        “나라와 권세와 영광이<br>\n                        <span class='highlight'>영원히 (Forever & Ever)</span><br>\n                        아버지께 있사옵나이다!”\n                    </div>\n                </div>\n            </div>\n            <div class=\"rock-foundation\">\n                ⚓ 흔들리는 세상에 닻을 내리지 말고, <strong>영원히 변치 않는 주의 반석 위에</strong> 기도를 세웁시다.\n            </div>\n        ", "notes": "장년층 맞춤 메시지: 인생의 황혼기와 굴곡을 지나온 어르신들에게 세상의 덧없음과 주님의 영원하심을 대비하여 깊은 영적 위로와 영원에 잇대어 사는 삶의 기쁨을 전합니다."}, {"num": 9, "badge": "점검과 회개", "title": "우리의 흔한 착각과 실수들", "subtitle": "기도를 가로막는 <span class='highlight'>인간적인 교만과 정욕</span>을 내려놓습니다", "character": "images/pastor/confessing.jpg", "character_alt": "머리를 긁적이며 멋쩍게 땀을 흘리는 최목사", "talk": "저도 목사지만 가끔 '내가 기도를 많이 해서 응답받았나?' 착각할 때가 있습니다. ㅎㅎ", "icon": "warning", "content_html": "\n            <div class=\"mistake-grid\">\n                <div class=\"mistake-item\">\n                    <div class=\"m-badge\">착각 1</div>\n                    <div class=\"m-title\">공로주의 기도</div>\n                    <div class=\"m-desc\">“내가 40일 작정했으니 하나님도 빚진 것처럼 들어주셔야 해!”</div>\n                </div>\n                <div class=\"mistake-item\">\n                    <div class=\"m-badge\">착각 2</div>\n                    <div class=\"m-title\">자기중심적 목적</div>\n                    <div class=\"m-desc\">응답을 통해 내 체면을 세우고 내 야망을 채우려는 속마음</div>\n                </div>\n                <div class=\"mistake-item\">\n                    <div class=\"m-badge\">착각 3</div>\n                    <div class=\"m-title\">불신앙의 염려</div>\n                    <div class=\"m-desc\">기도는 열심히 드려놓고, 돌아설 때는 여전히 깊은 한숨과 불신</div>\n                </div>\n            </div>\n            <div class=\"confession-quote\">\n                “기도는 나의 거룩함을 자랑하는 자리가 아니라,<br>\n                <span class='highlight'>오직 나의 전적인 무력함을 인정하고 아버지께 안기는 은혜의 자리</span>입니다.”\n            </div>\n        ", "notes": "목회적 공감대: 최목사 캐릭터의 땀 흘리는 표정을 활용하여, 목회자 자신도 연약한 죄인임을 유쾌하면서도 진솔하게 고백하며 성도들의 마음 문을 활짝 엽니다."}, {"num": 10, "badge": "아멘의 신비", "title": "‘아멘(Amen)’의 두 가지 기둥", "subtitle": "마지막 한마디에 담긴 <span class='highlight'>확신과 간절한 열망</span>", "character": "images/pastor/praying.jpg", "character_alt": "두 손을 모으고 간절히 고백하는 최목사", "talk": "기도 끝에 외치는 '아멘', 그냥 끝인사가 아닙니다. 도장을 찍는 것입니다!", "icon": "seal", "content_html": "\n            <div class=\"amen-pillars\">\n                <div class=\"amen-col\">\n                    <div class=\"amen-badge\">기둥 1</div>\n                    <div class=\"amen-header\">확신 (Assurance)</div>\n                    <div class=\"amen-body\">\n                        “하나님께서 나의 미천한 간구를<br>\n                        <strong>반드시 들으셨음을</strong><br>\n                        <span class='highlight'>추호도 의심 없이 확신합니다!</span>”\n                    </div>\n                </div>\n                <div class=\"amen-col\">\n                    <div class=\"amen-badge\">기둥 2</div>\n                    <div class=\"amen-header\">열망 (Desire)</div>\n                    <div class=\"amen-body\">\n                        “주여, 내 원대로 마옵시고<br>\n                        <strong>오직 아버지의 뜻대로</strong><br>\n                        <span class='highlight'>진실로 이루어지기를 사모합니다!</span>”\n                    </div>\n                </div>\n            </div>\n            <div class=\"seal-statement\">\n                ✨ <strong>아멘(Amen)</strong>: 히브리어로 <em>“진실로, 참으로 그러합니다!”</em> 라는 거룩한 믿음의 서명입니다.\n            </div>\n        ", "notes": "소요리문답 107문 답의 핵심 정리: '아멘'이 단순히 기도가 끝났음을 알리는 신호음이 아니라, '들으실 줄 확신하는 믿음'과 '이루어지기를 바라는 소원'의 결합임을 강조합니다."}, {"num": 11, "badge": "삶의 실천", "title": "한숨으로 시작해 찬양으로 마치는 기도", "subtitle": "기도의 자리를 떠날 때는 <span class='highlight'>승리의 기쁨으로</span> 일어납니다", "character": "images/pastor/cheering.jpg", "character_alt": "환하게 웃으며 주먹을 쥐고 성도들을 격려하는 최목사", "talk": "무거운 짐을 지고 엎드렸을지라도, 일어설 때는 '할렐루야!' 찬양하며 일어납시다!", "icon": "eagle", "content_html": "\n            <div class=\"journey-steps\">\n                <div class=\"step-card\">\n                    <div class=\"step-num\">Step 1</div>\n                    <div class=\"step-title\">탄식과 간구</div>\n                    <div class=\"step-desc\">“주님, 마음이 찢어지도록 아픕니다. 도와주옵소서.”</div>\n                </div>\n                <div class=\"step-arrow\">➔</div>\n                <div class=\"step-card\">\n                    <div class=\"step-num\">Step 2</div>\n                    <div class=\"step-title\">시선의 전환</div>\n                    <div class=\"step-desc\">“그러나 보좌에 계신 아버지를 바라봅니다. 나라와 권세가 주께 있습니다!”</div>\n                </div>\n                <div class=\"step-arrow\">➔</div>\n                <div class=\"step-card final-step\">\n                    <div class=\"step-num\">Step 3</div>\n                    <div class=\"step-title\">승리의 송영</div>\n                    <div class=\"step-desc\"><strong>“이미 승리하신 아버지께 영광을! 아멘!”</strong></div>\n                </div>\n            </div>\n            <div class=\"practical-quote\">\n                “기도의 참된 응답은 내 문제가 사라지는 것보다 먼저,<br>\n                <span class='highlight'>내 영혼이 하나님의 크심을 보고 평안을 되찾는 것</span>입니다.”\n            </div>\n        ", "notes": "목회적 적용: 성도들의 실제 삶의 자리로 연결합니다. 병마와 자녀 걱정, 생계의 고난 속에 기도하러 왔던 성도들이 송영을 통과하며 믿음의 눈을 뜨도록 감동을 전하세요."}, {"num": 12, "badge": "결론과 축복", "title": "오직 하나님의 영광을 위하여!", "subtitle": "영원한 나라와 권세의 주님과 함께 <span class='highlight'>세상으로 파송</span>받습니다", "character": "images/pastor/waving.jpg", "character_alt": "환한 미소로 축복하며 손을 흔드는 최목사", "talk": "성도 여러분, 영원한 왕이신 우리 아버지께서 늘 여러분 곁에 계십니다. 승리하십시오!", "icon": "lighthouse", "content_html": "\n            <div class=\"benediction-card\">\n                <div class=\"b-verse\">\n                    “그런즉 너희가 먹든지 마시든지 무엇을 하든지<br>\n                    <span class='highlight'>다 하나님의 영광을 위하여 하라</span>”<br>\n                    <span class='b-ref'>— 고린도전서 10:31 —</span>\n                </div>\n            </div>\n            <div class=\"action-commitments\">\n                <div class=\"commit-item\">\n                    <span class=\"c-check\">✔</span>\n                    <span class=\"c-text\">매일의 삶에서 <strong>주기도문의 송영</strong>을 마음 깊이 고백하기</span>\n                </div>\n                <div class=\"commit-item\">\n                    <span class=\"c-check\">✔</span>\n                    <span class=\"c-text\">낙심될 때마다 <strong>영원하신 아버지의 권세</strong>를 바라보기</span>\n                </div>\n                <div class=\"commit-item\">\n                    <span class=\"c-check\">✔</span>\n                    <span class=\"c-text\">모든 승리와 은혜의 순간에 <strong>오직 주님께만 영광 돌리기</strong></span>\n                </div>\n            </div>\n            <div class=\"final-pastor-blessing\">\n                🕊️ “주 예수 그리스도의 은혜와 하나님의 사랑과 성령의 교통하심이<br>\n                모든 성도님들의 가정과 일터 위에 영원토록 함께하시기를 축원합니다. <strong>아멘!</strong>”\n            </div>\n        ", "notes": "마무리 축도: 107개의 소요리문답 대장정을 모두 마친 성도들을 격려하고, 일상의 모든 순간을 하나님의 영광을 위해 살아가는 참된 예배자로 파송합니다."}];
+        const svgIcons = {"bible-cross": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z\"/><path d=\"M10 6v6\"/><path d=\"M8 8h4\"/></svg>", "scroll": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4\"/><path d=\"M19 17V5a2 2 0 0 0-2-2H4\"/></svg>", "search": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/><path d=\"M11 8v6\"/><path d=\"M8 11h6\"/></svg>", "hands-praying": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2v20\"/><path d=\"M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6\"/></svg>", "crown": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.269a4 4 0 0 1-3.86 2.934H8.713a4 4 0 0 1-3.86-2.934L2.019 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z\"/><path d=\"M5 21h14\"/></svg>", "lightning": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"13 2 3 14 12 14 11 22 21 10 12 10 13 2\"/></svg>", "sun": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/></svg>", "infinity": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z\"/></svg>", "warning": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z\"/><line x1=\"12\" y1=\"9\" x2=\"12\" y2=\"13\"/><line x1=\"12\" y1=\"17\" x2=\"12.01\" y2=\"17\"/></svg>", "seal": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"/><path d=\"m9 12 2 2 4-4\"/></svg>", "eagle": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z\"/></svg>", "lighthouse": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2v20\"/><path d=\"M8 8h8\"/><path d=\"m9 2 6 20\"/><path d=\"m15 2-6 20\"/><circle cx=\"12\" cy=\"5\" r=\"2\"/></svg>"};
+
+        let currentIndex = 0;
+        let isAutoplay = false;
+        let autoplayTimer = null;
+        let isFontLarge = false;
+
+        const slideContentEl = document.getElementById('slideContent');
+        const progressBarEl = document.getElementById('progressBar');
+        const slideCounterEl = document.getElementById('slideCounter');
+        const btnPrevEl = document.getElementById('btnPrev');
+        const btnNextEl = document.getElementById('btnNext');
+        const notesDrawerEl = document.getElementById('notesDrawer');
+        const notesTextEl = document.getElementById('notesText');
+        const overviewModalEl = document.getElementById('overviewModal');
+        const overviewGridEl = document.getElementById('overviewGrid');
+        const btnAutoplayEl = document.getElementById('btnAutoplay');
+        const btnFontZoomEl = document.getElementById('btnFontZoom');
+        const slideStageEl = document.getElementById('slideStage');
+
+        // Play gentle synthesis click sound
+        function playChime() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12); // A5
+                gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.14);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            } catch(e) {}
+        }
+
+        function renderSlide(index) {
+            const slide = slides[index];
+            const iconSvg = svgIcons[slide.icon] || '';
+
+            // Transition effect
+            slideContentEl.classList.remove('active');
+
+            setTimeout(() => {
+                slideContentEl.innerHTML = `
+                    <div class="left-panel">
+                        <div class="slide-header">
+                            <div class="badge-row">
+                                <span class="catechism-badge">
+                                    <span class="svg-icon-wrap">${iconSvg}</span>
+                                    ${slide.badge}
+                                </span>
+                                <span class="slide-number-tag">Slide ${String(index + 1).padStart(2, '0')} / 12</span>
+                            </div>
+                            <h1 class="slide-title">${slide.title}</h1>
+                            <div class="slide-subtitle">${slide.subtitle}</div>
+                        </div>
+
+                        <div class="slide-body-main">
+                            ${slide.content_html}
+                        </div>
+                    </div>
+
+                    <div class="right-panel">
+                        <div class="talk-bubble">
+                            “${slide.talk}”
+                        </div>
+                        <div class="pastor-image-wrap">
+                            <img src="${slide.character}" alt="${slide.character_alt}" class="pastor-image" onerror="this.style.display='none'">
+                            <div class="pastor-name-badge">최성광 목사</div>
+                        </div>
+                    </div>
+                `;
+
+                // Update Presenter Notes
+                notesTextEl.innerHTML = slide.notes;
+
+                // Update Progress & Counter
+                const progressPct = ((index + 1) / slides.length) * 100;
+                progressBarEl.style.width = `${progressPct}%`;
+                slideCounterEl.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+
+                btnPrevEl.disabled = index === 0;
+                btnNextEl.textContent = index === slides.length - 1 ? '마침 🏁' : '다음 ▶';
+
+                slideContentEl.classList.add('active');
+            }, 150);
+        }
+
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            currentIndex = index;
+            playChime();
+            renderSlide(currentIndex);
+            closeOverview();
+        }
+
+        function nextSlide() {
+            if (currentIndex < slides.length - 1) {
+                goToSlide(currentIndex + 1);
+            } else {
+                stopAutoplay();
+            }
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) {
+                goToSlide(currentIndex - 1);
+            }
+        }
+
+        // Autoplay logic
+        function toggleAutoplay() {
+            if (isAutoplay) {
+                stopAutoplay();
+            } else {
+                startAutoplay();
+            }
+        }
+
+        function startAutoplay() {
+            isAutoplay = true;
+            btnAutoplayEl.textContent = '⏸ 일시정지';
+            btnAutoplayEl.classList.add('btn-primary');
+            autoplayTimer = setInterval(() => {
+                if (currentIndex < slides.length - 1) {
+                    nextSlide();
+                } else {
+                    goToSlide(0);
+                }
+            }, 8500);
+        }
+
+        function stopAutoplay() {
+            isAutoplay = false;
+            btnAutoplayEl.textContent = '▶ 자동재생';
+            btnAutoplayEl.classList.remove('btn-primary');
+            if (autoplayTimer) {
+                clearInterval(autoplayTimer);
+                autoplayTimer = null;
+            }
+        }
+
+        // Overview Modal
+        function openOverview() {
+            overviewGridEl.innerHTML = slides.map((s, idx) => `
+                <div class="overview-card ${idx === currentIndex ? 'current' : ''}" onclick="goToSlide(${idx})">
+                    <div class="ov-num">Slide ${String(idx + 1).padStart(2, '0')}</div>
+                    <div class="ov-title">${s.title}</div>
+                    <div style="font-size: 0.85rem; color: #64748b;">${s.badge}</div>
+                </div>
+            `).join('');
+            overviewModalEl.classList.add('open');
+        }
+
+        function closeOverview() {
+            overviewModalEl.classList.remove('open');
+        }
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {});
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Event Listeners
+        btnNextEl.addEventListener('click', nextSlide);
+        btnPrevEl.addEventListener('click', prevSlide);
+        btnAutoplayEl.addEventListener('click', toggleAutoplay);
+        btnNotesEl = document.getElementById('btnNotes');
+        btnNotesEl.addEventListener('click', () => {
+            notesDrawerEl.classList.toggle('open');
+        });
+        document.getElementById('btnOverview').addEventListener('click', openOverview);
+        document.getElementById('btnCloseOverview').addEventListener('click', closeOverview);
+        document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+
+        btnFontZoomEl.addEventListener('click', () => {
+            isFontLarge = !isFontLarge;
+            document.body.classList.toggle('font-large', isFontLarge);
+            btnFontZoomEl.textContent = isFontLarge ? 'A- 기본크기' : 'A+ 글자크게';
+        });
+
+        // Keyboard Controls
+        window.addEventListener('keydown', (e) => {
+            if (overviewModalEl.classList.contains('open')) {
+                if (e.key === 'Escape') closeOverview();
+                return;
+            }
+
+            switch (e.key) {
+                case 'ArrowRight':
+                case 'ArrowDown':
+                case ' ':
+                case 'Enter':
+                case 'PageDown':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                case 'PageUp':
+                    e.preventDefault();
+                    prevSlide();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    goToSlide(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    goToSlide(slides.length - 1);
+                    break;
+                case 'f':
+                case 'F':
+                    e.preventDefault();
+                    toggleFullscreen();
+                    break;
+                case 'n':
+                case 'N':
+                    e.preventDefault();
+                    notesDrawerEl.classList.toggle('open');
+                    break;
+                case 'o':
+                case 'O':
+                    e.preventDefault();
+                    openOverview();
+                    break;
+                case 'a':
+                case 'A':
+                    e.preventDefault();
+                    toggleAutoplay();
+                    break;
+            }
+        });
+
+        // Touch Swipe gestures for tablets and phones
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slideStageEl.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        slideStageEl.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) {
+                nextSlide();
+            } else if (touchEndX > touchStartX + threshold) {
+                prevSlide();
+            }
+        }
+
+        // Initial render
+        renderSlide(0);
+    </script>
+</body>
+</html>
