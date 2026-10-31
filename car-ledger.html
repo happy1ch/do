@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>다차종 스마트 차계부</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background: var(--pickle-surface-page, #f8f9fa);
+      color: var(--pickle-text-primary, #1a1a1a);
+      font-size: 14px;
+      line-height: 1.5;
+      padding: var(--pickle-inset-screen-x, 16px);
+      padding-bottom: 80px;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: var(--pickle-gap-section, 18px);
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .title-group h1 {
+      font-size: 19px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--pickle-text-primary, #111827);
+    }
+    .header-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .icon-btn {
+      background: var(--pickle-surface-fill-soft, #e5e7eb);
+      border: 1px solid var(--pickle-border-hairline, #d1d5db);
+      color: var(--pickle-text-primary, #1f2937);
+      border-radius: var(--pickle-radius-pill, 9999px);
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Vehicle Tab Pills */
+    .vehicle-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .vehicle-nav::-webkit-scrollbar { display: none; }
+    .nav-pill {
+      background: var(--pickle-surface-card, #ffffff);
+      border: 1px solid var(--pickle-border-control, #cbd5e1);
+      color: var(--pickle-text-secondary, #4b5563);
+      border-radius: var(--pickle-radius-pill, 9999px);
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .nav-pill.active {
+      background: var(--pickle-text-primary, #111827);
+      color: var(--pickle-text-inverse, #ffffff);
+      border-color: var(--pickle-text-primary, #111827);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .nav-pill-add {
+      border-style: dashed;
+      color: var(--pickle-text-tertiary, #9ca3af);
+    }
+
+    /* Dashboard Card */
+    .dashboard-card {
+      background: var(--pickle-surface-card, #ffffff);
+      border: 1px solid var(--pickle-border-hairline, #e5e7eb);
+      border-radius: var(--pickle-radius-card, 16px);
+      padding: 16px;
+      margin-bottom: var(--pickle-gap-section, 18px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .car-profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--pickle-border-hairline, #f3f4f6);
+    }
+    .car-plate-badge {
+      display: inline-block;
+      background: var(--pickle-surface-fill-soft, #e5e7eb);
+      border: 1px solid var(--pickle-border-control, #d1d5db);
+      color: var(--pickle-text-primary, #1f2937);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 2px 8px;
+      border-radius: var(--pickle-radius-tile, 6px);
+      margin-bottom: 4px;
+    }
+    .car-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--pickle-text-primary, #111827);
+    }
+    .car-subtitle {
+      font-size: 12px;
+      color: var(--pickle-text-secondary, #6b7280);
+    }
+    .car-spec-btn {
+      background: var(--pickle-surface-fill-faint, #f3f4f6);
+      border: 1px solid var(--pickle-border-control, #d1d5db);
+      border-radius: var(--pickle-radius-tile, 8px);
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--pickle-text-primary, #374151);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Health & Status Badges Grid */
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .health-item {
+      background: var(--pickle-surface-fill-faint, #f9fafb);
+      border: 1px solid var(--pickle-border-hairline, #e5e7eb);
+      border-radius: var(--pickle-radius-tile, 10px);
+      padding: 10px;
+    }
+    .health-label {
+      font-size: 11px;
+      color: var(--pickle-text-secondary, #6b7280);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .health-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--pickle-text-primary, #111827);
+    }
+    .health-desc {
+      font-size: 11px;
+      color: var(--pickle-text-secondary, #9ca3af);
+      margin-top: 2px;
+    }
+    .badge-alert {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: var(--pickle-radius-pill, 9999px);
+      font-size: 10px;
+      font-weight: 700;
+      background: #fee2e2;
+      color: #dc2626;
+    }
+    .badge-ok {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: var(--pickle-radius-pill, 9999px);
+      font-size: 10px;
+      font-weight: 700;
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    /* Overall Stats Card (when '전체' is selected) */
+    .all-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .stat-box {
+      background: var(--pickle-surface-fill-faint, #f9fafb);
+      border-radius: var(--pickle-radius-tile, 10px);
+      padding: 12px 6px;
+      border: 1px solid var(--pickle-border-hairline, #e5e7eb);
+    }
+    .stat-box-num {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--pickle-text-primary, #111827);
+    }
+    .stat-box-lbl {
+      font-size: 11px;
+      color: var(--pickle-text-secondary, #6b7280);
+      margin-top: 2px;
+    }
+
+    /* Action & Search Bar */
+    .action-bar {
+      margin-bottom: 14px;
+    }
+    .add-rec-btn {
+      width: 100%;
+      background: var(--pickle-text-primary, #111827);
+      color: var(--pickle-text-inverse, #ffffff);
+      border: none;
+      border-radius: var(--pickle-radius-cta, 12px);
+      padding: 13px;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      margin-bottom: 12px;
+    }
+    .add-rec-btn:active {
+      transform: scale(0.98);
+    }
+    .search-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .search-input {
+      flex: 1;
+      background: var(--pickle-surface-card, #ffffff);
+      border: 1px solid var(--pickle-border-control, #d1d5db);
+      border-radius: var(--pickle-radius-tile, 8px);
+      padding: 8px 12px;
+      font-size: 13px;
+      color: var(--pickle-text-primary, #111827);
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--pickle-text-primary, #111827);
+    }
+    .sort-select {
+      background: var(--pickle-surface-card, #ffffff);
+      border: 1px solid var(--pickle-border-control, #d1d5db);
+      border-radius: var(--pickle-radius-tile, 8px);
+      padding: 8px 8px;
+      font-size: 12px;
+      color: var(--pickle-text-primary, #111827);
+      outline: none;
+    }
+
+    /* Category Filter Chips */
+    .cat-filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .cat-filter-row::-webkit-scrollbar { display: none; }
+    .cat-chip {
+      background: var(--pickle-surface-fill-faint, #f3f4f6);
+      border: 1px solid var(--pickle-border-hairline, #e5e7eb);
+      color: var(--pickle-text-secondary, #4b5563);
+      border-radius: var(--pickle-radius-pill, 9999px);
+      padding: 5px 10px;
+      font-size: 12px;
+      white-space: nowrap;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .cat-chip.active {
+      background: var(--pickle-surface-fill-soft, #e5e7eb);
+      color: var(--pickle-text-primary, #111827);
+      border-color: var(--pickle-border-control, #9ca3af);
+      font-weight: 700;
+    }
+
+    /* Record List */
+    .record-count-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--pickle-text-secondary, #6b7280);
+      margin-bottom: 8px;
+      padding: 0 4px;
+    }
+    .record-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .record-item {
+      background: var(--pickle-surface-card, #ffffff);
+      border: 1px solid var(--pickle-border-hairline, #e5e7eb);
+      border-radius: var(--pickle-radius-card, 14px);
+      padding: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rec-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .rec-date-car {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--pickle-text-secondary, #6b7280);
+    }
+    .rec-car-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: var(--pickle-radius-pill, 9999px);
+      background: var(--pickle-surface-fill-soft, #e5e7eb);
+      color: var(--pickle-text-primary, #374151);
+    }
+    .rec-cat-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: var(--pickle-radius-tile, 4px);
+    }
+    .cat-oil { background: #dbeafe; color: #1e40af; }
+    .cat-tire { background: #ffedd5; color: #c2410c; }
+    .cat-electric { background: #fef9c3; color: #854d0e; }
+    .cat-repair { background: #ede9fe; color: #5b21b6; }
+    .cat-filter { background: #dcfce7; color: #166534; }
+    .cat-insurance { background: #f3e8ff; color: #7e22ce; }
+    .cat-fuel { background: #ccfbf1; color: #115e59; }
+    .cat-check { background: #e0f2fe; color: #0369a1; }
+    .cat-other { background: #f3f4f6; color: #4b5563; }
+
+    .rec-mid {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .rec-desc {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--pickle-text-primary, #111827);
+      flex: 1;
+      padding-right: 8px;
+    }
+    .rec-cost {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--pickle-text-primary, #111827);
+      white-space: nowrap;
+    }
+    .rec-bot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--pickle-text-secondary, #9ca3af);
+      padding-top: 6px;
+      border-top: 1px dashed var(--pickle-border-hairline, #f3f4f6);
+    }
+    .rec-km-shop {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .rec-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .btn-text {
+      background: none;
+      border: none;
+      font-size: 11px;
+      color: var(--pickle-text-tertiary, #9ca3af);
+      cursor: pointer;
+      padding: 2px 4px;
+    }
+    .btn-text:hover {
+      color: var(--pickle-text-primary, #111827);
+    }
+    .btn-text-del:hover {
+      color: var(--pickle-accent-danger, #ef4444);
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 1000;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 0;
+    }
+    @media (min-width: 500px) {
+      .modal-overlay {
+        align-items: center;
+        padding: 20px;
+      }
+    }
+    .modal-content {
+      background: var(--pickle-surface-card, #ffffff);
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      border-radius: 20px 20px 0 0;
+      overflow-y: auto;
+      padding: 20px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+      animation: slideUp 0.2s ease-out;
+    }
+    @media (min-width: 500px) {
+      .modal-content {
+        border-radius: var(--pickle-radius-card, 16px);
+      }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--pickle-border-hairline, #f3f4f6);
+    }
+    .modal-title {
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--pickle-text-secondary, #9ca3af);
+      cursor: pointer;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--pickle-text-secondary, #4b5563);
+      margin-bottom: 5px;
+    }
+    .form-control {
+      width: 100%;
+      background: var(--pickle-surface-fill-faint, #f9fafb);
+      border: 1px solid var(--pickle-border-control, #d1d5db);
+      border-radius: var(--pickle-radius-tile, 8px);
+      padding: 9px 12px;
+      font-size: 14px;
+      color: var(--pickle-text-primary, #111827);
+      outline: none;
+    }
+    .form-control:focus {
+      border-color: var(--pickle-text-primary, #111827);
+      background: var(--pickle-surface-card, #ffffff);
+    }
+    .quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .quick-tag-chip {
+      background: var(--pickle-surface-fill-soft, #e5e7eb);
+      border: 1px solid var(--pickle-border-hairline, #d1d5db);
+      border-radius: var(--pickle-radius-pill, 9999px);
+      padding: 3px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--pickle-text-secondary, #4b5563);
+    }
+    .modal-submit-btn {
+      width: 100%;
+      background: var(--pickle-text-primary, #111827);
+      color: var(--pickle-text-inverse, #ffffff);
+      border: none;
+      border-radius: var(--pickle-radius-cta, 10px);
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    /* Authentic Registration Certificate Styles */
+    .cert-box {
+      border: 2px solid #2b2b2b;
+      padding: 12px;
+      background: #fafafa;
+      color: #111;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    .cert-title-area {
+      text-align: center;
+      margin-bottom: 12px;
+      border-bottom: 2px solid #2b2b2b;
+      padding-bottom: 8px;
+    }
+    .cert-h1 {
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+    .cert-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+      font-size: 11px;
+    }
+    .cert-table th, .cert-table td {
+      border: 1px solid #777;
+      padding: 5px 6px;
+      text-align: left;
+    }
+    .cert-table th {
+      background: #f1f3f5;
+      font-weight: 600;
+      width: 25%;
+    }
+    .cert-stamp-area {
+      text-align: right;
+      padding: 8px 10px;
+      font-weight: bold;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+    }
+    .cert-stamp {
+      display: inline-block;
+      border: 2px solid #c92a2a;
+      color: #c92a2a;
+      padding: 3px 8px;
+      font-weight: 900;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 40px 10px;
+      color: var(--pickle-text-secondary, #9ca3af);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="header">
+    <div class="header-top">
+      <div class="title-group">
+        <h1>🚗 다차종 스마트 차계부</h1>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" onclick="exportCSV()">📥 CSV</button>
+        <button class="icon-btn" onclick="exportJSON()">💾 백업</button>
+      </div>
+    </div>
+
+    <!-- Vehicle Selector Pills -->
+    <nav class="vehicle-nav" id="vehicleNav">
+      <!-- Injected dynamically -->
+    </nav>
+  </header>
+
+  <!-- Dashboard Overview (Single Car or All) -->
+  <section class="dashboard-card" id="dashboardCard">
+    <!-- Injected dynamically -->
+  </section>
+
+  <!-- Action & Filter Section -->
+  <section class="action-bar">
+    <button class="add-rec-btn" onclick="openAddModal()">
+      <span>➕ 새 정비 · 지출 내역 등록</span>
+    </button>
+    <div class="search-row">
+      <input type="text" id="searchInput" class="search-input" placeholder="정비 내용, 부품, 정비업체 검색..." oninput="onSearchChange()">
+      <select id="sortSelect" class="sort-select" onchange="onSortChange()">
+        <option value="date-desc">최신순</option>
+        <option value="date-asc">오래된순</option>
+        <option value="cost-desc">금액높은순</option>
+        <option value="cost-asc">금액낮은순</option>
+        <option value="km-desc">주행거리순</option>
+      </select>
+    </div>
+    <div class="cat-filter-row" id="catFilterRow">
+      <!-- Category chips injected dynamically -->
+    </div>
+  </section>
+
+  <!-- Record List -->
+  <main>
+    <div class="record-count-bar">
+      <span id="filteredCount">총 0건의 기록</span>
+      <span id="filteredCostTotal">지출 합계: 0원</span>
+    </div>
+    <div class="record-list" id="recordList">
+      <!-- Records injected dynamically -->
+    </div>
+  </main>
+
+  <!-- Add/Edit Record Modal -->
+  <div class="modal-overlay" id="recordModal" onclick="closeModalOnOverlay(event, 'recordModal')">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="recordModalTitle">새 정비·지출 등록</h2>
+        <button class="modal-close" onclick="closeModal('recordModal')">&times;</button>
+      </div>
+      <form id="recordForm" onsubmit="handleRecordSubmit(event)">
+        <input type="hidden" id="editRecordId">
+        <div class="form-group">
+          <label class="form-label">차종 선택 *</label>
+          <select id="modalCarId" class="form-control" required></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">일자 *</label>
+          <input type="date" id="modalDate" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">분류 *</label>
+          <select id="modalCategory" class="form-control" required>
+            <option value="엔진/오일">🛢️ 엔진/오일</option>
+            <option value="정비/수리">🔧 정비/수리</option>
+            <option value="타이어">🛞 타이어</option>
+            <option value="전기/배터리">⚡ 전기/배터리</option>
+            <option value="필터/소모품">💨 필터/소모품</option>
+            <option value="보험/세금">🛡️ 보험/세금</option>
+            <option value="주유">⛽ 주유</option>
+            <option value="점검/정비">🔍 점검/검사</option>
+            <option value="기타">📝 기타</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">수리 및 정비 내용 *</label>
+          <input type="text" id="modalDesc" class="form-control" placeholder="예: 엔진오일 및 오일필터 교환" required>
+          <div class="quick-tags">
+            <span class="quick-tag-chip" onclick="setDescTag('엔진오일 교환', '엔진/오일')">엔진오일 교환</span>
+            <span class="quick-tag-chip" onclick="setDescTag('에어컨필터 교체', '필터/소모품')">에어컨필터</span>
+            <span class="quick-tag-chip" onclick="setDescTag('타이어 교체', '타이어')">타이어 교체</span>
+            <span class="quick-tag-chip" onclick="setDescTag('배터리 교체', '전기/배터리')">배터리 교체</span>
+            <span class="quick-tag-chip" onclick="setDescTag('라이닝/브레이크 패드 교체', '정비/수리')">라이닝 교체</span>
+            <span class="quick-tag-chip" onclick="setDescTag('자동차 정기검사', '점검/정비')">정기검사</span>
+            <span class="quick-tag-chip" onclick="setDescTag('자동차보험 가입', '보험/세금')">보험 가입</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">비용 (원) *</label>
+          <input type="number" id="modalCost" class="form-control" placeholder="0" min="0" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">누적 주행거리 (km)</label>
+          <input type="number" id="modalKm" class="form-control" placeholder="예: 89800" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">정비업체</label>
+          <input type="text" id="modalShop" class="form-control" placeholder="예: 보승카공업사, 매봉카센타, 기아오토큐...">
+          <div class="quick-tags">
+            <span class="quick-tag-chip" onclick="setShopTag('보승카공업사')">보승카공업사</span>
+            <span class="quick-tag-chip" onclick="setShopTag('매봉')">매봉카센타</span>
+            <span class="quick-tag-chip" onclick="setShopTag('문경정비')">문경정비</span>
+            <span class="quick-tag-chip" onclick="setShopTag('기아오토큐')">기아오토큐</span>
+            <span class="quick-tag-chip" onclick="setShopTag('한국타이어')">한국타이어</span>
+            <span class="quick-tag-chip" onclick="setShopTag('DIY')">DIY</span>
+          </div>
+        </div>
+        <button type="submit" class="modal-submit-btn">저장 완료</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Registration Certificate Modal -->
+  <div class="modal-overlay" id="certModal" onclick="closeModalOnOverlay(event, 'certModal')">
+    <div class="modal-content" style="max-width: 580px;">
+      <div class="modal-header">
+        <h2 class="modal-title">📄 대한민국 자동차등록증</h2>
+        <button class="modal-close" onclick="closeModal('certModal')">&times;</button>
+      </div>
+      <div id="certModalBody">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Vehicle Modal -->
+  <div class="modal-overlay" id="carModal" onclick="closeModalOnOverlay(event, 'carModal')">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">새 차량 등록</h2>
+        <button class="modal-close" onclick="closeModal('carModal')">&times;</button>
+      </div>
+      <form id="carForm" onsubmit="handleCarSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">차량 식별 ID (영문/숫자) *</label>
+          <input type="text" id="newCarId" class="form-control" placeholder="예: avante, bongo" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">차명 (모델명) *</label>
+          <input type="text" id="newCarName" class="form-control" placeholder="예: 아반떼 CN7, 봉고 3" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">차량번호 (번호판) *</label>
+          <input type="text" id="newCarPlate" class="form-control" placeholder="예: 12가 3456" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">연식 / 유종</label>
+          <input type="text" id="newCarYear" class="form-control" placeholder="예: 2022년식 / 가솔린">
+        </div>
+        <div class="form-group">
+          <label class="form-label">현재 주행거리 (km)</label>
+          <input type="number" id="newCarKm" class="form-control" placeholder="예: 45000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">엔진오일 교환주기 (km)</label>
+          <input type="number" id="newCarOilInterval" class="form-control" value="10000">
+        </div>
+        <button type="submit" class="modal-submit-btn">차량 추가 완료</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_DATA = {"vehicles": [{"id": "carnival", "name": "카니발 (더 뉴 카니발 9인승)", "plate": "300오 4664", "modelYear": "2019", "modelCode": "YP 9 ABF-G-8", "vin": "KNAMB81ABKS610867", "engine": "D4HB (2,199cc 디젤)", "fuel": "경유 (디젤)", "color": "스노우 화이트 펄 (SWP) / 내장 GBU", "owner": "최성광", "regDate": "2019-11-26", "acquireNote": "2019년 11월 26일 신차 구입 / 출고가 28,701,818원", "currentKm": 89785, "isCurrent": true, "insurance": {"company": "현대해상", "expiry": "2026-11-24", "lastCost": 618770}, "nextInspection": "2027-11-25", "oilIntervalKm": 10000, "lastOilKm": 75307, "lastOilDate": "2025-05-16", "specs": {"배기량": "2,199 cc", "출력": "202 / 3,800 ps/rpm", "승차정원": "9인승", "전장x전폭x전고": "5,115 x 1,985 x 1,755 mm", "공차중량": "2,130 kg (총중량 2,745kg)", "공인연비": "11.4 km/L (복합)"}}, {"id": "lotze", "name": "로체 (ADVANCE)", "plate": "26버 1857", "modelYear": "2008", "modelCode": "GEN23E-LX", "vin": "KNAGE22238A186292", "engine": "G4KA (1,998cc 가솔린/LPG)", "fuel": "LPG / 가솔린", "owner": "박유진 (사모님)", "regDate": "2008-01-03", "acquireDate": "2019-12-23", "acquireNote": "2019년 12월 23일 인수 (106,000 km)", "currentKm": 216202, "isCurrent": true, "oilIntervalKm": 7000, "lastOilKm": 216202, "lastOilDate": "2025-10-21", "specs": {"배기량": "1,998 cc", "승차정원": "5인승", "전장x전폭x전고": "4,755 x 1,820 x 1,480 mm", "원동기": "세타 2.0 LPI (G4KA)"}}, {"id": "sm520", "name": "르노삼성 SM520 LPG", "plate": "62로 5468", "modelYear": "2003", "engine": "SR20 (1,998cc LPG)", "fuel": "LPG", "owner": "최성광", "acquireDate": "2017-01-31", "acquireNote": "2017년 1월 31일 강서방에게서 인수 (230,000 km)", "currentKm": 288075, "isCurrent": false, "specs": {"배기량": "1,998 cc", "승차정원": "5인승", "엔진": "닛산 SR20 2.0 DOHC LPG"}}], "records": [{"id": "rec_040", "carId": "carnival", "date": "2026-01-22", "description": "엔진 터보", "cost": 385506, "km": 89785, "shop": "문경정비", "category": "정비/수리"}, {"id": "rec_039", "carId": "carnival", "date": "2025-11-27", "description": "타이어 펑크", "cost": 10000, "km": null, "shop": "한국타이어", "category": "타이어"}, {"id": "rec_038", "carId": "carnival", "date": "2025-11-24", "description": "카니발 보험", "cost": 618770, "km": null, "shop": "현대화재해상", "category": "보험/세금"}, {"id": "rec_036", "carId": "lotze", "date": "2025-10-21", "description": "엔진오일", "cost": 71000, "km": 216202, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_037", "carId": "lotze", "date": "2025-10-21", "description": "라이닝 교체 및 수리", "cost": 155000, "km": 216202, "shop": "매봉", "category": "정비/수리"}, {"id": "rec_035", "carId": "carnival", "date": "2025-05-16", "description": "엔진오일", "cost": 110000, "km": 75307, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_034", "carId": "lotze", "date": "2025-04-02", "description": "타이어 교체", "cost": 160000, "km": 205000, "shop": "한국타이어", "category": "타이어"}, {"id": "rec_033", "carId": "lotze", "date": "2025-01-24", "description": "엔진 플러그 수리", "cost": 180000, "km": 200000, "shop": "매봉", "category": "전기/배터리"}, {"id": "rec_032", "carId": "carnival", "date": "2024-12-09", "description": "베터리 교환", "cost": 145000, "km": 62858, "shop": "매봉", "category": "기타"}, {"id": "rec_031", "carId": "lotze", "date": "2024-08-26", "description": "배터리 교체", "cost": 130000, "km": 195168, "shop": "매봉", "category": "전기/배터리"}, {"id": "rec_029", "carId": "lotze", "date": "2024-08-01", "description": "엔진 오일 빵꾸", "cost": 75000, "km": 194251, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_028", "carId": "carnival", "date": "2024-07-09", "description": "엔진오일교환", "cost": 90000, "km": 55117, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_027", "carId": "carnival", "date": "2024-07-06", "description": "사이드 미러 부품 구입 장착(영도,문경)", "cost": 105000, "km": 54828, "shop": "DIY", "category": "정비/수리"}, {"id": "rec_026", "carId": "lotze", "date": "2024-01-04", "description": "휀다 부품 구입 및 탈거", "cost": 83000, "km": 185455, "shop": "매봉", "category": "정비/수리"}, {"id": "rec_025", "carId": "lotze", "date": "2024-01-02", "description": "엔진오일 에어필터 교환", "cost": 65000, "km": 185455, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_024", "carId": "carnival", "date": "2023-11-23", "description": "카니발 보험가입", "cost": 633410, "km": 43677, "shop": "현대화재해상", "category": "보험/세금"}, {"id": "rec_022", "carId": "carnival", "date": "2023-07-21", "description": "엔진오일 교환", "cost": 90000, "km": 37130, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_023", "carId": "lotze", "date": "2023-07-21", "description": "타이어교체,엔진오일", "cost": 545000, "km": null, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_021", "carId": "lotze", "date": "2023-04-12", "description": "엔진오일 교환, 마후라 용접", "cost": 110000, "km": 170700, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_020", "carId": "carnival", "date": "2022-10-24", "description": "소모품/정비", "cost": 78000, "km": null, "shop": "", "category": "점검/정비"}, {"id": "rec_015", "carId": "lotze", "date": "2022-10-10", "description": "엔진오일 교환", "cost": 60000, "km": 160583, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_016", "carId": "carnival", "date": "2022-10-10", "description": "엔진오일 필터교환", "cost": 125000, "km": 25577, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_014", "carId": "lotze", "date": "2022-07-15", "description": "부품구입 및 교체", "cost": 14500, "km": 155819, "shop": "DIY", "category": "정비/수리"}, {"id": "rec_013", "carId": "carnival", "date": "2022-07-14", "description": "에어컨필터 교환", "cost": 15000, "km": 22500, "shop": "매봉", "category": "필터/소모품"}, {"id": "rec_001", "carId": "lotze", "date": "2022-01-14", "description": "엔진오일 교환", "cost": 70000, "km": 144300, "shop": "매봉", "category": "엔진/오일"}, {"id": "rec_017", "carId": "carnival", "date": "2021-12-04", "description": "엔진오일 에어필터 교체", "cost": 154000, "km": 13480, "shop": "기아오토큐", "category": "엔진/오일"}, {"id": "rec_019", "carId": "carnival", "date": "2021-12-04", "description": "EWP 보상교체", "cost": 0, "km": 13480, "shop": "기아오토큐", "category": "정비/수리"}, {"id": "rec_030", "carId": "lotze", "date": "2021-05-15", "description": "차량 점검", "cost": 0, "km": 130258, "shop": "매봉", "category": "점검/정비"}, {"id": "rec_005", "carId": "lotze", "date": "2021-04-24", "description": "앞 바퀴 소리나는 부품 교환", "cost": 40000, "km": 129327, "shop": "매봉", "category": "정비/수리"}, {"id": "rec_003", "carId": "lotze", "date": "2021-04-17", "description": "엔진오일교환", "cost": 100000, "km": 128948, "shop": "기아오토큐", "category": "엔진/오일"}, {"id": "rec_008", "carId": "carnival", "date": "2021-04-12", "description": "트럭사고로 인한 수리", "cost": 870000, "km": 10000, "shop": "문경정비", "category": "정비/수리"}, {"id": "rec_004", "carId": "lotze", "date": "2021-02-13", "description": "트렁크 찌그러짐", "cost": 0, "km": 120258, "shop": "매봉", "category": "기타"}, {"id": "rec_018", "carId": "carnival", "date": "2020-11-25", "description": "엔진오일교환", "cost": 0, "km": 5413, "shop": "기아오토큐", "category": "엔진/오일"}, {"id": "rec_006", "carId": "lotze", "date": "2020-02-10", "description": "배터리 교체", "cost": 180000, "km": null, "shop": "기아오토큐", "category": "전기/배터리"}, {"id": "rec_002", "carId": "lotze", "date": "2020-01-14", "description": "차량인수 전체 정비", "cost": 328000, "km": 106966, "shop": "기아오토큐", "category": "점검/정비"}, {"id": "rec_007", "carId": "lotze", "date": "2019-12-23", "description": "차량인수", "cost": 0, "km": 106000, "shop": "", "category": "점검/정비"}, {"carId": "carnival", "date": "2019-12-12", "description": "유류 주유", "cost": 89300, "km": null, "shop": "", "category": "주유", "id": "rec_052"}, {"id": "rec_009", "carId": "sm520", "date": "2019-10-11", "description": "제네레다 중고교체", "cost": 120000, "km": 288075, "shop": "매봉", "category": "전기/배터리"}, {"id": "rec_010", "carId": "sm520", "date": "2019-08-22", "description": "한국타이어", "cost": 170000, "km": 283115, "shop": "한국타이어", "category": "타이어"}, {"id": "rec_011", "carId": "sm520", "date": "2019-08-07", "description": "점화 플러그 교체", "cost": 10000, "km": null, "shop": "매봉", "category": "전기/배터리"}, {"id": "rec_012", "carId": "sm520", "date": "2019-08-06", "description": "매봉카", "cost": 50000, "km": 281921, "shop": "매봉", "category": "기타"}, {"carId": "sm520", "date": "2019-07-02", "description": "브레이크 등 교환", "cost": 0, "km": null, "shop": "", "category": "기타", "id": "rec_051"}, {"carId": "sm520", "date": "2018-12-21", "description": "엔진오일 및 미션오일(4통) 교환", "cost": 180000, "km": 270383, "shop": "삼성 르노", "category": "엔진/오일", "id": "rec_050"}, {"carId": "sm520", "date": "2018-09-27", "description": "ABS 브레이크 부품 교환", "cost": 90000, "km": null, "shop": "삼성 르노", "category": "정비/수리", "id": "rec_049"}, {"carId": "sm520", "date": "2018-09-15", "description": "브레이크 오일 교환", "cost": 0, "km": 266350, "shop": "르노삼성(고극환)", "category": "엔진/오일", "id": "rec_048"}, {"carId": "sm520", "date": "2018-07-30", "description": "플러그 4개, 코일 교환", "cost": 120000, "km": 264166, "shop": "", "category": "전기/배터리", "id": "rec_047"}, {"carId": "sm520", "date": "2018-07-21", "description": "엔진오일 교환", "cost": 50000, "km": 263000, "shop": "", "category": "엔진/오일", "id": "rec_046"}, {"carId": "sm520", "date": "2018-04-15", "description": "에어컨 가스 주입", "cost": 0, "km": null, "shop": "", "category": "정비/수리", "id": "rec_045"}, {"carId": "sm520", "date": "2018-02-19", "description": "에어컨 모터 교체", "cost": 190000, "km": 255314, "shop": "함창정비", "category": "정비/수리", "id": "rec_044"}, {"carId": "sm520", "date": "2017-12-01", "description": "겨울 밧데리 교체", "cost": 0, "km": null, "shop": "", "category": "전기/배터리", "id": "rec_043"}, {"carId": "sm520", "date": "2017-09-30", "description": "타이어 교체", "cost": 0, "km": null, "shop": "한국타이어 안집사", "category": "타이어", "id": "rec_042"}, {"carId": "sm520", "date": "2017-01-31", "description": "차량 인도 (230,000km)", "cost": 0, "km": 230000, "shop": "강서방", "category": "기타", "id": "rec_041"}], "metrics": {"vehicles_count": 3, "records_count": 52, "total_cost": 6865486, "carnival_records": 17, "lotze_records": 20, "sm520_records": 15}};
+
+    let savedState = null;
+    try {
+      const stored = localStorage.getItem("car_ledger_state");
+      if (stored) savedState = JSON.parse(stored);
+    } catch(e){}
+    let state = (window.pickle && window.pickle.widget && window.pickle.widget.state) 
+      ? window.pickle.widget.state 
+      : (savedState || DEFAULT_DATA);
+
+    let currentCarFilter = "carnival";
+    let currentCatFilter = "all";
+    let searchQuery = "";
+    let currentSort = "date-desc";
+
+    const CATEGORIES = [
+      { id: "all", label: "전체" },
+      { id: "엔진/오일", label: "🛢️ 엔진/오일" },
+      { id: "정비/수리", label: "🔧 정비/수리" },
+      { id: "타이어", label: "🛞 타이어" },
+      { id: "전기/배터리", label: "⚡ 전기/배터리" },
+      { id: "필터/소모품", label: "💨 필터/소모품" },
+      { id: "보험/세금", label: "🛡️ 보험/세금" },
+      { id: "주유", label: "⛽ 주유" },
+      { id: "점검/정비", label: "🔍 점검/검사" },
+      { id: "기타", label: "📝 기타" }
+    ];
+
+    function formatWon(num) {
+      if (num === null || num === undefined || isNaN(num)) return "0원";
+      return Number(num).toLocaleString("ko-KR") + "원";
+    }
+    function formatKm(num) {
+      if (!num) return "-";
+      return Number(num).toLocaleString("ko-KR") + " km";
+    }
+
+    async function commit(nextState, signalText) {
+      state = nextState;
+      state.metrics = {
+        vehicles_count: state.vehicles.length,
+        records_count: state.records.length,
+        total_cost: state.records.reduce((acc, r) => acc + (r.cost || 0), 0),
+        carnival_records: state.records.filter(r => r.carId === "carnival").length,
+        lotze_records: state.records.filter(r => r.carId === "lotze").length,
+        sm520_records: state.records.filter(r => r.carId === "sm520").length
+      };
+
+      render();
+
+      try {
+        localStorage.setItem("car_ledger_state", JSON.stringify(state));
+      } catch(e){}
+      if (window.pickle && window.pickle.widget) {
+        try {
+          await window.pickle.widget.save(state);
+          if (signalText) {
+            window.pickle.widget.signal(signalText);
+          }
+        } catch (e) {
+          console.error("Save error:", e);
+        }
+      }
+    }
+
+    if (window.pickle && window.pickle.widget) {
+      window.pickle.widget.onstate = (newState) => {
+        if (newState) {
+          state = newState;
+          render();
+        }
+      };
+
+      window.pickle.widget.oncommand = (cmd) => {
+        const parts = cmd.trim().split(/\s+/);
+        const action = parts[0];
+        if (action === "select") {
+          const target = parts[1];
+          if (target === "all" || state.vehicles.some(v => v.id === target)) {
+            currentCarFilter = target;
+            render();
+            return true;
+          }
+          throw new Error("차량을 찾을 수 없습니다: " + target);
+        } else if (action === "filter") {
+          const cat = parts[1];
+          currentCatFilter = cat || "all";
+          render();
+          return true;
+        } else if (action === "add") {
+          const carId = parts[1];
+          const date = parts[2];
+          const desc = parts[3];
+          const cost = Number(parts[4]) || 0;
+          const km = Number(parts[5]) || null;
+          const shop = parts.slice(6).join(" ") || "";
+          
+          let cat = "정비/수리";
+          if (desc.includes("오일")) cat = "엔진/오일";
+          else if (desc.includes("타이어")) cat = "타이어";
+          else if (desc.includes("배터리")) cat = "전기/배터리";
+          else if (desc.includes("보험")) cat = "보험/세금";
+
+          const newRec = {
+            id: "rec_" + Date.now(),
+            carId,
+            date,
+            description: desc,
+            cost,
+            km,
+            shop,
+            category: cat
+          };
+
+          const nextRecords = [newRec, ...state.records];
+          const nextVehicles = state.vehicles.map(v => {
+            if (v.id === carId && km && (!v.currentKm || km > v.currentKm)) {
+              return { ...v, currentKm: km };
+            }
+            return v;
+          });
+
+          commit({ ...state, records: nextRecords, vehicles: nextVehicles }, `${carId} 차량에 ${desc} (${formatWon(cost)}) 정비 내역을 추가했습니다.`);
+          return true;
+        }
+        return false;
+      };
+    }
+
+    function render() {
+      renderNav();
+      renderDashboard();
+      renderCatFilters();
+      renderRecords();
+    }
+
+    function renderNav() {
+      const nav = document.getElementById("vehicleNav");
+      let html = '<button class="nav-pill ' + (currentCarFilter === 'all' ? 'active' : '') + '" onclick="setCarFilter(\'all\')">🌐 전체 (' + state.records.length + ')</button>';
+
+      state.vehicles.forEach(v => {
+        const count = state.records.filter(r => r.carId === v.id).length;
+        const icon = v.id === "carnival" ? "🚙" : (v.id === "lotze" ? "🚘" : "🚗");
+        html += '<button class="nav-pill ' + (currentCarFilter === v.id ? 'active' : '') + '" onclick="setCarFilter(\'' + v.id + '\')">' + icon + ' ' + (v.plate || v.name) + ' (' + count + ')</button>';
+      });
+
+      html += '<button class="nav-pill nav-pill-add" onclick="openCarModal()">➕ 차종 추가</button>';
+      nav.innerHTML = html;
+    }
+
+    function renderDashboard() {
+      const board = document.getElementById("dashboardCard");
+
+      if (currentCarFilter === "all") {
+        const totalCost = state.records.reduce((acc, r) => acc + (r.cost || 0), 0);
+        const carCount = state.vehicles.length;
+        const recCount = state.records.length;
+
+        let carBreakdownHtml = "";
+        state.vehicles.forEach(v => {
+          const vRecs = state.records.filter(r => r.carId === v.id);
+          const vCost = vRecs.reduce((acc, r) => acc + (r.cost || 0), 0);
+          const pct = totalCost > 0 ? Math.round((vCost / totalCost) * 100) : 0;
+          carBreakdownHtml += '<div style="margin-top: 8px;">'
+            + '<div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:3px;">'
+            + '<span><strong>' + v.name + '</strong> (' + v.plate + ')</span>'
+            + '<span>' + formatWon(vCost) + ' (' + pct + '%)</span>'
+            + '</div>'
+            + '<div style="background:var(--pickle-surface-fill-soft,#e5e7eb); height:6px; border-radius:3px; overflow:hidden;">'
+            + '<div style="background:var(--pickle-text-primary,#111827); width:' + pct + '%; height:100%;"></div>'
+            + '</div>'
+            + '</div>';
+        });
+
+        board.innerHTML = '<div class="car-profile-header">'
+          + '<div>'
+          + '<span class="car-plate-badge">통합 차량 관리</span>'
+          + '<div class="car-title">등록 차량 총 ' + carCount + '대 보유</div>'
+          + '<div class="car-subtitle">문경 행복한교회 사역 및 일상 차량 관리</div>'
+          + '</div>'
+          + '<button class="icon-btn" onclick="openAddModal()">➕ 기록 추가</button>'
+          + '</div>'
+          + '<div class="all-stats-grid">'
+          + '<div class="stat-box"><div class="stat-box-num">' + carCount + '대</div><div class="stat-box-lbl">관리 차량</div></div>'
+          + '<div class="stat-box"><div class="stat-box-num">' + recCount + '회</div><div class="stat-box-lbl">총 정비·지출</div></div>'
+          + '<div class="stat-box"><div class="stat-box-num" style="font-size:13px;">' + formatWon(totalCost) + '</div><div class="stat-box-lbl">총 누적비용</div></div>'
+          + '</div>'
+          + '<div style="margin-top: 14px;">'
+          + '<div style="font-size:12px; font-weight:700; color:var(--pickle-text-secondary,#6b7280); margin-bottom:4px;">차량별 누적 정비비용 비중</div>'
+          + carBreakdownHtml
+          + '</div>';
+        return;
+      }
+
+      const car = state.vehicles.find(v => v.id === currentCarFilter);
+      if (!car) return;
+
+      const carRecs = state.records.filter(r => r.carId === car.id);
+      const totalCost = carRecs.reduce((acc, r) => acc + (r.cost || 0), 0);
+
+      const oilRecs = carRecs.filter(r => r.category === "엔진/오일" && r.description.includes("엔진오일"));
+      const latestOil = oilRecs.length > 0 ? oilRecs[0] : null;
+
+      let oilStatusHtml = "";
+      if (latestOil && latestOil.km && car.currentKm) {
+        const interval = car.oilIntervalKm || 10000;
+        const nextOilKm = latestOil.km + interval;
+        const diffKm = nextOilKm - car.currentKm;
+        if (diffKm <= 0) {
+          oilStatusHtml = '<span class="badge-alert">교환 시기 도래!</span><div class="health-desc">' + formatKm(Math.abs(diffKm)) + ' 초과 (권장: ' + formatKm(nextOilKm) + ')</div>';
+        } else {
+          oilStatusHtml = '<span class="badge-ok">' + formatKm(diffKm) + ' 남음</span><div class="health-desc">예정: ' + formatKm(nextOilKm) + '</div>';
+        }
+      } else if (latestOil) {
+        oilStatusHtml = '<div class="health-value" style="font-size:12px;">' + latestOil.date + '</div><div class="health-desc">' + (latestOil.shop || "정비소") + '</div>';
+      } else {
+        oilStatusHtml = '<div class="health-desc">교환 기록 없음</div>';
+      }
+
+      let insHtml = "";
+      if (car.insurance) {
+        const expDate = new Date(car.insurance.expiry);
+        const today = new Date("2026-10-31");
+        const daysLeft = Math.ceil((expDate - today) / (1000 * 60 * 60 * 24));
+        if (daysLeft <= 30 && daysLeft > 0) {
+          insHtml = '<span class="badge-alert">만기 D-' + daysLeft + '일!</span><div class="health-desc">' + car.insurance.expiry + ' (' + car.insurance.company + ')</div>';
+        } else {
+          insHtml = '<div class="health-value" style="font-size:12px;">' + car.insurance.expiry + '</div><div class="health-desc">' + car.insurance.company + '</div>';
+        }
+      } else {
+        insHtml = '<div class="health-desc">-</div>';
+      }
+
+      board.innerHTML = '<div class="car-profile-header">'
+        + '<div>'
+        + '<span class="car-plate-badge">' + (car.plate || "번호 미등록") + '</span>'
+        + '<div class="car-title">' + car.name + '</div>'
+        + '<div class="car-subtitle">' + (car.modelYear ? car.modelYear + '년식 · ' : '') + (car.engine || '') + '</div>'
+        + '</div>'
+        + '<div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">'
+        + '<button class="car-spec-btn" onclick="openCertModal(\'' + car.id + '\')">📄 자동차등록증</button>'
+        + '</div>'
+        + '</div>'
+        + '<div class="health-grid">'
+        + '<div class="health-item"><div class="health-label">📍 현재 주행거리</div><div class="health-value">' + formatKm(car.currentKm) + '</div><div class="health-desc">누적 주행 기록</div></div>'
+        + '<div class="health-item"><div class="health-label">🛢️ 엔진오일 점검</div>' + oilStatusHtml + '</div>'
+        + '<div class="health-item"><div class="health-label">🛡️ 자동차보험</div>' + insHtml + '</div>'
+        + '<div class="health-item"><div class="health-label">💰 총 정비·지출</div><div class="health-value" style="font-size:13px;">' + formatWon(totalCost) + '</div><div class="health-desc">총 ' + carRecs.length + '건 기록</div></div>'
+        + '</div>';
+    }
+
+    function renderCatFilters() {
+      const container = document.getElementById("catFilterRow");
+      let html = "";
+      CATEGORIES.forEach(c => {
+        const active = currentCatFilter === c.id ? "active" : "";
+        html += '<span class="cat-chip ' + active + '" onclick="setCatFilter(\'' + c.id + '\')">' + c.label + '</span>';
+      });
+      container.innerHTML = html;
+    }
+
+    function renderRecords() {
+      const list = document.getElementById("recordList");
+      let filtered = [...state.records];
+
+      if (currentCarFilter !== "all") {
+        filtered = filtered.filter(r => r.carId === currentCarFilter);
+      }
+
+      if (currentCatFilter !== "all") {
+        filtered = filtered.filter(r => r.category === currentCatFilter);
+      }
+
+      if (searchQuery.trim()) {
+        const q = searchQuery.trim().toLowerCase();
+        filtered = filtered.filter(r => 
+          (r.description && r.description.toLowerCase().includes(q)) ||
+          (r.shop && r.shop.toLowerCase().includes(q)) ||
+          (r.date && r.date.includes(q))
+        );
+      }
+
+      filtered.sort((a, b) => {
+        if (currentSort === "date-desc") return (b.date || "").localeCompare(a.date || "");
+        if (currentSort === "date-asc") return (a.date || "").localeCompare(b.date || "");
+        if (currentSort === "cost-desc") return (b.cost || 0) - (a.cost || 0);
+        if (currentSort === "cost-asc") return (a.cost || 0) - (b.cost || 0);
+        if (currentSort === "km-desc") return (b.km || 0) - (a.km || 0);
+        return 0;
+      });
+
+      const filteredCost = filtered.reduce((acc, r) => acc + (r.cost || 0), 0);
+      document.getElementById("filteredCount").textContent = "총 " + filtered.length + "건의 기록";
+      document.getElementById("filteredCostTotal").textContent = "지출 합계: " + formatWon(filteredCost);
+
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="empty-state"><div style="font-size:32px; margin-bottom:8px;">🔍</div><div>해당 조건의 정비·지출 기록이 없습니다.</div></div>';
+        return;
+      }
+
+      let html = "";
+      filtered.forEach(r => {
+        const car = state.vehicles.find(v => v.id === r.carId);
+        const carTag = car ? (car.plate || car.name) : r.carId;
+        
+        let catClass = "cat-other";
+        if (r.category === "엔진/오일") catClass = "cat-oil";
+        else if (r.category === "타이어") catClass = "cat-tire";
+        else if (r.category === "전기/배터리") catClass = "cat-electric";
+        else if (r.category === "정비/수리") catClass = "cat-repair";
+        else if (r.category === "필터/소모품") catClass = "cat-filter";
+        else if (r.category === "보험/세금") catClass = "cat-insurance";
+        else if (r.category === "주유") catClass = "cat-fuel";
+        else if (r.category === "점검/정비") catClass = "cat-check";
+
+        html += '<article class="record-item">'
+          + '<div class="rec-top">'
+          + '<div class="rec-date-car">'
+          + '<span>📅 ' + (r.date || "날짜 미기록") + '</span>'
+          + (currentCarFilter === 'all' ? '<span class="rec-car-tag">' + carTag + '</span>' : '')
+          + '</div>'
+          + '<span class="rec-cat-tag ' + catClass + '">' + r.category + '</span>'
+          + '</div>'
+          + '<div class="rec-mid">'
+          + '<span class="rec-desc">' + (r.description || "상세 내역 없음") + '</span>'
+          + '<span class="rec-cost">' + formatWon(r.cost) + '</span>'
+          + '</div>'
+          + '<div class="rec-bot">'
+          + '<div class="rec-km-shop">'
+          + (r.km ? '<span>📍 ' + formatKm(r.km) + '</span>' : '')
+          + (r.shop ? '<span>🏢 ' + r.shop + '</span>' : '')
+          + '</div>'
+          + '<div class="rec-actions">'
+          + '<button class="btn-text" onclick="openEditModal(\'' + r.id + '\')">수정</button>'
+          + '<button class="btn-text btn-text-del" onclick="deleteRecord(\'' + r.id + '\')">삭제</button>'
+          + '</div>'
+          + '</div>'
+          + '</article>';
+      });
+
+      list.innerHTML = html;
+    }
+
+    function setCarFilter(carId) {
+      currentCarFilter = carId;
+      render();
+    }
+    function setCatFilter(catId) {
+      currentCatFilter = catId;
+      render();
+    }
+    function onSearchChange() {
+      searchQuery = document.getElementById("searchInput").value;
+      renderRecords();
+    }
+    function onSortChange() {
+      currentSort = document.getElementById("sortSelect").value;
+      renderRecords();
+    }
+
+    function openModal(id) {
+      document.getElementById(id).style.display = "flex";
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+    function closeModalOnOverlay(e, id) {
+      if (e.target.id === id) closeModal(id);
+    }
+
+    function openAddModal() {
+      document.getElementById("recordModalTitle").textContent = "새 정비·지출 등록";
+      document.getElementById("editRecordId").value = "";
+      document.getElementById("recordForm").reset();
+
+      const select = document.getElementById("modalCarId");
+      select.innerHTML = state.vehicles.map(v => 
+        '<option value="' + v.id + '" ' + (v.id === (currentCarFilter === 'all' ? 'carnival' : currentCarFilter) ? 'selected' : '') + '>' + v.name + ' (' + v.plate + ')</option>'
+      ).join("");
+
+      document.getElementById("modalDate").value = "2026-10-31";
+      openModal("recordModal");
+    }
+
+    function openEditModal(recordId) {
+      const r = state.records.find(item => item.id === recordId);
+      if (!r) return;
+
+      document.getElementById("recordModalTitle").textContent = "정비·지출 수정";
+      document.getElementById("editRecordId").value = r.id;
+
+      const select = document.getElementById("modalCarId");
+      select.innerHTML = state.vehicles.map(v => 
+        '<option value="' + v.id + '" ' + (v.id === r.carId ? 'selected' : '') + '>' + v.name + ' (' + v.plate + ')</option>'
+      ).join("");
+
+      document.getElementById("modalDate").value = r.date || "";
+      document.getElementById("modalCategory").value = r.category || "정비/수리";
+      document.getElementById("modalDesc").value = r.description || "";
+      document.getElementById("modalCost").value = r.cost || 0;
+      document.getElementById("modalKm").value = r.km || "";
+      document.getElementById("modalShop").value = r.shop || "";
+
+      openModal("recordModal");
+    }
+
+    function setDescTag(text, cat) {
+      document.getElementById("modalDesc").value = text;
+      if (cat) document.getElementById("modalCategory").value = cat;
+    }
+    function setShopTag(text) {
+      document.getElementById("modalShop").value = text;
+    }
+
+    function handleRecordSubmit(e) {
+      e.preventDefault();
+      const editId = document.getElementById("editRecordId").value;
+      const carId = document.getElementById("modalCarId").value;
+      const date = document.getElementById("modalDate").value;
+      const category = document.getElementById("modalCategory").value;
+      const description = document.getElementById("modalDesc").value.trim();
+      const cost = Number(document.getElementById("modalCost").value) || 0;
+      const kmVal = document.getElementById("modalKm").value;
+      const km = kmVal ? Number(kmVal) : null;
+      const shop = document.getElementById("modalShop").value.trim();
+
+      let nextRecords = [...state.records];
+      let signalMsg = "";
+
+      if (editId) {
+        nextRecords = nextRecords.map(r => r.id === editId ? { ...r, carId, date, category, description, cost, km, shop } : r);
+        signalMsg = carId + " 차량의 " + description + " 내역을 수정했습니다.";
+      } else {
+        const newRec = {
+          id: "rec_" + Date.now(),
+          carId,
+          date,
+          category,
+          description,
+          cost,
+          km,
+          shop
+        };
+        nextRecords = [newRec, ...nextRecords];
+        signalMsg = carId + " 차량에 " + description + " (" + formatWon(cost) + ") 정비를 새로 등록했습니다.";
+      }
+
+      const nextVehicles = state.vehicles.map(v => {
+        if (v.id === carId && km && (!v.currentKm || km > v.currentKm)) {
+          return { ...v, currentKm: km };
+        }
+        return v;
+      });
+
+      commit({ ...state, records: nextRecords, vehicles: nextVehicles }, signalMsg);
+      closeModal("recordModal");
+    }
+
+    function deleteRecord(recordId) {
+      const r = state.records.find(item => item.id === recordId);
+      if (!r) return;
+      if (!confirm("'" + r.description + "' 내역을 정말 삭제하시겠습니까?")) return;
+
+      const nextRecords = state.records.filter(item => item.id !== recordId);
+      commit({ ...state, records: nextRecords }, "'" + r.description + "' 정비 내역을 삭제했습니다.");
+    }
+
+    function openCertModal(carId) {
+      const car = state.vehicles.find(v => v.id === carId) || state.vehicles[0];
+      const body = document.getElementById("certModalBody");
+
+      let specsHtml = "";
+      if (car.specs) {
+        specsHtml = Object.entries(car.specs).map(([k, v]) => '<tr><th>' + k + '</th><td>' + v + '</td></tr>').join("");
+      }
+
+      body.innerHTML = '<div class="cert-box">'
+        + '<div class="cert-title-area">'
+        + '<div style="font-size:10px; color:#666; margin-bottom:2px;">[별지 제1호 서식]</div>'
+        + '<div class="cert-h1">자 동 차 등 록 증</div>'
+        + '</div>'
+        + '<table class="cert-table">'
+        + '<tr>'
+        + '<th>자동차등록번호</th><td style="font-weight:bold; font-size:13px;">' + (car.plate || '-') + '</td>'
+        + '<th>차 종</th><td>' + (car.specs && car.specs['승차정원'] ? car.specs['승차정원'] + ' 대형승용' : '승용') + '</td>'
+        + '</tr>'
+        + '<tr>'
+        + '<th>차 명</th><td>' + car.name + '</td>'
+        + '<th>형식 및 모델연도</th><td>' + (car.modelCode || '-') + ' (' + (car.modelYear || '-') + ')</td>'
+        + '</tr>'
+        + '<tr>'
+        + '<th>차 대 번 호</th><td colspan="3" style="font-family:monospace; font-weight:bold;">' + (car.vin || '-') + '</td>'
+        + '</tr>'
+        + '<tr>'
+        + '<th>원동기 형식</th><td>' + (car.engine || '-') + '</td>'
+        + '<th>외장 / 내장색상</th><td>' + (car.color || '표기생략') + '</td>'
+        + '</tr>'
+        + '<tr>'
+        + '<th>소 유 자</th><td>' + (car.owner || '최성광') + '</td>'
+        + '<th>최초 등록일</th><td>' + (car.regDate || car.acquireDate || '-') + '</td>'
+        + '</tr>'
+        + '<tr>'
+        + '<th>사용 본거지</th><td colspan="3">경상북도 문경시 신흥시장길 23-4 (흥덕동)</td>'
+        + '</tr>'
+        + '</table>'
+        + '<div style="font-size:11px; font-weight:bold; margin:8px 0 4px 2px;">[ 주요 제원 정보 ]</div>'
+        + '<table class="cert-table">' + specsHtml + '</table>'
+        + '<div class="cert-stamp-area">'
+        + '<span>문 경 시 장</span>'
+        + '<span class="cert-stamp">문경시장인</span>'
+        + '</div>'
+        + '</div>';
+      openModal("certModal");
+    }
+
+    function openCarModal() {
+      document.getElementById("carForm").reset();
+      openModal("carModal");
+    }
+
+    function handleCarSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById("newCarId").value.trim().toLowerCase();
+      const name = document.getElementById("newCarName").value.trim();
+      const plate = document.getElementById("newCarPlate").value.trim();
+      const year = document.getElementById("newCarYear").value.trim();
+      const kmVal = document.getElementById("newCarKm").value;
+      const currentKm = kmVal ? Number(kmVal) : null;
+      const intervalVal = document.getElementById("newCarOilInterval").value;
+      const oilIntervalKm = intervalVal ? Number(intervalVal) : 10000;
+
+      if (state.vehicles.some(v => v.id === id)) {
+        alert("이미 존재하는 차량 ID입니다.");
+        return;
+      }
+
+      const newCar = {
+        id,
+        name,
+        plate,
+        modelYear: year,
+        currentKm,
+        oilIntervalKm,
+        isCurrent: true
+      };
+
+      const nextVehicles = [...state.vehicles, newCar];
+      currentCarFilter = id;
+      commit({ ...state, vehicles: nextVehicles }, "새 차량 " + name + "(" + plate + ")을 차계부에 등록했습니다.");
+      closeModal("carModal");
+    }
+
+    function exportCSV() {
+      let csvContent = "\uFEFF차종,수리일자,분류,수리내용,비용,주행거리,정비업체\n";
+      state.records.forEach(r => {
+        const car = state.vehicles.find(v => v.id === r.carId);
+        const carName = car ? car.name : r.carId;
+        const row = [
+          '"' + carName + '"',
+          '"' + (r.date || '') + '"',
+          '"' + (r.category || '') + '"',
+          '"' + (r.description || '').replace(/"/g, '""') + '"',
+          r.cost || 0,
+          r.km || '',
+          '"' + (r.shop || '').replace(/"/g, '""') + '"'
+        ];
+        csvContent += row.join(",") + "\n";
+      });
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "차계부_통합데이터_" + new Date().toISOString().slice(0,10) + ".csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function exportJSON() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "차계부_전체백업_" + new Date().toISOString().slice(0,10) + ".json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    render();
+  </script>
+</body>
+</html>
