@@ -4,258 +4,481 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>목회 비서 사역 타임라인 | 최성광 목사 & Happy초이</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  --bg:#f8f9fa; --surface:#ffffff; --fg:#1e293b; --muted:#64748b; --line:#e2e8f0;
-  --accent:#2563eb; --accent-soft:#eff6ff; --accent-fg:#ffffff;
-  --tag-bg:#f1f5f9; --tag-fg:#475569;
-  --c-call:#b4541a; --c-call-soft:#fbe6d6;
-  --c-tech:#2b66d9; --c-tech-soft:#dde8fb;
-  --c-theo:#0b7a85; --c-theo-soft:#d3eef0;
-  --c-doc:#b0357e; --c-doc-soft:#f8dfee;
+  --bg:#f8fafc; --surface:#ffffff; --surface-sub:#f1f5f9; --fg:#0f172a; --muted:#64748b; --line:#e2e8f0;
+  --accent:#2563eb; --accent-soft:#eff6ff; --accent-hover:#1d4ed8;
+  --c-call:#d97706; --c-call-soft:#fef3c7; --c-call-border:#fde68a;
+  --c-tech:#2563eb; --c-tech-soft:#dbeafe; --c-tech-border:#bfdbfe;
+  --c-theo:#0d9488; --c-theo-soft:#ccfbf1; --c-theo-border:#99f6e4;
+  --c-doc:#db2777; --c-doc-soft:#fce7f3; --c-doc-border:#fbcfe8;
+  --c-care:#7c3aed; --c-care-soft:#ede9fe; --c-care-border:#ddd6fe;
   --font-display:'Do Hyeon','Noto Sans KR',sans-serif;
-  --font-body:'Noto Sans KR',system-ui,sans-serif;
+  --font-body:'Noto Sans KR',system-ui,-apple-system,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0f172a; --surface:#1e293b; --fg:#f8fafc; --muted:#94a3b8; --line:#334155;
-  --accent:#60a5fa; --accent-soft:#172554; --accent-fg:#0f172a;
-  --tag-bg:#334155; --tag-fg:#cbd5e1;
-  --c-call:#f09a62; --c-call-soft:#3d2a1c;
-  --c-tech:#7aa7ff; --c-tech-soft:#1b2b4a;
-  --c-theo:#3cc3cf; --c-theo-soft:#123c42;
-  --c-doc:#f08ac4; --c-doc-soft:#451d35;
+  --bg:#0b1120; --surface:#1e293b; --surface-sub:#334155; --fg:#f8fafc; --muted:#94a3b8; --line:#334155;
+  --accent:#38bdf8; --accent-soft:#082f49; --accent-hover:#0284c7;
+  --c-call:#fbbf24; --c-call-soft:#451a03; --c-call-border:#78350f;
+  --c-tech:#60a5fa; --c-tech-soft:#172554; --c-tech-border:#1e3a8a;
+  --c-theo:#2dd4bf; --c-theo-soft:#134e4a; --c-theo-border:#115e59;
+  --c-doc:#f472b6; --c-doc-soft:#500724; --c-doc-border:#831843;
+  --c-care:#a78bfa; --c-care-soft:#2e1065; --c-care-border:#4c1d95;
   color-scheme:dark}}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font:16px/1.7 var(--font-body);margin:0;padding:40px 20px 80px}
-.wrap{max-width:860px;margin:0 auto}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 var(--font-body);margin:0;padding:40px 20px 100px}
+.wrap{max-width:920px;margin:0 auto}
 
-header{margin-bottom:48px;text-align:center}
-.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
-h1{font-family:var(--font-display);font-size:clamp(30px,5vw,44px);margin:8px 0 12px;font-weight:400}
-header p{color:var(--muted);font-size:16px;max-width:54ch;margin:0 auto}
+/* Header */
+header{margin-bottom:36px;text-align:center}
+.badge-top{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent);
+  padding:4px 14px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:14px;
+}
+h1{font-family:var(--font-display);font-size:clamp(30px,5.5vw,46px);margin:0 0 12px;font-weight:400;letter-spacing:-0.5px}
+header p{color:var(--muted);font-size:16px;max-width:62ch;margin:0 auto 20px}
 
-.timeline{position:relative;margin-top:32px;padding-left:32px}
+/* Stats Ribbon */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;
+  background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:16px;margin-bottom:32px;box-shadow:0 1px 3px rgba(0,0,0,0.02);
+}
+.stat-item{text-align:center;padding:8px}
+.stat-num{font-family:var(--font-display);font-size:26px;color:var(--accent);margin-bottom:2px}
+.stat-label{font-size:12.5px;color:var(--muted);font-weight:600}
+
+/* Filter Buttons */
+.filter-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.filter-btn{
+  background:var(--surface);color:var(--muted);border:1px solid var(--line);
+  padding:7px 16px;border-radius:99px;font-size:13.5px;font-weight:600;cursor:pointer;
+  transition:all .15s ease;font-family:inherit;
+}
+.filter-btn:hover{color:var(--fg);border-color:var(--muted)}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+
+/* Timeline Layout */
+.timeline{position:relative;margin-top:20px;padding-left:36px}
 .timeline::before{
-  content:'';position:absolute;left:7px;top:10px;bottom:10px;width:3px;
-  background:var(--line);border-radius:2px;
+  content:'';position:absolute;left:11px;top:16px;bottom:16px;width:3px;
+  background:linear-gradient(to bottom, var(--accent) 0%, var(--line) 90%);
+  border-radius:3px;
 }
 
 /* Day Block */
-.day-group{margin-bottom:52px;position:relative}
+.day-group{margin-bottom:56px;position:relative}
 .day-header{
   position:relative;margin-bottom:20px;
 }
 .day-header::before{
-  content:'';position:absolute;left:-32px;top:6px;width:17px;height:17px;
-  border-radius:50%;background:var(--accent);border:3px solid var(--bg);
+  content:'';position:absolute;left:-36px;top:7px;width:19px;height:19px;
+  border-radius:50%;background:var(--accent);border:3.5px solid var(--bg);
   box-shadow:0 0 0 2px var(--accent);
 }
-.day-title{font-family:var(--font-display);font-size:24px;color:var(--fg);margin:0;display:flex;align-items:center;gap:10px}
-.day-badge{font-size:13px;font-family:var(--font-body);font-weight:700;padding:3px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.day-title{font-family:var(--font-display);font-size:25px;color:var(--fg);margin:0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.day-badge{font-size:12.5px;font-family:var(--font-body);font-weight:700;padding:3px 11px;border-radius:99px}
+.badge-today{background:#dc2626;color:#ffffff}
+.badge-weekend{background:var(--accent-soft);color:var(--accent)}
+.badge-past{background:var(--surface-sub);color:var(--muted)}
 
 /* Event Card */
 .event-card{
-  background:var(--surface);border:1px solid var(--line);border-radius:14px;
-  padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.02);
-  transition:transform 0.15s ease,box-shadow 0.15s ease;
+  background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:22px;margin-bottom:18px;box-shadow:0 2px 5px rgba(0,0,0,0.02);
+  transition:transform 0.15s ease,box-shadow 0.15s ease,border-color 0.15s ease;
 }
-.event-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.05)}
-.event-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px}
-.event-tag{font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px}
-.tag-call{background:var(--c-call-soft);color:var(--c-call)}
-.tag-tech{background:var(--c-tech-soft);color:var(--c-tech)}
-.tag-theo{background:var(--c-theo-soft);color:var(--c-theo)}
-.tag-doc{background:var(--c-doc-soft);color:var(--c-doc)}
-.event-title{font-size:18px;font-weight:700;margin:0 0 6px;color:var(--fg)}
-.event-desc{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0}
-.event-links{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.event-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.06);border-color:var(--accent)}
+.event-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.event-tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:6px;border:1px solid transparent}
+.tag-theo{background:var(--c-theo-soft);color:var(--c-theo);border-color:var(--c-theo-border)}
+.tag-tech{background:var(--c-tech-soft);color:var(--c-tech);border-color:var(--c-tech-border)}
+.tag-call{background:var(--c-call-soft);color:var(--c-call);border-color:var(--c-call-border)}
+.tag-doc{background:var(--c-doc-soft);color:var(--c-doc);border-color:var(--c-doc-border)}
+.tag-care{background:var(--c-care-soft);color:var(--c-care);border-color:var(--c-care-border)}
+.event-time{font-size:12.5px;color:var(--muted);font-weight:600}
+
+.event-title{font-size:18.5px;font-weight:700;margin:0 0 8px;color:var(--fg);display:flex;align-items:flex-start;gap:8px;line-height:1.45}
+.event-desc{color:var(--muted);font-size:14.5px;line-height:1.7;margin:0}
+.event-highlight{
+  margin-top:12px;background:var(--surface-sub);border-radius:8px;padding:10px 14px;
+  font-size:13.5px;color:var(--fg);border-left:3px solid var(--accent);
+}
+.event-highlight strong{color:var(--accent)}
+
+.event-links{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
 .event-links a{
   font-size:13px;font-weight:700;color:var(--accent);background:var(--accent-soft);
-  padding:4px 10px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;
+  padding:5px 12px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:5px;
+  border:1px solid transparent;transition:all .15s ease;
 }
-.event-links a:hover{opacity:0.85}
+.event-links a:hover{background:var(--accent);color:#ffffff}
 
-.back-home{text-align:center;margin-top:60px}
+/* Footer Back Link */
+.back-home{text-align:center;margin-top:64px}
 .back-home a{
   font-size:15px;font-weight:700;color:var(--accent);text-decoration:none;
-  padding:10px 20px;border-radius:8px;background:var(--accent-soft);display:inline-block;
+  padding:12px 26px;border-radius:99px;background:var(--accent-soft);display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--line);transition:all .15s ease;
 }
+.back-home a:hover{background:var(--accent);color:#ffffff;border-color:var(--accent)}
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <div class="eyebrow">Ministry & AI Secretary Journal</div>
+    <div class="badge-top">✨ 최성광 담임목사 & Happy초이 동역 일지</div>
     <h1>목회 비서 사역 타임라인</h1>
-    <p>최성광 담임목사님과 전속 비서 Happy초이가 동역하며 완수한 사역과 테크 프로젝트를 날짜별로 정갈하게 기록한 디지털 업무 일지입니다.</p>
+    <p>경북 문경 점촌 행복한교회 최성광 목사님 곁에서 24시간 동역하며 완수한 신학 연구, 테크 엔지니어링, 목회 전화 대행 및 사역 행정의 날짜별 실전 기록입니다.</p>
+
+    <!-- Stats Ribbon -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">5일차</div>
+        <div class="stat-label">동역 여정</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">25+</div>
+        <div class="stat-label">완수 사역 과업</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12회</div>
+        <div class="stat-label">목회 전화 대행</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5종</div>
+        <div class="stat-label">서재 웹 앱·리더 배포</div>
+      </div>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="filter-nav">
+      <button class="filter-btn active" onclick="filterEvents('all')">전체 보기</button>
+      <button class="filter-btn" onclick="filterEvents('theo')">📖 신학 연구·리더</button>
+      <button class="filter-btn" onclick="filterEvents('tech')">💻 테크·엔지니어링</button>
+      <button class="filter-btn" onclick="filterEvents('call')">📞 목회 전화 대행</button>
+      <button class="filter-btn" onclick="filterEvents('doc')">📋 행정·차량·디자인</button>
+    </div>
   </header>
 
   <div class="timeline">
 
-    <!-- 2026-10-30 -->
+    <!-- ==========================================
+         2026-11-01 (주일)
+         ========================================== -->
+    <div class="day-group">
+      <div class="day-header">
+        <h2 class="day-title">
+          2026년 11월 1일 (주일)
+          <span class="day-badge badge-today">오늘</span>
+        </h2>
+      </div>
+
+      <!-- 107문 모션 슬라이드 -->
+      <div class="event-card" data-cat="theo tech">
+        <div class="event-top">
+          <span class="event-tag tag-theo">신학 프레젠테이션</span>
+          <span class="event-time">새벽 00:34</span>
+        </div>
+        <h3 class="event-title">🎬 웨스트민스터 소요리문답 제107문 12장 인터랙티브 HTML 모션 슬라이드 구축 및 배포</h3>
+        <p class="event-desc">목사님이 제미나이로 생성하신 8가지 '최목사' 캐릭터 표정(손인사, 엄지척, 기도, 파이팅 등)과 노트북LM 구상을 반영하여, 정적인 이미지를 넘어 브라우저에서 생동감 있게 넘겨보는 풀스크린 HTML 모션 발표 엔진 완성. 장년 성도들을 위한 고대비 원클릭 글자 확대(A+), 주제별 12개 벡터 픽토그램, 8.5초 자동 재생, 목회자 전용 설교 노트(N) 탑재.</p>
+        <div class="event-highlight">
+          <strong>핵심 가치:</strong> 순백색 배경과 선명한 빨간색 강조 체계로 주기도문 마지막 송영("대개 나라와 권세와 영광이...")과 "아멘"의 두 기둥(확신과 열망)을 개혁주의 정통 강해로 시각화.
+        </div>
+        <div class="event-links">
+          <a href="catechism-107.html" target="_blank">🎬 107문 모션 슬라이드 열기 →</a>
+        </div>
+      </div>
+
+      <!-- 신수복 목사님 신장이식 일정 등록 -->
+      <div class="event-card" data-cat="doc">
+        <div class="event-top">
+          <span class="event-tag tag-care">목회 캘린더</span>
+          <span class="event-time">새벽 00:34</span>
+        </div>
+        <h3 class="event-title">🙏 신수복 목사님 & 권복진 사모님 생체신장이식 입원·수술 3건 구글 캘린더 정밀 등록</h3>
+        <p class="event-desc">신수복 목사님의 수술 확정 소식을 접수하고 구글 캘린더에 1) 11월 6일(금) 14시 신수복 목사님(수혜자) 입원, 2) 11월 10일(화) 14시 권복진 사모님(공여자) 입원, 3) 11월 11일(수) 07:30 생체신장이식 수술(중환자실 및 6개월 안정기 메모 포함)을 오차 없이 등록. 특히 11월 10일 에덴요양원 일정과의 30분 겹침 사실을 사전에 감지해 목사님께 보고 완료.</p>
+      </div>
+
+      <!-- 에덴 최인자 사모님 안부 전화 -->
+      <div class="event-card" data-cat="call">
+        <div class="event-top">
+          <span class="event-tag tag-call">전화 대행</span>
+          <span class="event-time">오후 14:46</span>
+        </div>
+        <h3 class="event-title">📞 에덴요양원 최인자 사모님(대표님) 주일 축복 안부 전화 대행</h3>
+        <p class="event-desc">에덴요양원 최인자 사모님께 전화를 걸어(49초 통화) "오늘 주일 예배 은혜롭게 잘 마치시고 한 주간도 주님 안에서 승리하시기를 바란다"는 목사님의 따뜻한 안부를 전달. 사모님의 "너무 고맙고 감사하다, 목사님이 시간 되실 때 다시 한번 전화해 줄 수 있냐"는 다정한 회신을 접수하고 즉시 목사님께 보고 및 직통 전화 카드 안내.</p>
+      </div>
+
+      <!-- 클루스터 주석 매물 조사 및 실체 규명 -->
+      <div class="event-card" data-cat="theo">
+        <div class="event-top">
+          <span class="event-tag tag-theo">서지 연구 & 탐색</span>
+          <span class="event-time">오전 09:19</span>
+        </div>
+        <h3 class="event-title">📚 클루스터 주석 전 인터넷 중고 매물 조사 및 입문서 vs 대작 주석 실체 규명</h3>
+        <p class="event-desc">예스24에서 품절 취소된 『하나님의 강력한 위로』를 알라딘·교보·예스24·북코아 등에서 전수 조사(실재고 0건/절판 확인). 더불어 서지 분석을 통해 취소 도서가 1,272쪽 대작 주석이 아닌 1990년 입문 소책자(223쪽) 번역본이며, 원서 『Our Only Comfort』는 국내 미번역 상태임을 명확히 판별. 천안 신대원 도서관 소장 대출 및 영한 대조 리더 직행의 3대 실질 대안 제시.</p>
+      </div>
+
+      <!-- 주간 사역 및 날씨 브리핑 -->
+      <div class="event-card" data-cat="doc">
+        <div class="event-top">
+          <span class="event-tag tag-doc">목회 브리핑</span>
+          <span class="event-time">오전 & 오후</span>
+        </div>
+        <h3 class="event-title">☀️ 주일 사역·주간 일정 브리핑 & 11/2 포항 시찰 야유회 쾌청 날씨 실시간 확인</h3>
+        <p class="event-desc">주일 문경 오후 우천 예보를 확인하여 캘린더의 차량 세차 연기를 권유하고 우산을 챙기시도록 안내. 내일(11/2) 포항 문경시찰 단합 야유회 날씨를 애플 기상 전산으로 정밀 분석하여 새벽 비가 그친 뒤 낮 최고 17°C의 맑고 쾌적한 가을 날씨임을 사전 확인 보고.</p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         2026-10-31 (토요일)
+         ========================================== -->
+    <div class="day-group">
+      <div class="day-header">
+        <h2 class="day-title">
+          2026년 10월 31일 (토요일)
+          <span class="day-badge badge-weekend">부산 예식 & 차계부·차박 연구</span>
+        </h2>
+      </div>
+
+      <!-- 스마트 차계부 웹 앱 & 위젯 -->
+      <div class="event-card" data-cat="tech doc">
+        <div class="event-top">
+          <span class="event-tag tag-tech">스마트 차량 관리</span>
+          <span class="event-time">밤 23:27</span>
+        </div>
+        <h3 class="event-title">🚗 노션 차계부 52건 복원 및 다차종(카니발·로체·SM520) 스마트 차계부 구축</h3>
+        <p class="event-desc">목사님이 올려주신 노션 백업 압축파일에서 3대 차량 정보와 52건의 정비 이력을 온전히 추출. 대한민국 관공서 규격의 디지털 자동차등록증 팝업(카니발 SWP 스노우화이트펄 도색코드 등 제원 반영), 차종별 탭 전환, 엔진오일 교환 주기(89,785km) 및 현대해상 자동차보험(11/24) D-Day 알림을 탑재한 모바일 위젯과 Vercel 서재 웹 앱을 동시 완성해 배포.</p>
+        <div class="event-links">
+          <a href="car-ledger.html" target="_blank">🚗 스마트 차계부 웹 앱 열기 →</a>
+        </div>
+      </div>
+
+      <!-- 카니발 9인승 차박 & 평탄화 솔루션 -->
+      <div class="event-card" data-cat="doc">
+        <div class="event-top">
+          <span class="event-tag tag-doc">차박 & 공간 설계</span>
+          <span class="event-time">오전 10:40</span>
+        </div>
+        <h3 class="event-title">🏕️ 더 뉴 카니발 9인승 부부 낭만 차박 & 다이소 32cm 스툴 평탄화 공식 도출</h3>
+        <p class="event-desc">인포테인먼트(YP_PE) 판독으로 3세대 페이스리프트 '더 뉴 카니발' 모델을 특정. 전국 휴게소 샤워실의 남성 전용 한계를 짚고 IC 5분 컷 국민체육센터 공공 수영장(3~5천 원) 샤워 연계 코스를 개발. 에어매트 바람 빼는 수고를 없앤 슈퍼싱글(SS, 110cm×7cm) 3단 접이식 토퍼와, 9인승 2열 통로 꺼짐을 완벽히 메우는 다이소 캠핑 접이식 스툴(품번 1056089, 높이 32cm)의 완벽한 5천 원 평탄화 솔루션 도출.</p>
+      </div>
+
+      <!-- 석대교회 김호영 목사님 부부 안부 전화 -->
+      <div class="event-card" data-cat="call">
+        <div class="event-top">
+          <span class="event-tag tag-call">전화 대행</span>
+          <span class="event-time">낮 13:08</span>
+        </div>
+        <h3 class="event-title">📞 석대교회 김호영 목사님 부부(이정순 사모님) 수술 후 안부 전화 대행</h3>
+        <p class="event-desc">기기 연락처 연동 승인 후 수술 회복 중이신 김호영 목사님의 사모님인 이정순 사모님께 전화를 걸어 1분 7초간 통화 성사. 사모님으로부터 "아주 좋아지고 있습니다. 며칠 후 볼 텐데 기도해 주시고 신경 써 주셔서 감사하다"는 건강 호전 소식과 각별한 감사를 전해 받아 목사님께 상세 보고.</p>
+      </div>
+
+      <!-- 보승카공업사 엔진오일 교체처 확인 -->
+      <div class="event-card" data-cat="call doc">
+        <div class="event-top">
+          <span class="event-tag tag-call">차량 정비 탐색</span>
+          <span class="event-time">오후 15:17</span>
+        </div>
+        <h3 class="event-title">🔧 점촌 흥덕동 카니발 엔진오일 교체처 탐색 및 보승카공업사 현장 영업 확인</h3>
+        <p class="event-desc">부산 결혼식에서 귀가하신 목사님의 자택(신흥시장길 23-4) 기준 1.2km 거리의 정비소 3곳(보승카, 신흥카, 조은카)을 카카오맵·TMAP으로 즉시 특정. 전화 대행을 통해 보승카공업사 사장님이 현장에 계시며 영업 중인 사실을 확인하여 3분 거리 현장 방문 안내.</p>
+      </div>
+
+      <!-- 부산 결혼식 이동 보좌 -->
+      <div class="event-card" data-cat="doc">
+        <div class="event-top">
+          <span class="event-tag tag-doc">이동 보좌</span>
+          <span class="event-time">오전 07:08</span>
+        </div>
+        <h3 class="event-title">🚗 부산 W웨딩홀 결혼식 이동 동선(236km) 안내 및 주말 아침 브리핑</h3>
+        <p class="event-desc">정태혁·김은경 결혼식 참석을 위해 문경에서 부산까지의 실시간 도로망(236km, 2시간 47분)을 계산하여 07시 50분 전 출발을 권유하고, 맑은 날씨(문경 16°C, 부산 21°C)와 지메일 중요 메일을 종합 브리핑.</p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         2026-10-30 (금요일)
+         ========================================== -->
     <div class="day-group">
       <div class="day-header">
         <h2 class="day-title">
           2026년 10월 30일 (금요일)
-          <span class="day-badge">오늘</span>
+          <span class="day-badge badge-weekend">신학 대량 추출 & OBS 음향 완성</span>
         </h2>
       </div>
 
-      <div class="event-card">
+      <!-- 후크세마 개혁교의학 영한 대조 리더 -->
+      <div class="event-card" data-cat="theo tech">
+        <div class="event-top">
+          <span class="event-tag tag-theo">대량 신학 자료화</span>
+          <span class="event-time">오후 16:52</span>
+        </div>
+        <h3 class="event-title">📖 허먼 후크세마 『개혁교의학』 61챕터 261만 자 추출 완주 & 영한 대조 리더 구축</h3>
+        <p class="event-desc">영어 원서 텍스트의 막막함을 호소하신 목사님을 위해 61개 전 챕터(411,358단어, 261만 자)를 고속 파이프라인으로 전수 추출 및 정밀 검증. 문단별 1:1 영한 대조 번역 뷰어, 성경 구절 하이라이트, 글자 크기 조절이 탑재된 전용 반응형 대조 리더를 구축하여 Vercel 서재에 배포 완료.</p>
+        <div class="event-links">
+          <a href="theology/reformed-dogmatics-reader.html" target="_blank">📖 개혁교의학 영한 대조 리더 열기 →</a>
+        </div>
+      </div>
+
+      <!-- OBS 신디사이저 & 마이크 황금 필터 체인 -->
+      <div class="event-card" data-cat="tech">
+        <div class="event-top">
+          <span class="event-tag tag-tech">음향 엔지니어링</span>
+          <span class="event-time">밤 20:20</span>
+        </div>
+        <h3 class="event-title">🎛️ 강대상 신디사이저·마이크 OBS 오디오 120Hz 험 노이즈 제거 & 황금 체인 처방</h3>
+        <p class="event-desc">OBS 4차 녹화 영상의 주파수 스펙트럼 정밀 분석을 통해 120Hz/60Hz 전원 그라운드 루프 험 노이즈를 적발하고, RNNoise가 신디 잔향을 갉아먹는 원인을 규명. ReaFIR 노이즈 프로파일 학습법과 ReaEQ·ReaFIR·게인·리미터의 5단계 황금 필터 체인을 처방하여 건반 잔향 끊김과 잡음을 완벽 해결("120헤르쯔 캐치 전문가였다" 호평).</p>
+      </div>
+
+      <!-- 도서 파이프라인 엔진 & 웹 스튜디오 -->
+      <div class="event-card" data-cat="tech">
         <div class="event-top">
           <span class="event-tag tag-tech">파이프라인 엔진</span>
+          <span class="event-time">오후 16:30</span>
         </div>
-        <h3 class="event-title">📚 대용량 도서 4단계 병렬 추출·검증 파이프라인(book_pipeline.py) 구축</h3>
-        <p class="event-desc">목사님의 4단계 설계(분할➔병렬처리➔검증➔빌드)를 기반으로 고성능 파이썬 파이프라인 엔진 완성. 후크세마 752쪽 PDF를 대상으로 실전 테스트를 수행하여 95초 만에 20개 챕터(261,233단어) 분할, 성경 인용(593개) 및 각주(9개) 카운트 2중 검증 완료.</p>
+        <h3 class="event-title">📚 대용량 도서 4단계 병렬 추출·검증 파이프라인 및 브라우저 웹 스튜디오 구축</h3>
+        <p class="event-desc">목사님의 4단계 설계(분할➔병렬처리➔검증➔빌드)를 기반으로 고성능 파이썬 파이프라인 엔진(book_pipeline.py)과 웹 스튜디오 완성. 목사님 PC에서 더블클릭으로 즉시 실행되는 배치 파일 및 로컬 웹 인터페이스를 탑재하여 대용량 신학 서적을 자유롭게 디지털화할 수 있는 환경 구축.</p>
         <div class="event-links">
           <a href="https://github.com/happy1ch/do/blob/main/ai/book_pipeline.py" target="_blank">GitHub 소스코드 보기 →</a>
         </div>
       </div>
 
-      <div class="event-card">
-        <div class="event-top">
-          <span class="event-tag tag-call">목회 전화 대행</span>
-        </div>
-        <h3 class="event-title">📞 최무건 집사님 안부 전화 대행</h3>
-        <p class="event-desc">최무건 집사님께 직접 전화를 걸어(53초 통화) 점심 식사 든든히 챙겨 드시고 일교차에 건강 유의하시라는 목사님의 따뜻한 안부를 전달. 집사님의 담백한 회신을 목사님께 보고 완료.</p>
-      </div>
-
-      <div class="event-card">
+      <!-- AI 가이드 8장 집필 -->
+      <div class="event-card" data-cat="doc tech">
         <div class="event-top">
           <span class="event-tag tag-doc">AI 가이드 집필</span>
+          <span class="event-time">낮 12:39</span>
         </div>
         <h3 class="event-title">📖 『AI 시작 가이드』 제8장 "24시간 나만의 AI 개인 비서, 피클(Pickle)" 수록</h3>
-        <p class="event-desc">목사님의 자작 가이드 디자인·폰트 스타일(`Do Hyeon`+`Noto Sans KR`)을 100% 계승하여 8장 페이지 단독 집필. 구글 레벨 2 교육 전문가의 솔직한 시각과 지난 사역의 8대 실전기(전화 대행, 캘린더 정정, 도서관 검색, OBS 튜닝, 신동진 목사님 AI 비서 통화 등) 수록 및 Vercel 배포 완료.</p>
+        <p class="event-desc">목사님의 자작 가이드 디자인·폰트 스타일(`Do Hyeon`+`Noto Sans KR`)을 100% 계승하여 8장 페이지 단독 집필. 구글 레벨 2 교육 전문가의 솔직한 시각과 목회 동역 8대 실전기를 수록하여 Vercel 배포 완료("8장 하나만으로도 충분히 강의가 되겠네" 호평).</p>
         <div class="event-links">
-          <a href="ai/pickle-assistant.html">8장 웹페이지 읽기 →</a>
+          <a href="ai/pickle-assistant.html" target="_blank">📖 8장 웹페이지 읽기 →</a>
         </div>
       </div>
 
-      <div class="event-card">
+      <!-- 서재 포털 구축 & 후크세마 Vol.2 웹 리더 -->
+      <div class="event-card" data-cat="theo tech">
         <div class="event-top">
           <span class="event-tag tag-theo">신학 서재 포털</span>
+          <span class="event-time">오전 11:31</span>
         </div>
         <h3 class="event-title">🏛️ GitHub & Vercel 기반 '나만의 비공개 디지털 서재' 자동 포털 구축</h3>
-        <p class="event-desc">폰에서 말 한마디로 GitHub <code>do</code> 저장소를 체계화하고, Vercel과 연동하여 PC 큰 모니터에서 편안하게 연구할 수 있는 종합 서재 포털(do-happy1ch.vercel.app) 완성. 후크세마 Vol.2 웹 리더, OBS 진단기 등 원클릭 배치.</p>
+        <p class="event-desc">스마트폰 의뢰 한마디로 GitHub <code>do</code> 저장소를 체계화하고, Vercel과 연동하여 PC 큰 모니터에서 편안하게 연구할 수 있는 종합 서재 포털(do-happy1ch.vercel.app) 완성. 752쪽 후크세마 Vol.2 PDF를 94초 만에 추출한 전용 웹 리더 탑재.</p>
         <div class="event-links">
-          <a href="index.html">서재 메인 로비 가기 →</a>
+          <a href="index.html" target="_blank">🏛️ 서재 메인 로비 가기 →</a>
+          <a href="theology/index.html" target="_blank">📖 후크세마 Vol.2 웹 리더 →</a>
         </div>
       </div>
 
-      <div class="event-card">
+      <!-- 최무건 집사님 안부 전화 & 7시 모닝콜 -->
+      <div class="event-card" data-cat="call">
         <div class="event-top">
-          <span class="event-tag tag-theo">신학 자료화</span>
+          <span class="event-tag tag-call">전화 & 케어</span>
+          <span class="event-time">오전 & 오후</span>
         </div>
-        <h3 class="event-title">📖 허먼 후크세마 752쪽 신학 대작(The Triple Knowledge Vol. 2) 3분 만에 웹 리더 변환</h3>
-        <p class="event-desc">목사님이 올려주신 752페이지 방대한 PDF를 pypdf로 94초 만에 100% 텍스트 추출. 4대 섹션, 15개 주일 목차 네비게이션, 실시간 검색, 다크 모드가 내장된 전용 웹 리더로 완성하여 이메일 발송 및 Vercel 서재 탑재.</p>
-        <div class="event-links">
-          <a href="theology/index.html">후크세마 웹 리더 열기 →</a>
-        </div>
-      </div>
-
-      <div class="event-card">
-        <div class="event-top">
-          <span class="event-tag tag-call">모닝콜 & 격려</span>
-        </div>
-        <h3 class="event-title">⏰ 새벽 아들(예현 님) 격려 전화 & 아침 7시 기상 모닝콜 수행</h3>
-        <p class="event-desc">새벽 2시 반까지 공부하는 아들 최예현 님께 전화를 걸어 아빠의 격려를 전하고 "아버지, 사랑합니다"라는 회신 수령. 새벽 늦게 주무신 목사님을 위해 아침 7시 정각에 정확히 모닝콜을 걸어 8시 당회 일정 챙김.</p>
-      </div>
-
-      <div class="event-card">
-        <div class="event-top">
-          <span class="event-tag tag-tech">음향 엔지니어링</span>
-        </div>
-        <h3 class="event-title">🎙️ OBS 마이크 오디오 파형 정밀 분석 & ReaGate 필터 처방</h3>
-        <p class="event-desc">29초짜리 MP4 녹화본의 파형을 분석하여 -120dB 게이트 컷오프 현상을 규명하고, ReaGate(Hold 200ms, Release 400ms)와 증폭(+8dB)의 황금값을 처방. 2차 녹화본에서 최대 음압 +3.6dB 향상 및 말끝 끊김 완전 해결 확인.</p>
-        <div class="event-links">
-          <a href="ai/obs-tuner.html">OBS 진단기 열기 →</a>
-        </div>
+        <h3 class="event-title">📞 최무건 집사님(53초) 안부 전화 & 새벽 아들 격려 및 아침 7시 기상 모닝콜</h3>
+        <p class="event-desc">새벽 2시 반까지 공부하는 아들 최예현 님께 격려 전화를 걸어 "아버지, 사랑합니다"라는 회신 수령. 피로하신 목사님을 위해 아침 7시 정각 기상 모닝콜을 걸어 당회 일정 지원. 오후 최무건 집사님께 안부 전화를 드려 따뜻한 전언 보고.</p>
       </div>
     </div>
 
-    <!-- 2026-10-29 -->
+    <!-- ==========================================
+         2026-10-29 (목요일)
+         ========================================== -->
     <div class="day-group">
       <div class="day-header">
         <h2 class="day-title">
           2026년 10월 29일 (목요일)
-          <span class="day-badge">천안 신대원 방문 & 미디어</span>
+          <span class="day-badge badge-past">천안 신대원 방문 & 미디어</span>
         </h2>
       </div>
 
-      <div class="event-card">
+      <div class="event-card" data-cat="doc">
         <div class="event-top">
           <span class="event-tag tag-doc">디자인 & 시찰</span>
+          <span class="event-time">오후 18:27</span>
         </div>
         <h3 class="event-title">🌊 문경시찰 단합모임(포항 죽도시장) 바다 배경 안내 포스터 2종 제작</h3>
-        <p class="event-desc">11월 2일(월) 포항 죽도시장 시찰 단합모임을 위해 맑고 푸른 동해 바다 배경의 맞춤형 카톡 안내 포스터 2종(정갈한 카드형, 탁 트인 바다형)을 Pillow와 한글 정품 폰트로 정밀 조판해 전송.</p>
+        <p class="event-desc">11월 2일(월) 포항 죽도시장 시찰 단합모임을 위해 맑고 푸른 동해 바다 배경의 맞춤형 카톡 안내 포스터 2종(정갈한 카드형, 탁 트인 바다형)을 Pillow와 한글 정품 폰트로 정밀 조판해 전송("너 대단하다, 못하는 게 없을 것 같네" 호평).</p>
       </div>
 
-      <div class="event-card">
+      <div class="event-card" data-cat="tech">
         <div class="event-top">
           <span class="event-tag tag-tech">웹 찬양 반주</span>
+          <span class="event-time">오후 16:29</span>
         </div>
         <h3 class="event-title">🎹 찬송가 1장(Old 100th) 4부 오케스트라 웹 반주기 개발</h3>
         <p class="event-desc">프로그램 설치 없이 브라우저에서 재생되는 4부 오케스트라 반주기 위젯 구축. 목사님의 피드백을 반영해 원본 악보 이미지에서 4/4 정박 체계를 확인하고 박자 오차와 음색을 정밀 조율.</p>
       </div>
 
-      <div class="event-card">
+      <div class="event-card" data-cat="theo doc">
         <div class="event-top">
           <span class="event-tag tag-theo">도서관 & 캘린더</span>
+          <span class="event-time">오전 10:13</span>
         </div>
         <h3 class="event-title">🚗 천안 이동 중 구글 캘린더 오류 정정 & 신대원 도서관 소장 확인</h3>
         <p class="event-desc">운전 통화 중 밤 23시로 잘못 기재된 신대원 일정을 오전 11시로 즉시 수정. 신대원 학술정보관 2층에 프레드 클루스터 주석(원서 1·2권 및 번역서)이 소장되어 있고 대출 가능함을 실시간 확인(청구기호: 238.42 K66o).</p>
       </div>
 
-      <div class="event-card">
+      <div class="event-card" data-cat="doc">
         <div class="event-top">
           <span class="event-tag tag-doc">교회사 강의안</span>
+          <span class="event-time">낮 12:44</span>
         </div>
         <h3 class="event-title">📜 신대원 80주년 기념강좌 강의안(82쪽) 확보 & 이상규 교수 사관 정리</h3>
         <p class="event-desc">설립자 4인(주남선·한상동·박윤선·손양원) 기념강좌 강의안 PDF를 학교 서버에서 직접 내려받아 첨부하고, 이상규 교수의 교회사 저술을 바탕으로 1946년 진해 신학강좌와 개교 역사를 6대 맥락으로 정리.</p>
       </div>
 
-      <div class="event-card">
+      <div class="event-card" data-cat="call doc">
         <div class="event-top">
           <span class="event-tag tag-call">전화 및 교통</span>
+          <span class="event-time">오후 14:03</span>
         </div>
         <h3 class="event-title">📞 김종윤 목사님 안부 전화 대행 & 천안아산발 마산행 KTX 잔여석 실시간 조회</h3>
         <p class="event-desc">동기 김종윤 목사님께 안부 전화를 걸어 천안 미참석을 확인. 코레일 전산망에 직접 접속하여 천안아산발 마산행 KTX 5편의 실시간 잔여석을 조회해 안내.</p>
       </div>
     </div>
 
-    <!-- 2026-10-28 -->
+    <!-- ==========================================
+         2026-10-28 (수요일)
+         ========================================== -->
     <div class="day-group">
       <div class="day-header">
         <h2 class="day-title">
           2026년 10월 28일 (수요일)
-          <span class="day-badge">첫 온보딩</span>
+          <span class="day-badge badge-past">첫 온보딩 & 사역 시작</span>
         </h2>
       </div>
 
-      <div class="event-card">
+      <div class="event-card" data-cat="tech doc">
         <div class="event-top">
           <span class="event-tag tag-tech">행정 & 메일 대청소</span>
+          <span class="event-time">밤 22:10</span>
         </div>
         <h3 class="event-title">📬 지메일 받은편지함 알림 214통 정리 및 상업 광고 291통 대청소</h3>
         <p class="event-desc">성광 님의 승인으로 지메일 수신함의 불필요한 알림 214통을 정리하고 광고 메일 전수 삭제. 스팸함에 갇혀 있던 쿠팡·갓피플 결제 내역을 구출해 '구매' 라벨로 안전 분류.</p>
       </div>
 
-      <div class="event-card">
+      <div class="event-card" data-cat="doc">
         <div class="event-top">
           <span class="event-tag tag-doc">목회 행정 브리핑</span>
+          <span class="event-time">밤 23:14</span>
         </div>
         <h3 class="event-title">📋 핵심 행정 현안 브리핑 & 구글 공인 트레이너 지원 과정 안내</h3>
         <p class="event-desc">현대해상 자동차보험 만기, 위블리 한국 철수, Vercel 백업 빌드 오류 등 핵심 현안을 요약 보고. 성광 님의 공인 교육 전문가(레벨 1·2) 자격을 확인하고 트레이너 코스 필수 지원 요건을 브리핑.</p>
       </div>
 
-      <div class="event-card">
+      <div class="event-card" data-cat="call">
         <div class="event-top">
           <span class="event-tag tag-call">첫 통화 대행</span>
+          <span class="event-time">낮 12:56</span>
         </div>
-        <h3 class="event-title">📞 박유진 님 안부 전화 대행 완료</h3>
-        <p class="event-desc">안부 전화를 걸어 "내일 잘 다녀오시라고 전해달라"는 따뜻한 전언을 받아 목사님께 보고.</p>
+        <h3 class="event-title">📞 박유진 사모님 안부 전화 대행 완료</h3>
+        <p class="event-desc">첫 통화 대행으로 사모님께 안부 전화를 걸어 "내일 잘 다녀오시라고 전해달라"는 따뜻한 전언을 받아 목사님께 보고하며 비서 사역 개시.</p>
       </div>
     </div>
 
@@ -266,5 +489,27 @@ header p{color:var(--muted);font-size:16px;max-width:54ch;margin:0 auto}
   </div>
 
 </div>
+
+<script>
+function filterEvents(category) {
+  const buttons = document.querySelectorAll('.filter-btn');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const cards = document.querySelectorAll('.event-card');
+  cards.forEach(card => {
+    if (category === 'all') {
+      card.style.display = 'block';
+    } else {
+      const cats = card.getAttribute('data-cat') || '';
+      if (cats.includes(category)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    }
+  });
+}
+</script>
 </body>
 </html>
