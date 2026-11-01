@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>커즈와일 SP6 교회 반주용 사운드 가이드 | 최성광 목사의 디지털 서재</title>
+<meta name="description" content="커즈와일 SP6 신디사이저 교회 반주를 위한 5대 멀티 조합, 4대 레이어 황금비율, 예배 실전 조작 노하우 완벽 정리">
+<style>
+:root {
+  --bg: #0e1116;
+  --bg-soft: #151a22;
+  --panel: #1a212c;
+  --panel-hover: #212a38;
+  --border: rgba(255,255,255,.09);
+  --text: #e8ecf1;
+  --text-dim: #9aa7b5;
+  --accent: #d4b063;
+  --accent-soft: rgba(212,176,99,.14);
+  --accent-2: #6ea8d8;
+  --accent-2-soft: rgba(110,168,216,.13);
+  --success: #10b981;
+  --success-soft: rgba(16,185,129,.14);
+  --shadow: 0 12px 34px rgba(0,0,0,.42);
+  --glow: radial-gradient(1200px 500px at 50% -10%, rgba(212,176,99,.13), transparent 65%);
+}
+[data-theme="light"] {
+  --bg: #f7f5f0;
+  --bg-soft: #efece4;
+  --panel: #ffffff;
+  --panel-hover: #faf8f3;
+  --border: rgba(30,40,50,.10);
+  --text: #232a33;
+  --text-dim: #61707f;
+  --accent: #a9812e;
+  --accent-soft: rgba(169,129,46,.10);
+  --accent-2: #2f6ea8;
+  --accent-2-soft: rgba(47,110,168,.09);
+  --success: #059669;
+  --success-soft: rgba(5,150,105,.10);
+  --shadow: 0 10px 30px rgba(40,50,60,.10);
+  --glow: radial-gradient(1200px 500px at 50% -10%, rgba(169,129,46,.10), transparent 65%);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  background-image: var(--glow);
+  background-repeat: no-repeat;
+  transition: background-color .35s ease, color .35s ease;
+  line-height: 1.65;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── 상단 바 ─────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px clamp(18px, 5vw, 48px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.brand .mark {
+  width: 34px; height: 34px; border-radius: 10px;
+  display: grid; place-items: center; font-size: 17px;
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent-2-soft));
+  border: 1px solid var(--border);
+}
+.brand small { display: block; font-size: 10.5px; font-weight: 500; color: var(--text-dim); }
+.top-actions { display: flex; align-items: center; gap: 8px; }
+.btn {
+  font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 10px;
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  border: 1px solid var(--border); transition: all .2s ease;
+  background: var(--panel); color: var(--text);
+}
+.btn:hover { background: var(--panel-hover); transform: translateY(-1px); }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn.primary:hover { opacity: .92; }
+.btn.accent-2 { background: var(--accent-2-soft); color: var(--accent-2); border-color: color-mix(in srgb, var(--accent-2) 40%, transparent); }
+#themeToggle {
+  width: 38px; height: 38px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--panel);
+  color: var(--text); font-size: 16px; display: grid; place-items: center;
+  transition: transform .2s ease;
+}
+#themeToggle:hover { transform: rotate(-12deg) scale(1.05); }
+
+/* ── 헤더 / 소개 ─────────────────────── */
+.container { max-width: 980px; margin: 0 auto; padding: 32px 20px 80px; }
+.hero { text-align: center; padding: 36px 12px 24px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--accent); font-weight: 700; letter-spacing: 1px;
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 6px 16px; background: var(--accent-soft); margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: clamp(24px, 4.5vw, 36px); font-weight: 800; letter-spacing: -.8px; line-height: 1.3;
+}
+.hero p {
+  margin: 14px auto 0; max-width: 620px; color: var(--text-dim); font-size: clamp(14px, 2.2vw, 15.5px);
+}
+
+/* ── 탭 네비게이션 ─────────────────────── */
+.tab-bar {
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 28px 0 36px;
+}
+.tab-btn {
+  padding: 9px 18px; border-radius: 999px; font-size: 13.5px; font-weight: 600;
+  background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-dim);
+  cursor: pointer; transition: all .2s ease;
+}
+.tab-btn.active, .tab-btn:hover {
+  background: var(--accent-soft); color: var(--accent); border-color: var(--accent);
+}
+
+/* ── 카드 레이아웃 ─────────────────────── */
+.section-title {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 40px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+.section-title h2 { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.section-title .count { font-size: 12px; color: var(--accent); background: var(--accent-soft); padding: 3px 10px; border-radius: 999px; }
+
+.card-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 24px; }
+.card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 22px; box-shadow: var(--shadow); transition: transform .2s ease, border-color .2s ease;
+}
+.card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); }
+.card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.card-num {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--accent);
+  background: var(--accent-soft); padding: 3px 8px; border-radius: 6px; display: inline-block;
+}
+.card-title { font-size: 18px; font-weight: 700; margin-top: 4px; }
+.card-desc { font-size: 13.5px; color: var(--text-dim); margin-top: 4px; }
+.copy-badge {
+  font-size: 11.5px; padding: 5px 10px; border-radius: 8px; background: var(--bg-soft);
+  border: 1px solid var(--border); cursor: pointer; color: var(--text-dim); transition: all .2s;
+  white-space: nowrap;
+}
+.copy-badge:hover { color: var(--text); border-color: var(--accent); background: var(--accent-soft); }
+
+/* 존 테이블 / 리스트 */
+.zone-list { display: grid; gap: 8px; margin: 16px 0; }
+.zone-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--bg-soft); padding: 10px 14px; border-radius: 10px; font-size: 13px;
+  border: 1px solid var(--border);
+}
+.zone-label { font-weight: 700; color: var(--accent-2); min-width: 90px; }
+.zone-prog { font-weight: 600; color: var(--text); flex: 1; }
+.zone-vol {
+  font-size: 11.5px; color: var(--text-dim); background: var(--panel);
+  padding: 2px 8px; border-radius: 6px; border: 1px solid var(--border); font-family: monospace;
+}
+.tip-box {
+  background: color-mix(in srgb, var(--accent) 8%, var(--bg-soft));
+  border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: 0 10px 10px 0;
+  font-size: 13px; color: var(--text); margin-top: 14px; line-height: 1.6;
+}
+.tip-box strong { color: var(--accent); }
+
+/* 하드웨어 조작 팁 카드 */
+.hardware-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 18px; }
+.hw-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px; box-shadow: var(--shadow);
+}
+.hw-card h3 { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--accent-2); }
+.hw-card p, .hw-card ul { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+.hw-card ul { list-style: none; margin-top: 8px; }
+.hw-card li { margin-bottom: 6px; padding-left: 14px; position: relative; }
+.hw-card li::before { content: "•"; position: absolute; left: 0; color: var(--accent-2); font-weight: bold; }
+
+/* 공유 안내 모달 / 박스 */
+.share-guide {
+  background: var(--panel); border: 1.5px solid var(--accent-2); border-radius: 16px;
+  padding: 24px 22px; margin-top: 48px; box-shadow: var(--shadow);
+}
+.share-guide h3 { font-size: 18px; font-weight: 700; color: var(--accent-2); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.share-methods { display: grid; gap: 12px; margin-top: 14px; }
+.share-method {
+  background: var(--bg-soft); padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border);
+}
+.share-method strong { color: var(--text); font-size: 14px; display: block; margin-bottom: 4px; }
+.share-method p { font-size: 12.8px; color: var(--text-dim); line-height: 1.55; }
+
+/* 토스트 메시지 */
+#toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: #10b981; color: #fff; padding: 10px 22px; border-radius: 999px;
+  font-size: 13.5px; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,.3);
+  transition: transform .3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100;
+  pointer-events: none; opacity: 0;
+}
+#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+@media (max-width: 640px) {
+  .zone-item { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .zone-vol { align-self: flex-end; }
+  .top-actions .btn-text { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="mark">🎹</span>
+    <span>성광의 서재<small>Kurzweil SP6 Sound Guide</small></span>
+  </a>
+  <div class="top-actions">
+    <button class="btn accent-2" onclick="copyFullGuide()" title="카톡 전달용 전체 텍스트 복사">
+      <span>📋</span><span class="btn-text">카톡 요약 복사</span>
+    </button>
+    <a href="index.html" class="btn">
+      <span>🏛️</span><span class="btn-text">서재 로비</span>
+    </a>
+    <button id="themeToggle" aria-label="테마 전환" title="다크/라이트 모드">🌙</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="hero">
+    <div class="badge">✦ KURZWEIL SP6 WORSHIP SETTINGS ✦</div>
+    <h1>커즈와일 SP6 교회 반주용 사운드 가이드</h1>
+    <p>5대 멀티(Multi) 조합 · 4대 레이어(Layer) 황금 비율 · 예배 현장 실전 하드웨어 꿀팁을 한눈에 정리한 반주자 전용 프리셋 매뉴얼입니다.</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="filterSection('all')">전체 보기</button>
+    <button class="tab-btn" onclick="filterSection('multi')">1. 멀티 조합 5선</button>
+    <button class="tab-btn" onclick="filterSection('layer')">2. 레이어 조합 4선</button>
+    <button class="tab-btn" onclick="filterSection('hardware')">3. 실전 하드웨어 팁</button>
+    <button class="tab-btn" onclick="filterSection('sharing')">4. 이 페이지 공유 방법</button>
+  </div>
+
+  <!-- SECTION 1: 멀티 조합 5선 -->
+  <div class="content-section" id="sec-multi">
+    <div class="section-title">
+      <h2><span>🎛️</span> 1. 교회 반주용 멀티(Multi) 조합 5선</h2>
+      <span class="count">4-Zone 실시간 믹싱</span>
+    </div>
+    <div class="card-grid">
+
+      <!-- 멀티 1 -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-num">MULTI 01</span>
+            <h3 class="card-title">기도회 / 통성기도 전용 워십 콤보 (3-Zone)</h3>
+            <div class="card-desc">설교 후 결단 기도, 통성기도, 잔잔한 기도회 반주</div>
+          </div>
+          <button class="copy-badge" onclick="copyCard(this, '기도회 콤보')">세팅 복사</button>
+        </div>
+        <div class="zone-list">
+          <div class="zone-item">
+            <span class="zone-label">Zone 1 (전체)</span>
+            <span class="zone-prog">#1 Dyn 9ft Grand (어쿠스틱 피아노)</span>
+            <span class="zone-vol">Vol: 85</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">Zone 2 (전체)</span>
+            <span class="zone-prog">Warm Pad 또는 Ambient Pad (배경 온기)</span>
+            <span class="zone-vol">Vol: 45~50</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">Zone 3 (왼손 A0~B2)</span>
+            <span class="zone-prog">Fingered Bass (서브 베이스 저역 받침)</span>
+            <span class="zone-vol">Vol: 60</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>💡 연주 포인트:</strong> 피아노 연주가 잠시 멈추어도 패드가 웅장하게 서스테인을 채워주며 예배의 흐름이 끊기지 않습니다. 왼손 옥타브를 칠 때 깊은 베이스가 함께 울려 1인 반주로도 풀 밴드 느낌을 냅니다.
+        </div>
+      </div>
+
+      <!-- 멀티 2 -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-num">MULTI 02</span>
+            <h3 class="card-title">느린 경배 찬양 / 은혜로운 발라드 (3-Zone)</h3>
+            <div class="card-desc">서정적 CCM ('주 품에 품으소서', '꽃들도', '원하고 바라고 기도합니다')</div>
+          </div>
+          <button class="copy-badge" onclick="copyCard(this, '느린 찬양 콤보')">세팅 복사</button>
+        </div>
+        <div class="zone-list">
+          <div class="zone-item">
+            <span class="zone-label">Zone 1 (전체)</span>
+            <span class="zone-prog">#2 Rich Grand 7ft (따뜻하고 깊은 어쿠스틱 피아노)</span>
+            <span class="zone-vol">Vol: 90</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">Zone 2 (전체)</span>
+            <span class="zone-prog">73 Strawberry Fl (빈티지 로즈 EP - 배음 추가)</span>
+            <span class="zone-vol">Vol: 35</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">Zone 3 (전체)</span>
+            <span class="zone-prog">Lyrical Strings 또는 Adagio Strings (현악 앙상블)</span>
+            <span class="zone-vol">Vol: 30</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>💡 연주 포인트:</strong> 1절에서는 피아노 위주로 담담하게 반주하다가, 후렴으로 넘어갈 때 전면 <strong>노브 3번</strong>을 서서히 밀어 올려 스트링을 고조시키면 큰 감동을 자아냅니다.
+        </div>
+      </div>
+
+      <!-- 멀티 3 -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-num">MULTI 03</span>
+            <h3 class="card-title">빠른 찬양 / 찬송가 템포곡 관통 콤보 (3-Zone)</h3>
+            <div class="card-desc">업템포 찬양 ('기뻐하며 왕께 노래부르리', 찬송가 행진곡풍 편곡)</div>
+          </div>
+          <button class="copy-badge" onclick="copyCard(this, '빠른 찬양 콤보')">세팅 복사</button>
+        </div>
+        <div class="zone-list">
+          <div class="zone-item">
+            <span class="zone-label">Zone 1 (전체)</span>
+            <span class="zone-prog">#3 Bright Jazz 9ft (어택감이 선명한 밝은 피아노)</span>
+            <span class="zone-vol">Vol: 95</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">Zone 2 (오른손 C4~C8)</span>
+            <span class="zone-prog">Pop Brass 또는 Dyn Brass (브라스 팡파르 섹션)</span>
+            <span class="zone-vol">Vol: 65</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">Zone 3 (왼손 A0~B2)</span>
+            <span class="zone-prog">Slap Bass 또는 Picked Bass (리듬감 넘치는 베이스)</span>
+            <span class="zone-vol">Vol: 70</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>💡 연주 포인트:</strong> 밴드 세션이나 드럼이 있는 곡에서도 피아노 톤이 묻히지 않고 명확히 뚫고 나오며, 오른손 강박에 시원한 브라스 브레이크를 걸 수 있습니다.
+        </div>
+      </div>
+
+      <!-- 멀티 4 -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-num">MULTI 04</span>
+            <h3 class="card-title">특송 / 헌금송 / 성탄 천상의 벨 &amp; 콰이어</h3>
+            <div class="card-desc">묵상 특주, 성탄절 찬양, 헌금 기도 및 거룩한 분위기 연출</div>
+          </div>
+          <button class="copy-badge" onclick="copyCard(this, '벨&콰이어 콤보')">세팅 복사</button>
+        </div>
+        <div class="zone-list">
+          <div class="zone-item">
+            <span class="zone-label">Zone 1 (전체)</span>
+            <span class="zone-prog">#1 Dyn 9ft Grand (메인 그랜드 피아노)</span>
+            <span class="zone-vol">Vol: 80</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">Zone 2 (전체)</span>
+            <span class="zone-prog">FM Tine EP 또는 Crystal Bell (영롱한 벨 사운드)</span>
+            <span class="zone-vol">Vol: 30</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">Zone 3 (전체)</span>
+            <span class="zone-prog">Choir from Above (은은한 천상의 합창단 코러스)</span>
+            <span class="zone-vol">Vol: 35</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>💡 연주 포인트:</strong> 고음부 아르페지오를 연주할 때 유리구슬처럼 맑고 반짝이는 벨 소리와 합창 배음이 겹쳐 거룩하고 신비로운 예배 분위기를 연출합니다.
+        </div>
+      </div>
+
+      <!-- 멀티 5 -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-num">MULTI 05</span>
+            <h3 class="card-title">전통 예배 / 찬송가 4부 웅장한 엔딩 (2-Zone)</h3>
+            <div class="card-desc">주일 대예배 찬송가 반주, 입례송, 축도 후 장엄한 송영 후주</div>
+          </div>
+          <button class="copy-badge" onclick="copyCard(this, '파이프 오르간 콤보')">세팅 복사</button>
+        </div>
+        <div class="zone-list">
+          <div class="zone-item">
+            <span class="zone-label">Zone 1 (전체)</span>
+            <span class="zone-prog">#1 Dyn 9ft Grand (어쿠스틱 피아노)</span>
+            <span class="zone-vol">Vol: 85</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">Zone 2 (C3~C8)</span>
+            <span class="zone-prog">Chapel Organ 또는 KB3 Gospel Organ (교회 파이프 오르간)</span>
+            <span class="zone-vol">Vol: 55</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>💡 연주 포인트:</strong> 찬송가 1~3절은 피아노로 차분히 반주하다가 마지막 4절이나 '아멘' 송영 구간에서 <strong>노브 2번</strong>을 올려 오르간을 터뜨리면 대성당 파이프 오르간의 웅장함이 예배당에 가득 찹니다.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 2: 레이어 조합 4선 -->
+  <div class="content-section" id="sec-layer">
+    <div class="section-title">
+      <h2><span>🎹</span> 2. 교회 반주 추천 레이어(Layer) 황금 비율</h2>
+      <span class="count">PREVIOUS + NEXT 동시 클릭</span>
+    </div>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-num">LAYER 01</span>
+            <h3 class="card-title">피아노 + 웜 패드 (8 : 3 황금비)</h3>
+            <div class="card-desc">현대 CCM 건반 반주의 90%를 책임지는 절대 공식</div>
+          </div>
+          <button class="copy-badge" onclick="copyCard(this, '피아노+패드 레이어')">세팅 복사</button>
+        </div>
+        <div class="zone-list">
+          <div class="zone-item">
+            <span class="zone-label">메인 (80~85%)</span>
+            <span class="zone-prog">#1 Dyn 9ft Grand</span>
+            <span class="zone-vol">Key Click 유지</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">서브 (25~30%)</span>
+            <span class="zone-prog">Warm Pad / Analog Pad</span>
+            <span class="zone-vol">Soft Attack 필수</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>💡 세팅 핵심:</strong> 피아노의 타건 어택감을 덮지 않도록 패드의 Attack은 부드럽게(느리게) 설정하고, 볼륨은 피아노의 1/3 수준으로 낮춰야 코드가 뭉개지지 않고 온기만 남습니다.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-num">LAYER 02</span>
+            <h3 class="card-title">피아노 + 슬로우 스트링 (7 : 4 비율)</h3>
+            <div class="card-desc">서정적 찬양, 설교 후 결단 기도, 깊은 은혜의 순간</div>
+          </div>
+          <button class="copy-badge" onclick="copyCard(this, '피아노+스트링 레이어')">세팅 복사</button>
+        </div>
+        <div class="zone-list">
+          <div class="zone-item">
+            <span class="zone-label">메인 (70%)</span>
+            <span class="zone-prog">#2 Rich Grand 7ft</span>
+            <span class="zone-vol">따뜻한 톤</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">서브 (35~40%)</span>
+            <span class="zone-prog">Slow Strings / Lyrical Strings</span>
+            <span class="zone-vol">부드러운 스웰(Swell)</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>💡 세팅 핵심:</strong> 건반을 누르자마자 찌르는 날카로운 현악기가 아니라, 건반을 누른 뒤 반 박자 뒤에 서서히 부풀어 오르는 'Slow' 계열 현악기를 골라야 멜로디의 선명도가 유지됩니다.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-num">LAYER 03</span>
+            <h3 class="card-title">그랜드 피아노 + DX7 FM EP (7 : 3 비율)</h3>
+            <div class="card-desc">청량하고 반짝이는 90년대 복음성가 &amp; 가스펠 발라드</div>
+          </div>
+          <button class="copy-badge" onclick="copyCard(this, '피아노+FM EP 레이어')">세팅 복사</button>
+        </div>
+        <div class="zone-list">
+          <div class="zone-item">
+            <span class="zone-label">메인 (70%)</span>
+            <span class="zone-prog">#1 Dyn 9ft Grand</span>
+            <span class="zone-vol">선명한 그랜드</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">서브 (30%)</span>
+            <span class="zone-prog">FM E.Piano / Classic Tine EP</span>
+            <span class="zone-vol">코러스 이펙트</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>💡 세팅 핵심:</strong> 고음역대 아르페지오나 오른손 멜로디에서 맑은 차임벨과 같은 유리구슬 광택을 더해주어, 피아노 혼자 칠 때보다 훨씬 세련된 질감을 냅니다.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <span class="card-num">LAYER 04</span>
+            <h3 class="card-title">로즈 EP + 앰비언트 패드 (6 : 4 비율)</h3>
+            <div class="card-desc">세컨 건반 역할, 목사님 기도 멘트 및 광고 시간 BGM</div>
+          </div>
+          <button class="copy-badge" onclick="copyCard(this, '로즈+패드 레이어')">세팅 복사</button>
+        </div>
+        <div class="zone-list">
+          <div class="zone-item">
+            <span class="zone-label">메인 (60%)</span>
+            <span class="zone-prog">73 Strawberry Fl (Vintage Rhodes)</span>
+            <span class="zone-vol">따뜻한 EP</span>
+          </div>
+          <div class="zone-item">
+            <span class="zone-label">서브 (40%)</span>
+            <span class="zone-prog">Ambient Pad / Celestial Pad</span>
+            <span class="zone-vol">잔잔한 배경</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>💡 세팅 핵심:</strong> 설교 전후 목사님의 기도 멘트 시 어쿠스틱 피아노 대신 텐션 코드를 잔잔하게 짚어주면 성도들의 마음에 가장 포근하고 은혜롭게 스며듭니다.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 3: 하드웨어 조작 팁 -->
+  <div class="content-section" id="sec-hardware">
+    <div class="section-title">
+      <h2><span>💡</span> 3. SP6 예배 실전 하드웨어 노하우</h2>
+      <span class="count">1초 원클릭 조작</span>
+    </div>
+    <div class="hardware-grid">
+      <div class="hw-card">
+        <h3>⭐ FAVORITES 즐겨찾기 1~5번 세팅</h3>
+        <p>예배 중 복잡한 다이얼을 돌리지 않고 LCD 아래 5개 버튼으로 즉시 전환합니다:</p>
+        <ul>
+          <li><strong>1번:</strong> #1 Dyn 9ft 피아노 단독 (기본 예배)</li>
+          <li><strong>2번:</strong> 피아노 + 웜 패드 멀티 (느린 경배 찬양)</li>
+          <li><strong>3번:</strong> 피아노 + 스트링 멀티 (기도회 / 결단)</li>
+          <li><strong>4번:</strong> 브라이트 피아노 / 브라스 멀티 (빠른 찬양)</li>
+          <li><strong>5번:</strong> 로즈 EP + 패드 (목사님 멘트 BGM)</li>
+        </ul>
+      </div>
+
+      <div class="hw-card">
+        <h3>✨ VARIATION 버튼 원터치 레이어</h3>
+        <p>프로그램 모드에서 피아노(#1 Dyn 9ft)를 연주하다가 우측 패널의 <strong>VARIATION</strong> 버튼을 톡 누르면, 커즈와일 엔지니어가 미리 매칭해 둔 서브 패드가 즉각 켜집니다!</p>
+        <p style="margin-top:8px;">급하게 패드를 덧입혀야 하는 순간에 다이얼 조작 없이 버튼 하나로 해결되는 최고의 비기입니다.</p>
+      </div>
+
+      <div class="hw-card">
+        <h3>🎛️ 전면 4개 노브 실시간 믹싱</h3>
+        <p>멀티 모드에서 1~4번 노브는 각 Zone의 <strong>실시간 마스터 볼륨 페이더</strong> 역할을 합니다.</p>
+        <p style="margin-top:8px;">찬양 인도자가 "우리 다 같이 기도하겠습니다" 할 때 <strong>노브 2번(패드/스트링)</strong>만 손으로 살짝 올려주면 음향 엔지니어가 만져준 듯한 자연스러운 페이드 인이 연출됩니다.</p>
+      </div>
+
+      <div class="hw-card">
+        <h3>🎙️ OBS 방송 믹서 연계 주의점</h3>
+        <p>SP6는 저음역과 패드 배음이 매우 풍부합니다. 강대상 마이크와 섞여 나갈 때는 지난번 확립한 <strong>Scarlett 2i2 황금 체인</strong>(ReaEQ 100Hz 하이패스 + 리미터 -1.5dB)을 거쳐야 보컬을 방해하지 않고 맑게 송출됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: 공유 가이드 -->
+  <div class="content-section" id="sec-sharing">
+    <div class="share-guide">
+      <h3><span>📤</span> 4. 내 서재의 이 페이지만 다른 사람에게 공유하려면?</h3>
+      <p style="color:var(--text-dim); font-size:13.5px;">현재 성광 목사님의 Vercel 서재(<code>do-happy1ch.vercel.app</code>)는 성광 님만 보실 수 있도록 <strong>Vercel Authentication(배포 보호)</strong>이 켜져 있습니다. 교회 반주자님이나 동역자에게 이 페이지만 편하게 전달하는 3가지 실전 방법입니다.</p>
+      
+      <div class="share-methods">
+        <div class="share-method">
+          <strong>방법 ① [가장 추천] 상단의 [카톡 요약 복사] 버튼으로 텍스트 전달</strong>
+          <p>상단 우측의 <code>[📋 카톡 요약 복사]</code> 버튼을 누르면 스마트폰 클립보드에 반주자가 바로 읽기 편한 텍스트로 복사됩니다. 카카오톡 창에 '붙여넣기'만 하시면 1초 만에 깔끔하게 전달됩니다.</p>
+        </div>
+
+        <div class="share-method">
+          <strong>방법 ② Vercel 대시보드에서 로그인 없는 '공유 링크(Share Link)' 생성</strong>
+          <p>Vercel 대시보드(<code>vercel.com</code>)에 로그인하셔서 <strong>do 프로젝트 &gt; Deployments</strong>에서 최신 배포 오른쪽 점 세 개(<code>...</code>)를 누르고 <strong>[Share]</strong>를 누르면, 로그인 없이 외부인도 열람 가능한 임시 공유 링크가 생성됩니다.</p>
+        </div>
+
+        <div class="share-method">
+          <strong>방법 ③ Vercel 서재의 배포 보호를 해제 (전체 링크 공개)</strong>
+          <p>Vercel 대시보드 &gt; <code>Settings</code> &gt; <code>Deployment Protection</code>에서 <strong>Vercel Authentication</strong>을 <code>Disabled</code>로 끄시면, <code>https://do-happy1ch.vercel.app/sp6.html</code> 주소 그대로 누구에게나 바로 열람 링크를 보낼 수 있습니다. (서재 내 다른 비공개 페이지가 걱정되실 경우 방법 ① 또는 단독 파일 전달을 권장합니다)</p>
+        </div>
+
+        <div class="share-method">
+          <strong>방법 ④ 단독 HTML 파일(sp6.html) 자체를 카톡/메일로 전달</strong>
+          <p>이 웹페이지 파일 자체를 반주자님 스마트폰이나 PC로 전달해 드려도, 별도 앱이나 서버 없이 크롬/사파리 브라우저에서 지금 보시는 예쁜 화면 그대로 완벽히 작동합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="toast">복사되었습니다!</div>
+
+<script>
+// 테마 토글
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var saved = null;
+  try { saved = localStorage.getItem('do-portal-theme'); } catch (e) {}
+  var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  apply(theme);
+  btn.addEventListener('click', function () {
+    apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  function apply(t) {
+    root.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀️' : '🌙';
+    try { localStorage.setItem('do-portal-theme', t); } catch (e) {}
+  }
+})();
+
+// 토스트 메시지
+function showToast(msg) {
+  var toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(function() { toast.classList.remove('show'); }, 2200);
+}
+
+// 개별 카드 복사
+function copyCard(btn, title) {
+  var card = btn.closest('.card');
+  var text = card.innerText.replace('세팅 복사', '').trim();
+  navigator.clipboard.writeText(text).then(function() {
+    showToast(title + ' 세팅이 복사되었습니다!');
+  });
+}
+
+// 카톡 전달용 전체 요약 복사
+function copyFullGuide() {
+  var summary = `[커즈와일 SP6 교회 반주용 사운드 가이드]
+
+■ 1. 실전 멀티(Multi) 조합 5선
+1) 기도회 콤보: #1 Dyn 9ft(85) + Warm Pad(50) + Fingered Bass(60)
+2) 느린 찬양: #2 Rich Grand(90) + 73 EP(35) + Lyrical Strings(30)
+3) 빠른 찬양: #3 Bright Jazz(95) + Pop Brass(65) + Slap Bass(70)
+4) 특송/성탄: #1 Dyn 9ft(80) + FM Bell EP(30) + Choir(35)
+5) 찬송가 엔딩: #1 Dyn 9ft(85) + Chapel Organ(55)
+
+■ 2. 실전 레이어(Layer) 황금 비율
+- 피아노 + 웜 패드 (8:3 비율 - CCM 국민 공식)
+- 피아노 + 슬로우 스트링 (7:4 비율 - 결단 기도)
+- 피아노 + FM EP (7:3 비율 - 맑은 가스펠)
+- 로즈 EP + 앰비언트 패드 (6:4 비율 - 기도 멘트 BGM)
+
+■ 3. 하드웨어 조작 꿀팁
+- FAVORITES(1~5번) 버튼에 위 순서대로 등록
+- 멀티 모드 노브 1~4번으로 실시간 볼륨 조절
+- VARIATION 버튼으로 원터치 서브 패드 가동!`;
+
+  navigator.clipboard.writeText(summary).then(function() {
+    showToast('카톡용 요약 텍스트가 복사되었습니다!');
+  });
+}
+
+// 섹션 필터링
+function filterSection(sec) {
+  var tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  event.target.classList.add('active');
+
+  var secs = {
+    multi: document.getElementById('sec-multi'),
+    layer: document.getElementById('sec-layer'),
+    hardware: document.getElementById('sec-hardware'),
+    sharing: document.getElementById('sec-sharing')
+  };
+
+  if (sec === 'all') {
+    Object.values(secs).forEach(function(s) { s.style.display = 'block'; });
+  } else {
+    Object.keys(secs).forEach(function(k) {
+      secs[k].style.display = (k === sec) ? 'block' : 'none';
+    });
+    secs[sec].scrollIntoView({ behavior: 'smooth' });
+  }
+}
+</script>
+
+</body>
+</html>
