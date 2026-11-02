@@ -90,15 +90,19 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      overflow: hidden;
+      background: #000;
     }
 
     .video-layer iframe {
-      width: 100%;
+      position: absolute;
+      top: 0;
       height: 100%;
+      width: calc(100% * 256 / 81); /* 16:9 와이드 비율 (약 316%) */
+      left: calc(50% - (100% * 256 / 81 * 0.32)); /* 목사님 위치(좌측 32%)를 정중앙으로 */
       border: none;
-      transform: scale(1.4);
       pointer-events: auto;
+      transition: left 0.2s ease;
     }
 
     /* 쇼츠 UI 오버레이 */
@@ -316,36 +320,53 @@
 
   <div class="main-layout">
 
-    <!-- 9:16 모바일 쇼츠 미리보기 -->
-    <div class="shorts-phone">
-      <div class="video-layer">
-        <iframe 
-          src="https://www.youtube.com/embed/R4Msyxf9mzE?autoplay=1&mute=1&loop=1&playlist=R4Msyxf9mzE&controls=0&modestbranding=1" 
-          title="설교 원본 영상">
-        </iframe>
-      </div>
-
-      <div class="shorts-overlay">
-        <div class="shorts-top">
-          <span class="series-tag">#하이델베르크 1분 묵상</span>
-          <span style="font-size:12px; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.8);">0:58</span>
+    <!-- 9:16 모바일 쇼츠 미리보기 & 위치 조절 -->
+    <div style="display:flex; flex-direction:column; align-items:center; gap:12px; flex-shrink:0;">
+      <div class="shorts-phone">
+        <div class="video-layer">
+          <iframe 
+            id="shortsIframe"
+            src="https://www.youtube.com/embed/R4Msyxf9mzE?autoplay=1&mute=1&loop=1&playlist=R4Msyxf9mzE&controls=0&modestbranding=1" 
+            title="설교 원본 영상">
+          </iframe>
         </div>
 
-        <div class="shorts-bottom">
-          <div class="caption-box">
-            <div class="caption-hook">⚡ 당신은 '믿어주는' 중인가요, '믿어지는' 중인가요?</div>
-            <div class="caption-main">
-              "내 몸도 영혼도 <highlight>예수 그리스도의 것</highlight>입니다! 내 재산도 내 삶도 내 모든 사역도 주님의 것입니다!"
-            </div>
+        <div class="shorts-overlay">
+          <div class="shorts-top">
+            <span class="series-tag">#하이델베르크 1분 묵상</span>
+            <span style="font-size:12px; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.8);">0:58</span>
           </div>
 
-          <div class="channel-row">
-            <div class="channel-info">
-              <div class="avatar">행</div>
-              <div class="channel-name">문경 행복한교회 · 최성광 목사</div>
+          <div class="shorts-bottom">
+            <div class="caption-box">
+              <div class="caption-hook">⚡ 당신은 '믿어주는' 중인가요, '믿어지는' 중인가요?</div>
+              <div class="caption-main">
+                "내 몸도 영혼도 <highlight>예수 그리스도의 것</highlight>입니다! 내 재산도 내 삶도 내 모든 사역도 주님의 것입니다!"
+              </div>
             </div>
-            <button class="btn-sub">구독</button>
+
+            <div class="channel-row">
+              <div class="channel-info">
+                <div class="avatar">행</div>
+                <div class="channel-name">문경 행복한교회 · 최성광 목사</div>
+              </div>
+              <button class="btn-sub">구독</button>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <!-- 목사님 화면 위치 조절 컨트롤러 -->
+      <div style="background:rgba(30,41,59,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:10px 16px; width:360px; max-width:100%; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; font-weight:700; color:var(--gold);">
+          <span>🎯 화면 좌우 위치 조절</span>
+          <span id="posLabel">목사님 중심 (32%)</span>
+        </div>
+        <input type="range" id="posSlider" min="15" max="55" value="32" step="1" style="width:100%; accent-color:var(--gold); cursor:pointer;">
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:#94a3b8;">
+          <button onclick="setPos(25)" style="background:none; border:none; color:#94a3b8; cursor:pointer;">◀ 왼쪽(25%)</button>
+          <button onclick="setPos(32)" style="background:none; border:none; color:var(--gold); font-weight:700; cursor:pointer;">기본(32%)</button>
+          <button onclick="setPos(40)" style="background:none; border:none; color:#94a3b8; cursor:pointer;">오른쪽(40%) ▶</button>
         </div>
       </div>
     </div>
@@ -394,6 +415,29 @@
   </div>
 
   <script>
+    const iframe = document.getElementById('shortsIframe');
+    const posSlider = document.getElementById('posSlider');
+    const posLabel = document.getElementById('posLabel');
+
+    function updateIframePos(val) {
+      const factor = (256 / 81) * (val / 100);
+      iframe.style.left = `calc(50% - (100% * ${factor.toFixed(4)}))`;
+      posLabel.innerText = `${val}% (목사님 중심)`;
+    }
+
+    if (posSlider) {
+      posSlider.addEventListener('input', (e) => {
+        updateIframePos(e.target.value);
+      });
+    }
+
+    function setPos(val) {
+      if (posSlider) {
+        posSlider.value = val;
+        updateIframePos(val);
+      }
+    }
+
     function copyText(id) {
       const text = document.getElementById(id).innerText;
       navigator.clipboard.writeText(text).then(() => {
