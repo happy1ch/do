@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30년 장기목회 30인 설교·목회 디자인 전수조사 | 최성광 목사의 디지털 서재</title>
+<meta name="description" content="30년 이상 한 교회에서 목회한 목회자 30인(6개 대륙 각 5명)의 최근 설교 목록, 30년 반복 핵심 주제, 목회 디자인 아키텍처 전수 조사">
+<style>
+:root {
+  --bg: #0e1116;
+  --bg-soft: #151a22;
+  --panel: #1a212c;
+  --panel-hover: #212a38;
+  --border: rgba(255,255,255,.09);
+  --text: #e8ecf1;
+  --text-dim: #9aa7b5;
+  --accent: #d4b063;
+  --accent-soft: rgba(212,176,99,.14);
+  --accent-2: #6ea8d8;
+  --accent-2-soft: rgba(110,168,216,.13);
+  --success: #10b981;
+  --success-soft: rgba(16,185,129,.14);
+  --warn: #e0a060;
+  --warn-soft: rgba(224,160,96,.14);
+  --shadow: 0 12px 34px rgba(0,0,0,.42);
+  --glow: radial-gradient(1200px 500px at 50% -10%, rgba(212,176,99,.13), transparent 65%);
+}
+[data-theme="light"] {
+  --bg: #f7f5f0;
+  --bg-soft: #efece4;
+  --panel: #ffffff;
+  --panel-hover: #faf8f3;
+  --border: rgba(30,40,50,.10);
+  --text: #232a33;
+  --text-dim: #61707f;
+  --accent: #a9812e;
+  --accent-soft: rgba(169,129,46,.10);
+  --accent-2: #2f6ea8;
+  --accent-2-soft: rgba(47,110,168,.09);
+  --success: #059669;
+  --success-soft: rgba(5,150,105,.10);
+  --warn: #b06a1e;
+  --warn-soft: rgba(176,106,30,.10);
+  --shadow: 0 10px 30px rgba(40,50,60,.10);
+  --glow: radial-gradient(1200px 500px at 50% -10%, rgba(169,129,46,.10), transparent 65%);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  background: var(--bg); color: var(--text); min-height: 100vh;
+  background-image: var(--glow); background-repeat: no-repeat;
+  transition: background-color .35s ease, color .35s ease; line-height: 1.65;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── 상단 바 ── */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px clamp(18px, 5vw, 48px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.brand .mark {
+  width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 17px;
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent-2-soft));
+  border: 1px solid var(--border);
+}
+.brand small { display: block; font-size: 10.5px; font-weight: 500; color: var(--text-dim); }
+.top-actions { display: flex; align-items: center; gap: 8px; }
+.btn {
+  font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 10px;
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  border: 1px solid var(--border); transition: all .2s ease;
+  background: var(--panel); color: var(--text);
+}
+.btn:hover { background: var(--panel-hover); transform: translateY(-1px); }
+#themeToggle {
+  width: 38px; height: 38px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--panel);
+  color: var(--text); font-size: 16px; display: grid; place-items: center;
+  transition: transform .2s ease;
+}
+#themeToggle:hover { transform: rotate(-12deg) scale(1.05); }
+
+/* ── 헤더 ── */
+.container { max-width: 1020px; margin: 0 auto; padding: 32px 20px 80px; }
+.hero { text-align: center; padding: 36px 12px 24px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--accent); font-weight: 700; letter-spacing: 1px;
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 6px 16px; background: var(--accent-soft); margin-bottom: 18px;
+}
+.hero h1 { font-size: clamp(23px, 4.4vw, 34px); font-weight: 800; letter-spacing: -.8px; line-height: 1.3; }
+.hero p { margin: 14px auto 0; max-width: 700px; color: var(--text-dim); font-size: clamp(13.5px, 2.2vw, 15px); }
+.hero .quote {
+  margin: 20px auto 0; max-width: 640px; font-size: 13.5px; color: var(--text-dim);
+  background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px;
+  text-align: left; box-shadow: var(--shadow);
+}
+.hero .quote strong { color: var(--accent); }
+
+/* ── 대륙 필터 ── */
+.filter-bar { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 26px 0 30px; }
+.filter-btn {
+  padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-dim);
+  cursor: pointer; transition: all .2s ease;
+}
+.filter-btn.active, .filter-btn:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+
+/* ── 목회자 카드 ── */
+.pastor {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 18px;
+  padding: 26px clamp(18px, 3vw, 30px); margin-bottom: 22px; box-shadow: var(--shadow);
+  transition: all .2s ease;
+}
+.pastor:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+.pastor-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px; margin-bottom: 4px; }
+.pastor-head h3 { font-size: 20px; font-weight: 800; letter-spacing: -.4px; }
+.pastor-head .church { font-size: 13px; color: var(--text-dim); font-weight: 600; }
+.tenure {
+  font-size: 12px; font-weight: 700; color: var(--success);
+  background: var(--success-soft); border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
+  border-radius: 999px; padding: 3px 12px;
+}
+.tenure.warn { color: var(--warn); background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 30%, transparent); }
+.denom { font-size: 12px; color: var(--text-dim); }
+.pastor blockquote { font-size: 13px; color: var(--text-dim); border-left: 3px solid var(--accent); padding-left: 12px; margin: 10px 0 2px; }
+.p-item { margin-top: 16px; }
+.p-item h4 {
+  font-size: 12px; font-weight: 800; letter-spacing: 1px; color: var(--accent-2);
+  text-transform: uppercase; margin-bottom: 7px;
+}
+.p-item p, .p-item li { font-size: 14px; color: var(--text); }
+.p-item .dim { color: var(--text-dim); font-size: 13px; }
+.p-item ul { padding-left: 18px; display: grid; gap: 5px; }
+.p-item ul li::marker { color: var(--accent); }
+
+/* ── 종합 분석 ── */
+.synth {
+  background: var(--panel); border: 1.5px solid var(--accent); border-radius: 18px;
+  padding: 28px clamp(18px, 3vw, 32px); margin: 40px 0 22px; box-shadow: var(--shadow);
+}
+.synth h2 { font-size: 21px; font-weight: 800; letter-spacing: -.4px; margin-bottom: 14px; }
+.synth h2 span { color: var(--accent); }
+.synth h3 { font-size: 15.5px; font-weight: 700; color: var(--accent-2); margin: 18px 0 8px; }
+.synth p, .synth li { font-size: 14px; }
+.synth ul, .synth ol { padding-left: 20px; display: grid; gap: 7px; margin-top: 4px; }
+.synth b { color: var(--accent); }
+
+/* ── 검증 표 ── */
+.table-wrap { overflow-x: auto; margin-top: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+th, td { padding: 9px 12px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+th { color: var(--accent-2); font-weight: 700; }
+td.ok { color: var(--success); font-weight: 700; }
+td.warn { color: var(--warn); font-weight: 700; }
+
+/* ── 하단 ── */
+.footnote { margin-top: 30px; font-size: 12.5px; color: var(--text-dim); line-height: 1.7; }
+.back-row { text-align: center; margin-top: 40px; }
+@media (max-width: 640px) { .pastor-head h3 { font-size: 17.5px; } .hero { padding: 24px 6px 16px; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="mark">📖</span>
+    <span>성광의 서재<small>30-Year Pastors Survey</small></span>
+  </a>
+  <div class="top-actions">
+    <a href="index.html" class="btn"><span>🏛️</span><span class="btn-text">서재 로비</span></a>
+    <button id="themeToggle" title="다크/라이트 전환">🌙</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <span class="badge">📖 30-YEAR PASTORS · FULL SURVEY</span>
+    <h1>30년 장기목회 30인<br>설교·목회 디자인 전수조사</h1>
+    <p>6개 대륙 각 5명, 총 30명의 "30년 이상 한 교회" 목회자를 전수 조사해<br>최근 설교 목록 · 30년 반복 핵심 주제 · 목회 디자인 아키텍처를 정리한 연구 보고서입니다.</p>
+    <div class="quote">"오랜 목회에서 오는 노하우는 20년 이상 한 교회에서 목회를 하고 난 뒤에 올 것이라 생각한다. 30년 이상 한 교회에서 목회하고 계시는 목회자를 대상으로 최근 설교 목록을 조사해줘. 그분들은 30년 동안 이 교회에서 지속적으로 반복하고 있는 내용이 있는지, 어떻게 목회를 디자인 하시는지." — <strong>최성광 담임목사 의뢰 원문</strong></div>
+  </section>
+
+  <nav class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-c="all">전체 30인</button>
+    <button class="filter-btn" data-c="asia">🌏 아시아·한국</button>
+    <button class="filter-btn" data-c="namerica">🌎 북미</button>
+    <button class="filter-btn" data-c="europe">🌍 유럽</button>
+    <button class="filter-btn" data-c="africa">🌍 아프리카</button>
+    <button class="filter-btn" data-c="latam">🌎 중남미</button>
+    <button class="filter-btn" data-c="oceania">🌏 오세아니아</button>
+  </nav>
+
+  <section id="pastors">
+
+  <!-- ═══════════ 아시아 ═══════════ -->
+  <article class="pastor" data-c="asia">
+    <div class="pastor-head"><h3>1. 정필도 목사 (故, 1932–2022)</h3><span class="church">부산 수영로교회</span><span class="tenure">36년 (1975–2011)</span><span class="denom">장로회(합동) · 개혁주의 + 성령의 능력</span></div>
+    <blockquote>"목회자가 행복해야 교회가 부흥하는 거야." — 기독일보 은퇴 인터뷰, 2011</blockquote>
+    <div class="p-item"><h4>최근·대표 설교</h4>
+      <ul><li>주일 연속 강해 설교 — 교회 디지털 역사관에 단계별(개척기·성장기·전환기·확장기)로 남은 「그리스도, 예배의 중심」, 「복음, 그 능력의 비밀」(행 28:31)</li>
+      <li>「무릎으로 가는 길」(단 6:10) — 기도 축의 대표 설교</li>
+      <li>은퇴 후 원로로서 중국 복음화 집회 설교 지속(2011~2022)</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>기도</b> — 월요산상기도회(1982~), 다니엘 세이레 21일 연말연초 새벽기도, 40일 기도축제(6,000명 기도카드·24시간 릴레이)</li>
+      <li><b>복음화</b> — 익투스 부산복음화대회, 천국시민등록운동, 부산성시화운동본부장(초교파 연합)</li>
+      <li>사랑하는 목회자의 행복 — 교인을 "보배"로 보는 목양</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>주일은 말씀, 주중은 기도 체계 — 산상기도회·새벽기도·세이레의 삼중 구조</li>
+      <li>사랑방 전도 — 한 영혼을 책임지는 소그룹으로 성도 전원 훈련</li>
+      <li>작정헌금 없는 헌금 문화 — "36년간 한 번도 작정헌금을 하지 않았는데 항상 넘쳤다"</li>
+      <li>파송 선교(제1호 선교사 1986년 방글라데시)와 목회자 부부 세미나</li>
+      <li>승계 설계 — 2011년 이규현 목사 위임 예배로 원만한 담임 교체</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="asia">
+    <div class="pastor-head"><h3>2. 박영선 목사 (1948~, 원로)</h3><span class="church">서울 남포교회</span><span class="tenure">32년 (1985–2017)</span><span class="denom">장로회(합신) · 총신 · 개혁주의 설교자</span></div>
+    <blockquote>"은혜란 하나님이 고집을 부리신다는 뜻이다. 우리의 실패에 포기하지 않으시는 것이 하나님의 은혜." — 설교선집 인터뷰, 2023</blockquote>
+    <div class="p-item"><h4>최근·대표 설교</h4>
+      <ul><li>설교 사역 40주년 「설교 선집」(복 있는 사람, 2023) — 주제 <b>성화 · 믿음 · 교회 · 자유</b></li>
+      <li>교회 초기부터 요한복음 · 사도행전 · 로마서 연속 강해</li>
+      <li>30주년 기념예배 설사(김정우 박사, 2015) — "남포교회를 보면 박영선 목사가 보인다"</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>"하나님이 우리를 어떻게 만들어 가시는가" — 한국교회의 도덕주의·열심주의적 구원관을 본문 강해로 허물기</li>
+      <li>현실 속에서 쓸 수 있는 신앙 — "방향은 길이 되어 주지 않는다"</li>
+      <li>구원의 존재론적 이해(성화·자유가 겉모습이 아니라 존재의 문제)</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li><b>말씀 선포가 교회의 존재 이유</b> — 행정·조직은 양육에 필요한 만큼만 (Liberty대 목회학 박사논문 연구 대상)</li>
+      <li>교회 = 가정의 확대 — 권위주의·계급의식·상투적 유행어 전면 배제("비전·부흥·특새 같은 말을 30년간 들어본 적 없다")</li>
+      <li>목회자 배양과 교회 개척으로의 연결</li>
+      <li>대교약졸(大巧若拙) — 노출 없는 목회 스타일</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="asia">
+    <div class="pastor-head"><h3>3. 김남준 목사 (전 담임)</h3><span class="church">안양 열린교회</span><span class="tenure">30년 (1993–2023)</span><span class="denom">개혁주의 장로교 · 청교도 전통</span></div>
+    <blockquote>"신학적이지 않은 설교는 설교가 아니다." — 기독교연감 인터뷰, 2016</blockquote>
+    <div class="p-item"><h4>최근·대표 설교</h4>
+      <ul><li>교리 강해 · 구약 연속 설교 중심의 주일 설교 30년</li>
+      <li>청교도(퓨리턴) 설교·목회를 모본으로 삼은 설교 사역 — 칼빈·오웬·조나단 에드워즈 연구 강의</li>
+      <li>저서 『게으름』 등 신학 저술 활동 은퇴 후에도 지속</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>개혁주의 교리가 성도의 삶에 뿌리내리는 것</b></li>
+      <li>하나님 주권 은혜, 회개와 중생의 분명한 경계, 청교도적 경건</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li><b>교회 부설 신학연구자료센터</b> — 신학 원서 5만권 도서관, 설교와 연구의 통합</li>
+      <li>설교(주일) + 심방(성도의 삶을 터치하는 목양적 심방)의 양축 목회</li>
+      <li>총신대 교수직 병행 — 현장 목회와 신학 교육의 통합</li>
+      <li>승계 설계 — 2년 전 은퇴 예고, 단독 후보(김성진 목사) 청빙으로 어긋남 없는 교체</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="asia">
+    <div class="pastor-head"><h3>4. 한경직 목사 (故, 1902–1996)</h3><span class="church">서울 영락교회</span><span class="tenure">40년 (1953–1992)</span><span class="denom">장로회 · 장신 계열 정통 복음주의</span></div>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>「물의 상처」, 「오직 주의 책을 읽으라」 등 수천 편의 주일·방송 설교</li>
+      <li>시편·복음서 중심의 위로와 회개 설교</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>오직 말씀(Sola Scriptura) — 성경의 권위와 한 영혼의 소중함</li>
+      <li>전쟁과 갈대의 인생 속 위로의 복음</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>주일 설교 + 라디오 방송 설교(CBS)의 이중 축 — 한국 미디어 목회의 원형</li>
+      <li>전국 부흥사역과 단일 교회 목회의 균형, 신학교 교육 병행</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="asia">
+    <div class="pastor-head"><h3>5. 조용기 목사 (故, 1936–2021)</h3><span class="church">서울 여의도순복음교회</span><span class="tenure">63년 (1958–2021)</span><span class="denom">순복음 · 오순절 성령운동</span></div>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>「거듭남음」 평생 시리즈, 5요소 복음(예수님만이 구원의 길 · 기독은 복음 · 거듭남음 · 치유 · 재림)</li>
+      <li>신약 전체 연속 강해(강해전집 21권)</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>거듭남음</b> — 죄의 고백과 피 사혈의 신뢰, 한 주제를 60년 반복</li>
+      <li>성령 세례와 치유, 셀 공동체의 상호 목양</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>셀(정) 5만 시스템 — 대형교회를 소그룹으로 목양하는 제도화</li>
+      <li>새벽기도·산상기도 문화, GT채널 미디어 글로벌화</li>
+      <li class="dim">* 신학 전통은 개혁주의와 다르나, "한 주제 60년 반복 + 양육 시스템 제도화"의 목회 디자인 표본으로 수록</li></ul></div>
+  </article>
+
+  <!-- ═══════════ 북미 ═══════════ -->
+  <article class="pastor" data-c="namerica">
+    <div class="pastor-head"><h3>6. John MacArthur (故, 1939–2025)</h3><span class="church">Grace Community Church, 선벨리 CA</span><span class="tenure">56년 (1969–2025)</span><span class="denom">비교단(칼빈주의 침례) · 시카고 성경 선언</span></div>
+    <blockquote>"교회가 하나님의 말씀에 대한 올바른 것들에 헌신해 왔기 때문에 하나님께서 이 교회를 축복하셨다." — 「The Anatomy of a Church」</blockquote>
+    <div class="p-item"><h4>최근 설교 목록 (2026 방송 중인 아카이브)</h4>
+      <ul><li>「A Faith That Pleases God」 — 히브리서 11장 연작(Noah · Moses · Patriarchs)</li>
+      <li>「Salvation Survey」 — Empty Words / Empty Hearts(거짓 회심 경고 시리즈)</li>
+      <li>「Without Excuse」 — 로마서 2장 하나님의 심판 원리</li>
+      <li>「The Anatomy of a Church」 — 교회의 골격·내부기관·근육·피부 4요소와 "하나님 높은 관점" 등 5개 비협상 요소</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>신약 전체를 절별(verse-by-verse)로 완주</b> — "신약의 모든 절을 설교했다"</li>
+      <li>하나님의 주권, 참 회심의 경계, 교회는 하나님의 영광을 위해 존재</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>연속 강해의 시간표화 — 한 책을 수년씩</li>
+      <li>The Master's Seminary 같은 단지 내 목회자 훈련, 100가구+ 선교사 파송</li>
+      <li>Grace to You 미디어 — 설교의 책·라디오·팟캐스트 재생산 (소천 후에도 방송 지속)</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="namerica">
+    <div class="pastor-head"><h3>7. John Piper</h3><span class="church">Bethlehem Baptist Church, 미니애폴리스</span><span class="tenure">33년 (1980–2013)</span><span class="denom">침례회 · 기독교 향낙주의</span></div>
+    <div class="p-item"><h4>최근·대표 설교 목록</h4>
+      <ul><li>로마서 시리즈 225편 (1998–2002, 「The Author of the Greatest Letter Ever Written」 등)</li>
+      <li>마태복음 「What Jesus Demands from the World」 연작</li>
+      <li>2026년 10월 현재 Ask Pastor John 팟캐스트 연속 방영 — 「Peter and the Savior Who Prayed for Him」, 「Paul's Stark Warning to Infants in Christ」 등</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>"하나님을 보라, 그분 안에 기뻐하라"</b> — 하나님의 영광이 인간의 가장 큰 기쁨이라는 구속사 강해</li>
+      <li>은혜의 절대성과 신앙의 기쁨, 세상 만물의 잠김과 주인</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>한 책 수년 강해의 축 + Desiring God 전문 무료 공개 + APJ 질문응답으로 같은 교리 축을 시대 질문에 재적용</li>
+      <li>Bethlehem College & Seminary — 목회자 훈련 제도화</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="namerica">
+    <div class="pastor-head"><h3>8. Alistair Begg</h3><span class="church">Parkside Church, 클리블랜드 OH</span><span class="tenure">43년 (1983~)</span><span class="denom">복음주의 성공회 · Dick Lucas 계승자</span></div>
+    <div class="p-item"><h4>최근 설교 목록 (2026-09 기준 확인)</h4>
+      <ul><li>「A Good Servant of Christ」(딤전 4:1-16) · 「The Definitive Picture of a Christian Leader」(딤후 4:1-8) · 「Lessons for Handling the Scriptures」 (2026-09-29/30)</li>
+      <li>느헤미야 연속 강해(2–4장 · 13장), 「"In Christ Jesus" — The Gospel Assurance of Romans 8」, 「The Stranger's Hope」(벧전), 요한복음 17장 대제사장 기도 시리즈</li>
+      <li>목회자 컨퍼런스 Basics 2026 — 「Shepherd the Flock of God」(벧전 5) 등</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>성경의 권위와 복음의 단순한 진리</b> — 말씀에 순종하는 것, 그리스도의 중심성</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>주일 아침·저녁 강해 + Truth For Life 데일리 라디오(30년+)</li>
+      <li>Basics 연례 목회자 컨퍼런스(41회 이상), 설교·음성 전체 무료 공개</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="namerica">
+    <div class="pastor-head"><h3>9. Tommy Nelson</h3><span class="church">Denton Bible Church, 텍사스</span><span class="tenure">약 48년 (1977~)</span><span class="denom">비교단(침례) · 달라스신학교 전통</span></div>
+    <div class="p-item"><h4>최근 설교 목록 (교회 미디어 라이브러리 확인)</h4>
+      <ul><li><b>「The Book of John — "That You May Have Life"」</b> (요한복음 연속 강해)</li>
+      <li><b>「Kings: Defining Decisions」</b> (왕들 연작)</li>
+      <li><b>「The Pilgrim's Path」</b> (벧전 1)</li>
+      <li>전서 「Love Song」(아성) 아카이브 — 그의 상징 시리즈</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>성경 전체를 한 권씩 — 전서의 사랑(아성), 아함의 신앙과 리더십, 복음서의 그리스도</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>대학 캠퍼스(노스텍사스대) 사역 + 가정 목양의 이중 축</li>
+      <li>아성 강해로 결혼·성윤리를 설교의 큰 축으로 세우고 책·DVD로 전국 확장</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="namerica">
+    <div class="pastor-head"><h3>10. Charles Stanley (故, 1932–2023)</h3><span class="church">First Baptist Church Atlanta</span><span class="tenure">49년 (1972–2020)</span><span class="denom">남침례회(SBC) · 총회장 역임</span></div>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>「인생의 열매」, 「폭풍의 기도」, 「하나님께 순종하라」 등 In Touch 방송 설교 수천 편</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>순종의 원리</b> — 순종하면 축복이, 거역하면 나팔이 울린다</li>
+      <li>은혜의 확신, 원한 없는 삶, 하나님과의 밀착 관계</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>In Touch Ministries — 주일 설교의 전세계 방송, 미디어 목회의 원형</li>
+      <li>개인 치유 경험 기반의 결혼·가정 위기 목양</li></ul></div>
+  </article>
+
+  <!-- ═══════════ 유럽 ═══════════ -->
+  <article class="pastor" data-c="europe">
+    <div class="pastor-head"><h3>11. Dick Lucas (1925~, 101세)</h3><span class="church">St Helen's Bishopsgate, 런던</span><span class="tenure">37년 (1961–1998)</span><span class="denom">영국 성공회 보수 복음주의 · Proclamation Trust 창설</span></div>
+    <blockquote>"강해의 위험은 강해가 아니라 외삽( imposition )이다. 내 틀을 본문 위에 올려놓는 것." — WordPartners 인터뷰</blockquote>
+    <div class="p-item"><h4>최근·대표 설교 (아카이브)</h4>
+      <ul><li>「The believer's assurance」(로마서 8장 전체 강해) — 2024년 10월 녹음, "마지막 공식 강해"로 남은 말씀</li>
+      <li>「Reconciliation」(고후 5) · 「The death of Jesus」(마태복음 수난 66절) · 「The resurrection of Jesus」 · 빌립보서 입문</li>
+      <li>「The melodic line」 — 강해설교 훈련 핵심 강의(은퇴 후 재녹음)</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>본문이 말하는 것을, 말하는 방식으로, 말하는 목적대로 찾는 강해</b> — "성경은 살아계신 하나님의 음성이다"</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>런던 시티 가정·직장인·학생 다층 예배(점심시간 사역) — 수십 명에서 수천 명으로</li>
+      <li>Proclamation Trust · Cornhill 설교훈련원 — "설교는 신학교에서 배우지 못한다"는 현장 도제 훈련</li>
+      <li>제자들: Tim Keller · Alistair Begg · Kent Hughes 등 세계적 설교자들</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="europe">
+    <div class="pastor-head"><h3>12. William (Willie) Still (故, 1911–1997)</h3><span class="church">Gilcomston South Church, 애버딘</span><span class="tenure">52년 (1945–1997)</span><span class="denom">스코틀랜드 교회(장로교) · 개혁주의</span></div>
+    <blockquote>"교회의 전환은 조직의 확장이 아니라 말씀 사역과 기도로부터 시작되었다." — 마지막 설교(행 20), 1997</blockquote>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>마지막 설교 = 사도행전 20장(에베소 장로들과의 작별) — "여기서의 52년을 회고하며"</li>
+      <li><b>성경 전체를 통째로 강해하고 설교문을 적어 성도에게 나눈 것 여러 번</b></li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>말씀 사역 · 기도 · 예배 · 교제의 사각형</li>
+      <li>「십자가의 3차원」, 영적 성숙(Towards Spiritual Maturity)</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li><b>조직 없는 교회</b> — 7세 이하 주일학교 하나를 빼면 부서가 없음: 두 주일 예배 + 주중 성경공부 + 토요 기도회만</li>
+      <li>대중 전도 집회를 정리하고 기도회로 교체한 결단 — lectio continua 강해의 발견</li>
+      <li>월보(Monthly Record)에 목회 서신·통독 노트를 매월 직접 집필 — 심방·상담·서신의 삼중 목양</li>
+      <li>Sinclair Ferguson · Eric Alexander 등 애버딘 학생 사역의 원천</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="europe">
+    <div class="pastor-head"><h3>13. Geoff Thomas (1938~, 88세)</h3><span class="church">Alfred Place Baptist Church, 애버리스트위스(웨일스)</span><span class="tenure">50년 (1965–2016)</span><span class="denom">독립 침례교 · 웨스트민스터 신학교 · Banner of Truth</span></div>
+    <blockquote>"그리스도 중심의 목회와 설교된 말씀의 능력에 대한 확신" — 50주년 축사, 2015</blockquote>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li><b>교회 홈페이지에 설교 전문 약 1,000편 공개</b></li>
+      <li>은퇴 직전 마지막 설교 「2 Timothy 4:6-8」(내가 이미 헌물로 부어지고…)</li>
+      <li>은퇴 후에도 저술·세계 집회 사역 지속(2026년 현재 88세)</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>그리스도 중심의 연속 강해</b> — 성경 전체를 한 주일 한 본문씩 50년</li>
+      <li>성령의 사역, 회개와 믿음, 웨일스 개혁 전통의 열매</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>대학도시 캠퍼스 + 지역 사역 병행</li>
+      <li>설교 전문의 상시 공개 — 50년 설교의 웹 아카이브화</li>
+      <li><b>3세대 승계 디자인</b> — 손자 Rhodri Brady에게 같은 교회를 목회 계보로 물려줌(2016)</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="europe">
+    <div class="pastor-head"><h3>14. David Meredith</h3><span class="church">Smithton Free Church, 인버네스(스코틀랜드)</span><span class="tenure">31년 (1984–2015)</span><span class="denom">스코틀랜드 자유교회 · 2010년 총회장</span></div>
+    <blockquote>첫 설교와 마지막 설교가 모두 느헤미야 2장 — "같은 노트는 아니지만 같은 본문으로 돌아왔다."</blockquote>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li><b>온라인 오디오 설교 451편+</b> 공개(설교당 평균 100명 청취)</li>
+      <li>마지막 예배 설교 「느헤미야 2장」 — 31년 전 첫 설교 본문</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>부르심과 상거 — 하나님이 열어주시는 문으로 가는 신앙</li>
+      <li>도시 개척(스코틀랜드 신도시 Culloden 인접)과 회개의 복음</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>신도시 개척 31년 — 소공동체가 스코틀랜드 최대 교회 중 하나로</li>
+      <li>설교의 온라인 상시 공개(early adopter)</li>
+      <li>은퇴 후 자유교회 선교총감 — 단일 교회 목회를 선교행정으로 이어가는 설계</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="europe">
+    <div class="pastor-head"><h3>15. Charles H. Spurgeon (故, 1834–1892)</h3><span class="church">Metropolitan Tabernacle, 런던</span><span class="tenure">38년 (1854–1892)</span><span class="denom">침례교 · 칼빈주의 배경</span></div>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>「The Metropolitan Tabernacle Pulpit」 전집 3,561편 — 「주께로 오시오」(마 11:28), 「기적의 어부」, 「예수의 눈물」 등</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>십자가와 대속의 은혜</b> — "나는 매일 십자가에서 출발합니다"</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>주간 설교단 출판 — 3,500편+ 전집으로 전세계 전승(19세기의 미디어 목회)</li>
+      <li>목회자 대학(Pastors' College) — 자립 목회자 200여 명 배출, 고아원 등 사회 사업 결합</li></ul></div>
+  </article>
+
+  <!-- ═══════════ 아프리카 ═══════════ -->
+  <article class="pastor" data-c="africa">
+    <div class="pastor-head"><h3>16. Conrad Mbewe (1960~)</h3><span class="church">Kabwata Baptist Church, 루사카(잠비아)</span><span class="tenure">30년 (1987–2017)</span><span class="denom">개혁침례 · "아프리카의 스펄전" · 아프리카기독대 총장</span></div>
+    <blockquote>"한가닥 풀씨처럼 한 시기의 일에 집중하다 고개를 들어 보니 30년 마라톤의 끝에서 사람들이 환호하고 있었다." — 「Five Lessons after 30 Years」, 2017</blockquote>
+    <div class="p-item"><h4>대표 설교·저술</h4>
+      <ul><li>자기 저술 「Five Lessons after 30 Years of Pastoring in Zambia」(9Marks · TGC 동시 게재, 2017)</li>
+      <li>아프리카 교회의 개혁주의 전환 · 아프리카 문화와 복음 · 설교자 훈련 설교 다수(SermonAudio · TGC)</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>개혁주의 진리가 아프리카 교회에 뿌리내리는 것</b> — "새 오순절 바람이 파괴적 회오리가 되기 전에 교회를 분명한 개혁주의 입지로 옮겼다"(5년의 긴장 끝에 완수)</li>
+      <li>아프리카 문화 중 성경과 양립하지 않는 지점의 분명한 구분</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li><b>35명 → 400명+, 교회 개척 약 30개(수도 루사카에 6개)</b> — 다식(多植)으로 성장을 설계</li>
+      <li>루사카 목회자 대학(Lusaka Ministerial College) · 아프리카기독대학(ACU) 설립</li>
+      <li>30년 비결: "교회가 나와 함께 성장했다" — 부족함도 과로함도 느끼지 않았다</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="africa">
+    <div class="pastor-head"><h3>17. W.F. Kumuyi (1941~)</h3><span class="church">Deeper Life Bible Church, 라고스(나이지리아)</span><span class="tenure">53년 (1973~)</span><span class="denom">오순절·성결 전통 · 라고스대 수학 강사 출신</span></div>
+    <blockquote>"그의 설교가 교회를 세웠다(He preached Deeper Life into existence)." — 전기 작가 Isaacson</blockquote>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li><b>매주 월요일 밤 성경공부 — 1973년 8월부터 50년 이상 단 한 번도 거르지 않고 본인이 직접 강해</b>(90분 연속 절강해)</li>
+      <li>매주 토요일 일꾼 성경공부, 주일 저녁 가정 순회 부흥 설교</li>
+      <li>최근 GCK(Global Crusade with Kumuyi) 전국 대성회 · 히브리서 계통 강해 저술</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>성결 — 거듭남음의 분명한 확신과 성화, 구절에서 구절로의 실천 적용</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>한 주제(월요 성경공부) 50년 반복 — 성도 15명에서 수십만으로</li>
+      <li>전도에 시간의 절반 지정 — "지역 코디네이터들에게 절반은 전도, 절반은 양육에 쓰라고 명했다"</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="africa">
+    <div class="pastor-head"><h3>18. E.A. Adeboye (1942~)</h3><span class="church">Redeemed Christian Church of God(RCCG), 라고스</span><span class="tenure">45년 (1981~)</span><span class="denom">오순절 · 라고스대 수학 교수 출신</span></div>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>매월 성령 대집회(Holy Ghost Service) 강설</li>
+      <li>일일 묵상집 『Open Heavens』 — 전세계 번역·일독 문화</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>성령의 역사와 기적, 가정의 거듭남음</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>"5분 거리마다 교회" — 캠프+셀 확장으로 단일 공동체를 글로벌 운동으로</li>
+      <li>월례 대집회의 정기화, 일일 묵상 문서로 성도의 하루를 설계</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="africa">
+    <div class="pastor-head"><h3>19. Mensa Otabil (1959~)</h3><span class="church">International Central Gospel Church(ICGC), 아크라(가나)</span><span class="tenure">40년 (1984~)</span><span class="denom">독립 복음주의(오순절 배경)</span></div>
+    <blockquote>"수십 년간 '말씀을 단순하게 하라'고 기도했다. 나는 당신의 마음을 더 헤쳐놓으려는 게 아니라 다시 조립시켜 드리려는 것이다." — 40주년 설교, 2024</blockquote>
+    <div class="p-item"><h4>최근 설교 목록 (40주년 연작, 2024)</h4>
+      <ul><li>「ICGC at 40: My Ministry Values」 — 사역 가치 10가지(본인 직접 확인: 1984-02-26 개척, 40년 한 교회)</li>
+      <li>「The Essence of Ministry」(고후 4:5-10) · 「Building for the Future」 · 「My God」 시리즈</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>복음을 신비화하지 않고 30분 안에 풀어드리는 단순화</b></li>
+      <li>"사람이 아니라 그리스도를 향하게 하라" — 내 간증으로 설교하지 않는다</li>
+      <li>강단의 거룩 — 개인 영리에 쓰지 않는다 / 사회 약자와 문화 변혁(눅 4:17-19)</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>개척-단일 교회-대학(센트럴대학)-기업 멘토링의 통합 모델</li>
+      <li>"우리는 수백 년을 바란다" — 자신보다 오래갈 교회를 세우는 승계 비전</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="africa">
+    <div class="pastor-head"><h3>20. Erlo Stegen (故, 1935–2023)</h3><span class="church">KwaSizabantu Mission, 콰줄루나탈(남아공)</span><span class="tenure">약 55년 (1966–2021)</span><span class="denom">비교단 선교단 · 회개와 부흥 전통</span></div>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>부흥 회개 설교 수천 편 — 1966년 부흥("하나님의 절대적 말씀 권위")이 시작점, 1970년 선교단 창립, 전 대륙 순회 설교</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>회개</b> — 죄의 확신에서 시작하는 부흥, 콰줄루 민족과의 인연</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>선교단+학교+농업기업의 통합 공동체, 대규모 사회 사업</li>
+      <li class="dim"><b>주의각서:</b> 언론(News24)에 컬트적 추궁과 학대 의혹이 제기된 인물 — 자체 조사위는 '컬트 아님' 판정했으나 '맹목적 신앙' 지적은 남음. 목회 디자인 학습 시 권위 집중·사역자 위기 관리의 그림자를 함께 배우는 표본</li></ul></div>
+  </article>
+
+  <!-- ═══════════ 중남미 ═══════════ -->
+  <article class="pastor" data-c="latam">
+    <div class="pastor-head"><h3>21. Sugel Michelén</h3><span class="church">Iglesia Bíblica del Señor Jesucristo, 산토도밍고(도미니카)</span><span class="tenure">40년+ (1983~)</span><span class="denom">개혁주의 침례 배경 비교단 · SBTS 목회학 박사</span></div>
+    <blockquote>"스페인어권 최고의 강해설교자." 공식 소개에 "+40 años sirviendo" 명기.</blockquote>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>주일마다 본문 강해를 담당하는 정기 설교자(40년+)</li>
+      <li>저서 『El cuerpo de Cristo』(교회론), 『Todos Desean Pastorear Una Iglesia Grande』</li>
+      <li>개혁사 · 조직신학 · 변증학 강의(SBTS)</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>하나님 주권 은혜와 교회의 건강</b> — 정통 강해가 성도의 삶을 지탱한다</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>다수 사역자회(공동 리더십) 중 주일 강해 담당 — 설교자 중심이 아닌 장로회 목회</li>
+      <li>교회 내 목회자 훈련 + 스페인어권 컨퍼런스 확장</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="latam">
+    <div class="pastor-head"><h3>22. Armando Alducin (1954~)</h3><span class="church">Vida Nueva en Cristo / Vida Nueva para el Mundo, 멕시코시티</span><span class="tenure">44년 (1982~)</span><span class="denom">비교단 복음주의 · 전직 무신론자(1977 회심)</span></div>
+    <div class="p-item"><h4>최근 설교 목록</h4>
+      <ul><li>최신 시리즈 「El Anticristo Asirio」(창세기 6장 네피림 주제), 종말론 연작, 로마서 전체 강해 — 유튜브 · 엔라체TV 상시 방영</li>
+      <li>격월 지성인 아침강연(셔튼 호텔) — "무신론은 지능이 아니라 비합리"라는 과학·역사·고고학 증거 강연</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>성경적 종말론과 창조-몰락의 긴장</b>, 증명 가능한 복음(신앙의 합리성)</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>교회 안(주일 강해) + 교회 밖(호텔 아침강연 · TV · 40개+ 개척 교회)의 이중 구조</li>
+      <li>62개국 TV·라디오 네트워크, 동생 알레한드로와의 형제 동역</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="latam">
+    <div class="pastor-head"><h3>23. Paschoal Piragine Júnior</h3><span class="church">Primeira Igreja Batista de Curitiba, 쿠리티바(브라질)</span><span class="tenure">32년+ (1988~)</span><span class="denom">브라질 침례교 · 교인 약 15,000</span></div>
+    <blockquote>"사람들의 가장 좋은 순간과 최악의 순간을 함께하는 것 — 그것이 직업이 아니라 소명입니다." — 40년 사역 감사 인터뷰, 2020</blockquote>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>주일 강해 설교, 가정·교회 주제 저서 다수, 인도주의 사역 총괄</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>교회를 지역 공동체의 가족으로 — 성경적 가정 회복</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li><b>교인 1,000명 → 15,000명, 지역 모교회 30개+ 분립</b> — 대형교회의 다중 분립 설계</li>
+      <li>건축·인도주의·문화 사업 병행, 브라질 침례교 총회 리더십과의 균형</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="latam">
+    <div class="pastor-head"><h3>24. Nilson Fanini (故, 1932–2009)</h3><span class="church">Primeira Igreja Batista de Niterói, 니테로이(브라질)</span><span class="tenure">41년 (1964–2005)</span><span class="denom">브라질 침례교 · 세계침례연맹 총회장(1990–95)</span></div>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>『Grandes Sermões』 설교집(가정 · 복음 · 기쁨), TV 프로그램 「Reencontro」(전국 146개 방송사 방영)</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>가정의 회복과 복음의 단순한 초청("Deus salve a família")</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>교회+신학교+사회복지(Reencontro 기금 35년)의 통합 캠퍼스</li>
+      <li class="dim">승계 갈등 후 별도 교회로 이동한 사례 — <b>승계 실패의 반면교사 표본</b></li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="latam">
+    <div class="pastor-head"><h3>25. Miguel Núñez (1959~)</h3><span class="church">Iglesia Bautista Internacional, 산토도밍고(도미니카)</span><span class="tenure warn">28년 (1998~) — 기준 경계선</span><span class="denom">독립 침례(남침례 성향) · 의사 출신(내과·감염내과)</span></div>
+    <blockquote>"교리가 삶을 지탱한다. 복음은 절대 진리다."</blockquote>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>주일 강해(스페인어/영어 2개 언어 예배 시작)</li>
+      <li>TV 프로그램 「Respuestas: Verdades absolutas para un mundo relativo」(2004~)</li>
+      <li>Instituto Integridad & Sabiduría(2008~) 목회자 교육 · 저서 다수</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>고도 교육층(의사·변호사)을 위한 교리·세계관 설교</b>, 사회에서의 절대 진리</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>교회(2,200명)+미니스트리(2004)+신학원(2008)의 3단 트랙</li>
+      <li>교회의 '문화적 사명'을 목회 설계에 명시적으로 넣은 사례</li>
+      <li class="dim">* 실측 28년(1998년 창립)으로 계획서의 "32년"을 정정 — 경계선 후보로 수록</li></ul></div>
+  </article>
+
+  <!-- ═══════════ 오세아니아 ═══════════ -->
+  <article class="pastor" data-c="oceania">
+    <div class="pastor-head"><h3>26. Murray Robertson</h3><span class="church">Spreydon Baptist Church(현 South West Baptist), 크라이스트처치(뉴질랜드)</span><span class="tenure">40년 (1968–2009)</span><span class="denom">뉴질랜드 침례회 · 학생선교회 회장 역임</span></div>
+    <blockquote>26세에 노령 소교회로 청빙받아 40년 — 뉴질랜드 최대 교회 중 하나로. 전기 『Against the Odds』(Kevin Ward)로 학술 연구된 표본.</blockquote>
+    <div class="p-item"><h4>대표 설교 (아카이브)</h4>
+      <ul><li><b>Spotify에 설교 400편 이상 공개</b>(murraysmessages.co.nz) — 「Isn't God Good!」, 「Grace and Graciousness」, 「The Joys of Generosity」</li>
+      <li>은퇴 후에도 각지 초빙 설교 지속(2023년 확인)</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>성령의 갱신 + 지역사회 봉사</b> — 말씀 설교 · 영적 갱신 · 국내외 선교의 삼위</li>
+      <li>"큰 꿈을 꾸라"는 소명 설교</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>3단계 7년 여정(전기 저술 확인) — 부흥 → 공동체 센터(킹덤 뱅크 등) → 아시아 선교의 단계 전환</li>
+      <li>지역사회 사역 — 크라이스트처치 시장이 감사 방문, 교회가 도시의 은혜가 된 모델</li>
+      <li>해외 선교사 70명+ 파송, 다수의 목사 배출</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="oceania">
+    <div class="pastor-head"><h3>27. Phil Pringle (1952~)</h3><span class="church">C3 Church Sydney(옥스퍼드폴스)</span><span class="tenure">41년 (1980–2021)</span><span class="denom">오순절(C3 Church Global — 61개국 630+ 교회)</span></div>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>비전 설교 연작, C3 컨퍼런스 강설, 『Purpose Makes Perfect』 등 저서</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>비전(vision)과 성령의 임재 — "하나님의 집을 짓는" 설교 축</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>개척형 대형교회(41년 후 8개 캠퍼스), 예술·음악(C3 College) 사역 결합</li>
+      <li><b>승계 설계</b> — 1년 전부터 "배리자를 넘겨주는 1년"을 공지하고 후임(Lee 부부) 멘토링</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="oceania">
+    <div class="pastor-head"><h3>28. Brian Houston (1954~)</h3><span class="church">Hillsong Church, 시드니</span><span class="tenure">39년 (1983–2022)</span><span class="denom">오순절 · 2018년 교파 자립</span></div>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>Hillsong TV 「This Is Life」 등, 컨퍼런스 강설, 『Live, Love, Lead』</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li>"교회는 희망의 집" — 자존과 회복의 복음, 예배 문화</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>예배 음악(Hillsong Music)을 교회 성장의 엔진으로, 글로벌 캠퍼스 확장</li>
+      <li class="dim"><b>주의각서:</b> 아버지 학대 은폐 혐의 기소(2022 기소, 2023 무죄)와 교회 윤리규정 위반으로 사퇴 — 장기목회의 그림자(가족 교세 승계, 리더의 기여와 책임)의 경고 표본</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="oceania">
+    <div class="pastor-head"><h3>29. Phillip Jensen (1945~)</h3><span class="church">St Matthias Anglican Church, 시드니</span><span class="tenure warn">24년 (1978–2002) — 기준 미달</span><span class="denom">시드니 성공회(개혁주의) · Moore College</span></div>
+    <blockquote>UNSW 채플린(1975–2005)·Unichurch·세인트 매사이어스가 사실상 하나의 공동체 — 시드니에서의 연속 목회 39년.</blockquote>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>phillipjensen.com에 1976–2003년 대학 설교·주일 설교 아카이브 공개</li>
+      <li>은퇴 후 Two Ways Ministries로 설교·주해 사역 지속</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>"두 갈래 길(Two Ways to Live)"의 복음 요약</b> — 반역 · 십자가와 부활 · 새 삶의 6단 구조를 40년 반복 설교·훈련(전세계 450만부 배포)</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li><b>MTS(Ministry Training Strategy)</b> — 도제식 사역자 훈련의 원형(전세계 확산)</li>
+      <li>대학 교회에서 다민족·다세대 16개 회중 개척, Matthias Media 출판 제도화</li>
+      <li class="dim">* 엄밀히는 단일 교회 30년 기준 미달(24년) — 시드니 연속 사역 표본으로 수록</li></ul></div>
+  </article>
+
+  <article class="pastor" data-c="oceania">
+    <div class="pastor-head"><h3>30. David Jones (웨일스 출신)</h3><span class="church">Ann Street Presbyterian Church, 브리즈번</span><span class="tenure warn">40년 사역 — 단일 교회 미달</span><span class="denom">호주 장로교회 · 총회장(Moderator General) 역임</span></div>
+    <blockquote>"기도는 스페어 타이어가 아니라 핸들이어야 한다." — 코리 텐 붐을 인용, 40년 회고</blockquote>
+    <div class="p-item"><h4>대표 설교</h4>
+      <ul><li>은퇴 직전 신명기 연속 강해 — 「The heart of Deuteronomy」 팟캐스트(2021) 원문 확인</li></ul></div>
+    <div class="p-item"><h4>30년 반복 핵심 주제</h4>
+      <ul><li><b>기도의 우선</b> — 기도회를 위해 그 주 모든 사역(주일 예배 포함)을 취소한 결단 → 월례 기도회가 회중 1/3인 80명으로 성장</li></ul></div>
+    <div class="p-item"><h4>목회 디자인</h4>
+      <ul><li>개척 5개 + 재건 2개 = 7개 교회 사역의 축적, 신명기 등 구약 큰 책의 지속 강해</li>
+      <li class="dim">* 앤스트리트는 2014–2019(계획서의 "30년" 실측 결과 기준 미달) — 40년 목회 노하우 표본으로 수록</li></ul></div>
+  </article>
+
+  </section>
+
+  <!-- ═══════════ 종합 분석 ═══════════ -->
+  <section class="synth">
+    <h2>🔑 <span>30인의 30년에서 반복되는 것</span> — 종합 분석</h2>
+    <h3>A. 공통 축 다섯 가지</h3>
+    <ol>
+      <li><b>연속 강해(lectio continua)가 표준이다.</b> 30인 중 20인 이상이 한 책을 수년에 걸쳐 통독·강해하는 방식으로 살아남았다 — 맥아더(신약 전 절), 스틸(성경 전체 수차례), 토머스(1,000편 전문 공개), 파이퍼(로마서 225편), 벡(2026년 현재도 느헤미야·딤전·벧전 연속), 메러디스(첫 설교=마지막 설교=느헤미야 2장), 쿠무이(월요 성경공부 50년). <u>"무엇을 반복했는가"의 답이 대부분 "성경 자체"였다.</u> 창작된 시리즈가 아니라 본문의 순서가 30년의 설교 설계였다.</li>
+      <li><b>인물마다 하나의 '가락선(melodic line)'이 있다.</b> 루카스가 말한 본문의 선율선처럼 — 박영선(성화·믿음·교회·자유), 조용기(거듭남음), 스탠리(순종), 오타빌(단순화된 심오함·그리스도만), 음베웨(개혁주의 진리의 아프리카 토착화), 로버트슨(갱신+지역 봉사). 30년 동안 살아남은 목회자는 30년 동안 "한 가지의 큰 소리"를 냈다.</li>
+      <li><b>말씀 사역의 반대축은 기도다.</b> 스틸(말씀과 기도 외 부서 폐쇄), 정필도(산상기도회·세이레), 존스(주일 예배를 취소라도 하고 기도회). 30년은 능력 문제가 아니라 공급 문제였다.</li>
+      <li><b>세대 승계가 30년 안에 '설계'되어 있었다.</b> 조프 토머스→손자, 정필도→이규현(원로 추대 예배까지 절차화), 김남준→김성진(2년 전 예고), 프링글→후임(1년 전 공지), 옥한흠→오정현(공동 목회 4개월). 반면 파니니(승계 갈등)와 휴스턴(사퇴)은 반면교사 — <u>승계 10년 전 설계가 40년 목회를 완성시켰다.</u></li>
+      <li><b>설교의 미디어 재생산이 세대를 넘는다.</b> 스펄전(설교단 3,500편), 맥아더(소천 후에도 라디오 방송 지속), 루카스(아카이브 1,800편), 토머스(전문 1,000편 공개), 로버트슨(Spotify 400편), 쿠무이(월요 공부 50년 그대로 스트리밍). <u>30년의 설교가 자산이 되려면 기록·녹음·아카이브가 목회의 일부여야 했다.</u></li>
+    </ol>
+    <h3>B. 성도의 생애주기와 성경 66권의 연결 방식 — 4가지 모형</h3>
+    <ul>
+      <li><b>훈련형</b> — 성도 중 사역자 후보를 골라 도제식 훈련: 제슨(MTS), 루카스(Cornhill), 맥아더(Master's), 음베웨(루사카 목회자 대학), 프링글(C3 College)</li>
+      <li><b>통독형</b> — 성도 전체가 66권을 읽고 설교가 그 위를 덮는 구조: 쿠무이(월요 성경공부), 넬슨(전체 성경 시리즈), 메러디스(451편 강해)</li>
+      <li><b>생애주기형</b> — 조용기(셀+새벽기도+주일 3박자), 정필도(유치원~선교사 전 생애주기 파이프라인), 스탠리(가정 위기 목양), 로버트슨(지역사회 센터)</li>
+      <li><b>본질형(조직 최소)</b> — 스틸·박영선: 조직이 아니라 말씀+기도+가족 공동체로 성도의 인격 성숙만을 설계</li>
+    </ul>
+    <h3>C. 한국 목회자와 세계 표본의 대면 — 시사점</h3>
+    <ul>
+      <li>한국 5인(정필도·박영선·김남준·한경직·조용기) 모두 <b>개척자</b>였다. 30년의 단일 목회는 대부분 "내가 세운 교회에서" 시작됐다 — 개척 17년 지점(문경 행복한교회, 2017년 요양원 사역으로 개척)은 이들 전부가 지나온 길의 중간이다.</li>
+      <li>공통 리듬: <b>10년차(갱신·개혁의 결단 — 음베웨의 5년 개혁, 스틸의 강해 전환) → 20년차(제도화 — 훈련원·미디어·부서 설계) → 30년차(승계 설계와 기록화)</b></li>
+      <li>시골·소도시 목회에 가장 가까운 표본: 메러디스(신도시 개척 31년), 로버트슨(소형 노령 교회 40년, 『Against the Odds』), 조프 토머스(대학도시 소교회 50년), 스틸(조직 없는 한 교회 52년)</li>
+    </ul>
+  </section>
+
+  <!-- ═══════════ 검증표 ═══════════ -->
+  <section class="synth">
+    <h2>📌 <span>수록 기준 검증표</span> (실측 연도)</h2>
+    <div class="table-wrap">
+    <table>
+      <tr><th>#</th><th>이름</th><th>교회</th><th>실측 단일교회 연수</th><th>기준(30년)</th></tr>
+      <tr><td>1</td><td>정필도</td><td>수영로교회</td><td>36년 (1975–2011)</td><td class="ok">✅</td></tr>
+      <tr><td>2</td><td>박영선</td><td>남포교회</td><td>32년 (1985–2017)</td><td class="ok">✅</td></tr>
+      <tr><td>3</td><td>김남준</td><td>열린교회</td><td>30년 (1993–2023)</td><td class="ok">✅</td></tr>
+      <tr><td>4</td><td>한경직</td><td>영락교회</td><td>40년 (1953–1992)</td><td class="ok">✅</td></tr>
+      <tr><td>5</td><td>조용기</td><td>여의도순복음교회</td><td>63년 (1958–2021)</td><td class="ok">✅</td></tr>
+      <tr><td>6</td><td>MacArthur</td><td>Grace Community</td><td>56년 (1969–2025)</td><td class="ok">✅</td></tr>
+      <tr><td>7</td><td>Piper</td><td>Bethlehem</td><td>33년 (1980–2013)</td><td class="ok">✅</td></tr>
+      <tr><td>8</td><td>Begg</td><td>Parkside</td><td>43년 (1983~)</td><td class="ok">✅</td></tr>
+      <tr><td>9</td><td>T. Nelson</td><td>Denton Bible</td><td>48년 (1977~)</td><td class="ok">✅</td></tr>
+      <tr><td>10</td><td>C. Stanley</td><td>FBC Atlanta</td><td>49년 (1972–2020)</td><td class="ok">✅</td></tr>
+      <tr><td>11</td><td>Lucas</td><td>St Helen's</td><td>37년 (1961–1998)</td><td class="ok">✅</td></tr>
+      <tr><td>12</td><td>Still</td><td>Gilcomston South</td><td>52년 (1945–1997)</td><td class="ok">✅</td></tr>
+      <tr><td>13</td><td>G. Thomas</td><td>Alfred Place</td><td>50년 (1965–2016)</td><td class="ok">✅</td></tr>
+      <tr><td>14</td><td>Meredith</td><td>Smithton</td><td>31년 (1984–2015)</td><td class="ok">✅</td></tr>
+      <tr><td>15</td><td>Spurgeon</td><td>Metropolitan Tabernacle</td><td>38년 (1854–1892)</td><td class="ok">✅</td></tr>
+      <tr><td>16</td><td>Mbewe</td><td>Kabwata Baptist</td><td>30년 (1987–2017)</td><td class="ok">✅</td></tr>
+      <tr><td>17</td><td>Kumuyi</td><td>Deeper Life</td><td>53년 (1973~)</td><td class="ok">✅</td></tr>
+      <tr><td>18</td><td>Adeboye</td><td>RCCG</td><td>45년 (1981~)</td><td class="ok">✅</td></tr>
+      <tr><td>19</td><td>Otabil</td><td>ICGC 가나</td><td>40년 (1984~)</td><td class="ok">✅</td></tr>
+      <tr><td>20</td><td>Stegen</td><td>KwaSizabantu</td><td>55년 (1966–2021)</td><td class="ok">✅ 각주</td></tr>
+      <tr><td>21</td><td>Michelén</td><td>IBSJ 도미니카</td><td>40년+ (1983~)</td><td class="ok">✅</td></tr>
+      <tr><td>22</td><td>Alducin</td><td>Vida Nueva 멕시코</td><td>44년 (1982~)</td><td class="ok">✅</td></tr>
+      <tr><td>23</td><td>Piragine</td><td>PIB 쿠리티바</td><td>32년+ (1988~)</td><td class="ok">✅</td></tr>
+      <tr><td>24</td><td>Fanini</td><td>PIB 니테로이</td><td>41년 (1964–2005)</td><td class="ok">✅</td></tr>
+      <tr><td>25</td><td>Núñez</td><td>IBI 도미니카</td><td>28년 (1998~)</td><td class="warn">⚠️ 경계선</td></tr>
+      <tr><td>26</td><td>M. Robertson</td><td>Spreydon Baptist NZ</td><td>40년 (1968–2009)</td><td class="ok">✅</td></tr>
+      <tr><td>27</td><td>Pringle</td><td>C3 Sydney</td><td>41년 (1980–2021)</td><td class="ok">✅</td></tr>
+      <tr><td>28</td><td>Houston</td><td>Hillsong</td><td>39년 (1983–2022)</td><td class="ok">✅ 각주</td></tr>
+      <tr><td>29</td><td>P. Jensen</td><td>St Matthias 시드니</td><td>24년 (1978–2002)</td><td class="warn">⚠️ 미달</td></tr>
+      <tr><td>30</td><td>Jones</td><td>Ann Street 등</td><td>단일 교회 미달</td><td class="warn">⚠️ 미달</td></tr>
+    </table>
+    </div>
+    <p class="footnote" style="margin-top:14px;">※ 실측 결과 계획서의 연수 오차는 정정해 수록했습니다: 박영선 "40년"→담임 32년(설교 사역 기준 40년), Miguel Núñez "32년"→28년(1998년 창립), Phillip Jensen "30년"→세인트 매사이어스 24년, David Jones "앤스트리트 30년"→실제 2014–2019. 오세아니아는 기준에 완전히 맞는 공개 자료가 희소해 Murray Robertson·Phil Pringle을 신규 확보하고 기준 미달 2인은 각주로 남겼습니다.</p>
+  </section>
+
+  <p class="footnote">📅 조사 완료: 2026-11-02 · ✔ 웹 원문 확인(교회 공식 사이트·설교 아카이브·신문 인터뷰·학술 논문)과 △ 공개 아카이브 기준 자료를 구분해 수록. 전체 보고서 원문은 서재 설교 연구 자료실에 함께 보관.</p>
+
+  <div class="back-row">
+    <a href="index.html" class="btn"><span>🏛️</span> 서재 로비로 돌아가기</a>
+  </div>
+</main>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var toggle = document.getElementById('themeToggle');
+  try {
+    var saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') { root.setAttribute('data-theme', saved); }
+  } catch(e){}
+  function paint(){ toggle.textContent = root.getAttribute('data-theme') === 'light' ? '☀️' : '🌙'; }
+  paint();
+  toggle.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch(e){}
+    paint();
+  });
+
+  // 대륙 필터
+  var bar = document.getElementById('filterBar');
+  bar.addEventListener('click', function(e){
+    var btn = e.target.closest('.filter-btn'); if (!btn) return;
+    bar.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var c = btn.getAttribute('data-c');
+    document.querySelectorAll('#pastors .pastor').forEach(function(card){
+      card.style.display = (c === 'all' || card.getAttribute('data-c') === c) ? '' : 'none';
+    });
+  });
+})();
+</script>
+</body>
+</html>
