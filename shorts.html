@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문경 행복한교회 1분 설교 쇼츠 프로토타입</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800;900&family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #f59e0b;
+      --gold-dark: #d97706;
+      --navy: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      background: #090d16;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 16px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+      max-width: 800px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: var(--gold);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .main-layout {
+      display: flex;
+      flex-direction: row;
+      gap: 36px;
+      max-width: 1100px;
+      width: 100%;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    /* 9:16 모바일 쇼츠 목업 */
+    .shorts-phone {
+      width: 360px;
+      height: 640px;
+      background: #000;
+      border-radius: 36px;
+      border: 8px solid #334155;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.15);
+      flex-shrink: 0;
+    }
+
+    .video-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-layer iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      transform: scale(1.4);
+      pointer-events: auto;
+    }
+
+    /* 쇼츠 UI 오버레이 */
+    .shorts-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 16px 24px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.85) 100%);
+      pointer-events: none;
+    }
+
+    .shorts-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .series-tag {
+      background: rgba(245, 158, 11, 0.9);
+      color: #000;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: -0.3px;
+    }
+
+    /* 하단 자막 & 채널 정보 */
+    .shorts-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .caption-box {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-left: 4px solid var(--gold);
+      border-radius: 10px;
+      padding: 12px 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .caption-hook {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .caption-main {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.45;
+      color: #fff;
+      word-break: keep-all;
+    }
+
+    .caption-main highlight {
+      color: #fde047;
+      background: rgba(234, 179, 8, 0.2);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .channel-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .channel-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: #000;
+    }
+
+    .channel-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .btn-sub {
+      background: #dc2626;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 16px;
+      border: none;
+    }
+
+    /* 우측 쇼츠 메타데이터 & 챕터 박스 */
+    .details-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 620px;
+    }
+
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+    }
+
+    .script-box {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    .script-box strong {
+      color: #38bdf8;
+    }
+
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .meta-table th, .meta-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+    }
+
+    .meta-table th {
+      color: var(--text-muted);
+      width: 80px;
+    }
+
+    .meta-table td {
+      color: #fff;
+    }
+
+    .btn-copy {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 12px;
+      width: 100%;
+      transition: all 0.2s;
+    }
+
+    .btn-copy:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    @media (max-width: 900px) {
+      .main-layout {
+        flex-direction: column;
+        align-items: center;
+      }
+      .shorts-phone {
+        width: 320px;
+        height: 568px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">문경 행복한교회 미디어 파이프라인</div>
+    <h1>1분 설교 쇼츠 & 유튜브 챕터 프로토타입</h1>
+    <p class="subtitle">어제(11/1) 주일 설교 원본에서 추출한 실전 쇼츠 대본 및 타임스탬프 챕터입니다.</p>
+  </header>
+
+  <div class="main-layout">
+
+    <!-- 9:16 모바일 쇼츠 미리보기 -->
+    <div class="shorts-phone">
+      <div class="video-layer">
+        <iframe 
+          src="https://www.youtube.com/embed/R4Msyxf9mzE?autoplay=1&mute=1&loop=1&playlist=R4Msyxf9mzE&controls=0&modestbranding=1" 
+          title="설교 원본 영상">
+        </iframe>
+      </div>
+
+      <div class="shorts-overlay">
+        <div class="shorts-top">
+          <span class="series-tag">#하이델베르크 1분 묵상</span>
+          <span style="font-size:12px; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.8);">0:58</span>
+        </div>
+
+        <div class="shorts-bottom">
+          <div class="caption-box">
+            <div class="caption-hook">⚡ 당신은 '믿어주는' 중인가요, '믿어지는' 중인가요?</div>
+            <div class="caption-main">
+              "내 몸도 영혼도 <highlight>예수 그리스도의 것</highlight>입니다! 내 재산도 내 삶도 내 모든 사역도 주님의 것입니다!"
+            </div>
+          </div>
+
+          <div class="channel-row">
+            <div class="channel-info">
+              <div class="avatar">행</div>
+              <div class="channel-name">문경 행복한교회 · 최성광 목사</div>
+            </div>
+            <button class="btn-sub">구독</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 우측 설명 & 챕터 -->
+    <div class="details-col">
+
+      <!-- 쇼츠 1분 대본 -->
+      <div class="info-card">
+        <div class="card-title">🎬 1분 쇼츠 대본 (어제 주일오후 설교 발췌)</div>
+        <div class="script-box" id="shortsScript">
+<strong>[00:00~00:10 훅]</strong><br>
+"여러분, 신앙생활 하면서 '내가 하나님을 믿어드릴게요' 하고 계십니까, 아니면 부인할 수 없이 '믿어지는' 은혜를 누리고 계십니까?"<br><br>
+<strong>[00:10~00:30 본론]</strong><br>
+"내가 믿어주기만 하는 믿음은요, 세상의 고난과 좌절이 닥쳐오면 무너져 내립니다.<br>
+하이델베르크 교리문답 제1문이 묻습니다.<br>
+'살아서나 죽어서나 당신의 유일한 위로는 무엇입니까?'"<br><br>
+<strong>[00:30~00:50 절정]</strong><br>
+"답을 외워서 말하는 건 '믿어주는' 것이지만,<br>
+진짜 믿음은 심장 깊은 곳에서 터져 나오는 고백입니다.<br>
+'나는 나의 것이 아닙니다! 내 몸도 영혼도, 내 삶도 내 사역도 오직 예수 그리스도의 것입니다!'"<br><br>
+<strong>[00:50~00:58 결단]</strong><br>
+"주님이 내 안에 심어주신 그 부인할 수 없는 믿음으로, 이번 한 주간도 승리하십시오."
+        </div>
+        <button class="btn-copy" onclick="copyText('shortsScript')">📋 쇼츠 대본 복사하기</button>
+      </div>
+
+      <!-- 유튜브 챕터 자동 생성 -->
+      <div class="info-card">
+        <div class="card-title">📑 어제 주일오후 설교 유튜브 챕터 (타임스탬프)</div>
+        <table class="meta-table">
+          <tr><th>00:00</th><td>찬양 및 성경봉독 (에베소서 4:11-16)</td></tr>
+          <tr><th>04:15</th><td>신구약 66권과 역사 속의 교리문답</td></tr>
+          <tr><th>09:30</th><td>'믿어주는 믿음' vs '믿어지는 믿음'</td></tr>
+          <tr><th>15:40</th><td>하이델베르크 교리문답 제1문의 심장: 유일한 위로</td></tr>
+          <tr><th>21:10</th><td>1563년 팔츠와 20대 신학자들의 헌신 (우르시누스·올레비아누스)</td></tr>
+          <tr><th>28:30</th><td>왜 오후 예배에 교리를 가르쳐야 하는가?</td></tr>
+          <tr><th>33:40</th><td>점촌 17년의 교리 교육과 성도의 신앙 성장</td></tr>
+          <tr><th>37:10</th><td>결단과 기도</td></tr>
+        </table>
+        <button class="btn-copy" onclick="copyChapters()">📋 챕터 전체 복사하기 (유튜브 설명란용)</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function copyText(id) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("쇼츠 대본이 클립보드에 복사되었습니다!");
+      });
+    }
+
+    function copyChapters() {
+      const chapters = `00:00 찬양 및 성경봉독 (에베소서 4:11-16)
+04:15 신구약 66권과 역사 속의 교리문답
+09:30 '믿어주는 믿음' vs '믿어지는 믿음'
+15:40 하이델베르크 교리문답 제1문의 심장: 유일한 위로
+21:10 1563년 팔츠와 20대 신학자들의 헌신 (우르시누스·올레비아누스)
+28:30 왜 오후 예배에 교리를 가르쳐야 하는가?
+33:40 점촌 17년의 교리 교육과 성도의 신앙 성장
+37:10 결단과 기도`;
+      navigator.clipboard.writeText(chapters).then(() => {
+        alert("유튜브 챕터 타임스탬프가 클립보드에 복사되었습니다!\n유튜브 영상 수정 > 설명란에 그대로 붙여넣으시면 됩니다.");
+      });
+    }
+  </script>
+</body>
+</html>
