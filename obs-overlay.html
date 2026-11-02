@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문경 행복한교회 OBS 실시간 자막 & 성경 오버레이</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800;900&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #f59e0b;
+      --gold-dark: #d97706;
+      --gold-light: #fef3c7;
+      --navy: #0f172a;
+      --navy-transparent: rgba(15, 23, 42, 0.88);
+      --border-glass: rgba(255, 255, 255, 0.15);
+      --text-white: #ffffff;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: transparent;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    /* 가상 배경 (테스트용) */
+    body.preview-bg {
+      background: radial-gradient(circle at 50% 40%, #1e293b 0%, #020617 100%);
+    }
+
+    /* 상단 컨트롤 패널 (OBS 모드일 때 자동 숨김) */
+    .control-panel {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glass);
+      border-radius: 14px;
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      max-width: 95vw;
+      transition: all 0.3s ease;
+    }
+
+    .control-panel.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(-20px);
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ef4444;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    button.ctrl-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: inherit;
+    }
+
+    button.ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: var(--gold);
+    }
+
+    button.ctrl-btn.active {
+      background: var(--gold-dark);
+      border-color: var(--gold);
+      color: #fff;
+    }
+
+    .input-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      min-width: 200px;
+    }
+
+    .input-box:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    /* 메인 방송 오버레이 영역 */
+    .overlay-container {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1400px;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    /* 하단 로어서드 (Lower Third) 디자인 */
+    .lower-third {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.88) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: 6px solid var(--gold);
+      border-radius: 16px;
+      padding: 22px 32px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transform: translateY(0);
+      opacity: 1;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lower-third.hide {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    /* 상단 메타 바 (교회명 / 설교자 / 성경장절 태그) */
+    .meta-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .church-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: var(--gold);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .speaker-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+
+    .bible-ref-badge {
+      display: none;
+      background: linear-gradient(135deg, #d97706, #b45309);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4);
+    }
+
+    .bible-ref-badge.show {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 자막 텍스트 본문 */
+    .subtitle-body {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.45;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      word-break: keep-all;
+      transition: all 0.2s ease;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+    }
+
+    .subtitle-body.scripture-mode {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: #fef08a;
+      line-height: 1.55;
+    }
+
+    .interim-text {
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 500;
+    }
+
+    /* 토글 힌트 버튼 */
+    .toggle-hint {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1001;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .overlay-container {
+        bottom: 20px;
+        width: 95%;
+      }
+      .lower-third {
+        padding: 16px 20px;
+      }
+      .subtitle-body {
+        font-size: 20px;
+        min-height: 32px;
+      }
+      .subtitle-body.scripture-mode {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body class="preview-bg">
+
+  <!-- 컨트롤 패널 (OBS 송출 시 H 키 또는 패널 숨김 버튼으로 투명화) -->
+  <div class="control-panel" id="ctrlPanel">
+    <span class="badge-live">OBS LIVE</span>
+    <span class="panel-title">행복한교회 자막 오케스트레이터</span>
+
+    <div class="btn-group">
+      <button class="ctrl-btn" id="btnMic" onclick="toggleMic()">
+        🎤 실시간 마이크 켜기
+      </button>
+      <button class="ctrl-btn" onclick="loadSample(1)">
+        📜 어제 설교: 하이델베르크 1문
+      </button>
+      <button class="ctrl-btn" onclick="loadSample(2)">
+        📖 성경: 엡 4:11-12
+      </button>
+      <button class="ctrl-btn" onclick="loadSample(3)">
+        🍞 어제 오전: 성찬의 감사
+      </button>
+      <button class="ctrl-btn" onclick="toggleSubtitle()">
+        👁 자막 켜기/끄기
+      </button>
+      <button class="ctrl-btn" id="btnBg" onclick="toggleBg()">
+        🎬 OBS 투명배경 모드
+      </button>
+    </div>
+
+    <input type="text" class="input-box" id="manualInput" placeholder="직접 자막 입력 후 Enter..." onkeydown="handleManualKey(event)">
+  </div>
+
+  <button class="toggle-hint" onclick="togglePanel()">패널 표시/숨김 (H)</button>
+
+  <!-- OBS 하단 방송 자막 오버레이 -->
+  <div class="overlay-container">
+    <div class="lower-third" id="lowerThird">
+      <div class="meta-bar">
+        <div class="church-badge">
+          <span>⛪ 문경 행복한교회</span>
+        </div>
+        <div class="speaker-name" id="speakerLabel">최성광 담임목사</div>
+        <div class="bible-ref-badge" id="bibleBadge">
+          <span>📖</span> <span id="bibleRefText">에베소서 4:11-12</span>
+        </div>
+      </div>
+      <div class="subtitle-body" id="subText">
+        "살아서나 죽어서나 당신의 유일한 위로는 무엇입니까? 나는 나의 것이 아닙니다."
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isListening = false;
+    let recognition = null;
+    let hideTimer = null;
+
+    // 성경 구절 데이터베이스 (실전 감지용)
+    const BIBLE_DB = {
+      "에베소서 4:11-12": "그가 어떤 사람은 사도로, 어떤 사람은 선지자로, 어떤 사람은 복음 전하는 자로, 어떤 사람은 목사와 교사로 삼으셨으니 이는 성도를 온전하게 하여 봉사의 일을 하게 하며 그리스도의 몸을 세우려 하심이라.",
+      "고린도전서 11:23-24": "내가 너희에게 전한 것은 주께 받은 것이니 곧 주 예수께서 잡히시던 밤에 떡을 가지사 축사하시고 떼어 이르시되 이것은 너희를 위하는 내 몸이니 이것을 행하여 나를 기념하라 하시고.",
+      "사무엘상 3:10": "여호와께서 임하여 서서 전과 같이 사무엘아 사무엘아 부르시는지라 사무엘이 이르되 말씀하옵소서 주의 종이 듣겠나이다 하니.",
+      "요한복음 3:16": "하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려 하심이라."
+    };
+
+    // 샘플 자막
+    function loadSample(type) {
+      const lower = document.getElementById('lowerThird');
+      const sub = document.getElementById('subText');
+      const badge = document.getElementById('bibleBadge');
+      const speaker = document.getElementById('speakerLabel');
+
+      lower.classList.remove('hide');
+
+      if (type === 1) {
+        badge.classList.remove('show');
+        sub.classList.remove('scripture-mode');
+        speaker.textContent = "최성광 담임목사 (주일오후 교리강해)";
+        sub.textContent = "“살아서나 죽어서나 당신의 유일한 위로는 무엇입니까? 나는 나의 것이 아닙니다. 내 몸도 영혼도 예수 그리스도의 것입니다.”";
+      } else if (type === 2) {
+        badge.classList.add('show');
+        document.getElementById('bibleRefText').textContent = "에베소서 4:11-12";
+        speaker.textContent = "본문 성경 봉독";
+        sub.classList.add('scripture-mode');
+        sub.textContent = BIBLE_DB["에베소서 4:11-12"];
+      } else if (type === 3) {
+        badge.classList.remove('show');
+        sub.classList.remove('scripture-mode');
+        speaker.textContent = "최성광 담임목사 (주일오전 설교)";
+        sub.textContent = "“진정한 감사는 모든 일이 잘 풀릴 때만이 아니라, 주 예수께서 잡히시던 그 밤처럼 짙은 어둠 속에서도 드려지는 감사여야 합니다.”";
+      }
+    }
+
+    // 직접 입력
+    function handleManualKey(e) {
+      if (e.key === 'Enter') {
+        const input = document.getElementById('manualInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const lower = document.getElementById('lowerThird');
+        const sub = document.getElementById('subText');
+        const badge = document.getElementById('bibleBadge');
+
+        lower.classList.remove('hide');
+        badge.classList.remove('show');
+        sub.classList.remove('scripture-mode');
+        sub.textContent = text;
+        input.value = '';
+      }
+    }
+
+    // 마이크 Web Speech API
+    function toggleMic() {
+      const btn = document.getElementById('btnMic');
+
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("이 브라우저는 음성인식(Web Speech API)을 지원하지 않습니다. Chrome 또는 Edge 브라우저를 권장합니다.");
+        return;
+      }
+
+      if (!isListening) {
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRec();
+        recognition.lang = 'ko-KR';
+        recognition.continuous = true;
+        recognition.interimResults = true;
+
+        recognition.onstart = function() {
+          isListening = true;
+          btn.classList.add('active');
+          btn.textContent = "🔴 음성인식 중... (클릭 시 중지)";
+        };
+
+        recognition.onresult = function(event) {
+          let interim = '';
+          let final = '';
+
+          for (let i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+              final += event.results[i][0].transcript;
+            } else {
+              interim += event.results[i][0].transcript;
+            }
+          }
+
+          const targetText = final || interim;
+          if (targetText.trim()) {
+            displayLiveText(final, interim);
+          }
+        };
+
+        recognition.onerror = function(event) {
+          console.error("Speech Error:", event.error);
+        };
+
+        recognition.onend = function() {
+          if (isListening) {
+            try { recognition.start(); } catch(e) {}
+          }
+        };
+
+        recognition.start();
+      } else {
+        isListening = false;
+        if (recognition) recognition.stop();
+        btn.classList.remove('active');
+        btn.textContent = "🎤 실시간 마이크 켜기";
+      }
+    }
+
+    function displayLiveText(final, interim) {
+      const lower = document.getElementById('lowerThird');
+      const sub = document.getElementById('subText');
+      const badge = document.getElementById('bibleBadge');
+      const speaker = document.getElementById('speakerLabel');
+
+      lower.classList.remove('hide');
+
+      const fullText = (final || interim).trim();
+
+      // 성경 구절 음성 자동 감지 패턴 (예: "에베소서 4장", "고린도전서 11장")
+      if (fullText.includes("에베소서") && (fullText.includes("4장") || fullText.includes("사단"))) {
+        badge.classList.add('show');
+        document.getElementById('bibleRefText').textContent = "에베소서 4:11-12";
+        speaker.textContent = "실시간 성경 감지";
+        sub.classList.add('scripture-mode');
+        sub.textContent = BIBLE_DB["에베소서 4:11-12"];
+        return;
+      }
+
+      if (fullText.includes("고린도전서") && (fullText.includes("11장") || fullText.includes("십일장"))) {
+        badge.classList.add('show');
+        document.getElementById('bibleRefText').textContent = "고린도전서 11:23-24";
+        speaker.textContent = "실시간 성경 감지";
+        sub.classList.add('scripture-mode');
+        sub.textContent = BIBLE_DB["고린도전서 11:23-24"];
+        return;
+      }
+
+      // 일반 설교 음성 자막
+      badge.classList.remove('show');
+      sub.classList.remove('scripture-mode');
+      speaker.textContent = "최성광 담임목사 (실시간 STT)";
+
+      if (final) {
+        sub.innerHTML = final;
+      } else {
+        sub.innerHTML = `<span class="interim-text">${interim}</span>`;
+      }
+    }
+
+    function toggleSubtitle() {
+      const lower = document.getElementById('lowerThird');
+      lower.classList.toggle('hide');
+    }
+
+    function toggleBg() {
+      document.body.classList.toggle('preview-bg');
+      const btn = document.getElementById('btnBg');
+      if (document.body.classList.contains('preview-bg')) {
+        btn.textContent = "🎬 OBS 투명배경 모드";
+      } else {
+        btn.textContent = "📺 프리뷰 배경 켜기";
+      }
+    }
+
+    function togglePanel() {
+      document.getElementById('ctrlPanel').classList.toggle('hidden');
+    }
+
+    // URL 파라미터 체크 (?obs=true 면 컨트롤 패널 자동 숨김 & 투명 배경)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('obs') === 'true') {
+      document.body.classList.remove('preview-bg');
+      document.getElementById('ctrlPanel').classList.add('hidden');
+      document.querySelector('.toggle-hint').style.display = 'none';
+    }
+
+    // 단축키 H로 패널 토글
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'h' || e.key === 'H') {
+        if (document.activeElement.tagName !== 'INPUT') {
+          togglePanel();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
