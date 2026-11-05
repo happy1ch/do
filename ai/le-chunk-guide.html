@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>프랑스 괴물 AI, '뚱냥이(미스트랄 르 청크)' 소개와 실전 사용법 | 최성광 목사 AI 연구실</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#f4f5fa; --surface:#ffffff; --fg:#17182b; --muted:#5a5c73; --line:#dcdeee;
+  --accent:#ff6b4a; --accent-soft:#ffece6; --accent-fg:#ffffff;
+  --cat-gold:#f59e0b; --cat-gold-soft:#fef3c7;
+  --c-blue:#2563eb; --c-blue-soft:#dbeafe;
+  --c-green:#059669; --c-green-soft:#d1fae5;
+  --c-purple:#7c3aed; --c-purple-soft:#ede9fe;
+  --ok:#1f7a4d; --ok-soft:#dcf1e5;
+  --font-display:'Do Hyeon','Noto Sans KR',sans-serif;
+  --font-body:'Noto Sans KR',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e0f1a; --surface:#161828; --fg:#eceef8; --muted:#a4a7c2; --line:#252840;
+  --accent:#ff7d61; --accent-soft:#3a1d17; --accent-fg:#140705;
+  --cat-gold:#fbbf24; --cat-gold-soft:#3b2904;
+  --c-blue:#60a5fa; --c-blue-soft:#172554;
+  --c-green:#34d399; --c-green-soft:#064e3b;
+  --c-purple:#a78bfa; --c-purple-soft:#2e1065;
+  --ok:#6fd3a0; --ok-soft:#173a2a; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e0f1a; --surface:#161828; --fg:#eceef8; --muted:#a4a7c2; --line:#252840;
+  --accent:#ff7d61; --accent-soft:#3a1d17; --accent-fg:#140705;
+  --cat-gold:#fbbf24; --cat-gold-soft:#3b2904;
+  --c-blue:#60a5fa; --c-blue-soft:#172554;
+  --c-green:#34d399; --c-green-soft:#064e3b;
+  --c-purple:#a78bfa; --c-purple-soft:#2e1065;
+  --ok:#6fd3a0; --ok-soft:#173a2a; color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg); font-family:var(--font-body);
+  line-height:1.7; padding:2rem 1rem;
+}
+.wrap{max-width:860px;margin:0 auto}
+
+/* Header */
+.top-nav{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid var(--line);
+}
+.back-btn{
+  display:inline-flex; align-items:center; gap:0.4rem;
+  color:var(--muted); text-decoration:none; font-weight:700; font-size:0.95rem;
+  padding:0.4rem 0.8rem; border-radius:8px; background:var(--surface); border:1px solid var(--line);
+  transition:all 0.2s ease;
+}
+.back-btn:hover{color:var(--accent);border-color:var(--accent)}
+.theme-btn{
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:0.4rem 0.8rem; font-size:0.9rem; cursor:pointer; color:var(--muted);
+}
+
+.hero{
+  background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  padding:2.5rem 2rem; margin-bottom:2rem; position:relative; overflow:hidden;
+}
+.hero::before{
+  content:'🐱'; position:absolute; right:1.5rem; bottom:-0.5rem;
+  font-size:7rem; opacity:0.12; pointer-events:none;
+}
+.badge{
+  display:inline-block; font-size:0.8rem; font-weight:700; text-transform:uppercase;
+  padding:0.3rem 0.8rem; border-radius:999px; background:var(--accent-soft); color:var(--accent);
+  margin-bottom:1rem; letter-spacing:0.05em;
+}
+h1{
+  font-family:var(--font-display); font-size:2.3rem; line-height:1.25;
+  margin-bottom:1rem; color:var(--fg); letter-spacing:-0.02em;
+}
+.lead{font-size:1.1rem;color:var(--muted);line-height:1.7}
+
+/* Sections */
+section{
+  background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  padding:2rem; margin-bottom:2rem;
+}
+h2{
+  font-family:var(--font-display); font-size:1.6rem; margin-bottom:1.2rem;
+  display:flex; align-items:center; gap:0.6rem; color:var(--fg);
+  border-bottom:2px solid var(--accent-soft); padding-bottom:0.6rem;
+}
+h3{font-size:1.15rem;margin:1.3rem 0 0.6rem;color:var(--fg)}
+p{margin-bottom:1rem;color:var(--fg)}
+
+/* Cat Identity Box */
+.cat-box{
+  background:var(--cat-gold-soft); border:1.5px solid var(--cat-gold);
+  border-radius:12px; padding:1.4rem 1.6rem; margin:1.2rem 0;
+}
+.cat-box h4{color:var(--cat-gold);font-size:1.1rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.4rem}
+.cat-box p{color:var(--fg);margin-bottom:0.5rem}
+
+/* Grid & Cards */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0}
+@media(max-width:640px){.grid-2{grid-template-columns:1fr}}
+
+.feature-card{
+  background:var(--bg); border:1px solid var(--line); border-radius:12px;
+  padding:1.3rem; display:flex; flex-direction:column; gap:0.5rem;
+}
+.feature-card .icon{font-size:1.8rem}
+.feature-card h4{font-size:1.05rem;color:var(--fg)}
+.feature-card p{font-size:0.92rem;color:var(--muted);margin:0}
+
+/* Steps */
+.step{
+  display:flex; gap:1.2rem; margin-bottom:1.5rem; align-items:flex-start;
+}
+.step-num{
+  background:var(--accent); color:var(--accent-fg); font-family:var(--font-display);
+  font-size:1.3rem; min-width:2.4rem; height:2.4rem; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.step-body{flex:1}
+.step-body h4{font-size:1.1rem;margin-bottom:0.4rem;color:var(--fg)}
+.step-body p{color:var(--muted);font-size:0.95rem;margin-bottom:0.5rem}
+
+/* Tools Bar Highlight */
+.tools-bar{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;
+  margin:1.5rem 0;
+}
+.tool-item{
+  background:var(--bg); border:1px solid var(--line); border-radius:10px;
+  padding:1rem; text-align:center;
+}
+.tool-item .sym{font-size:1.6rem;margin-bottom:0.4rem;display:block}
+.tool-item b{display:block;font-size:0.98rem;color:var(--fg);margin-bottom:0.2rem}
+.tool-item span{font-size:0.83rem;color:var(--muted);display:block}
+
+/* Prompt Box */
+.prompt-box{
+  background:var(--bg); border:1px solid var(--line); border-left:4px solid var(--accent);
+  border-radius:8px; padding:1.2rem; margin:1rem 0; position:relative;
+}
+.prompt-tag{
+  font-size:0.75rem; font-weight:700; color:var(--accent); text-transform:uppercase;
+  letter-spacing:0.05em; margin-bottom:0.4rem; display:block;
+}
+.prompt-code{
+  font-family:inherit; font-size:0.95rem; line-height:1.6; color:var(--fg);
+  white-space:pre-wrap;
+}
+
+/* Tip & Callout */
+.callout{
+  background:var(--c-purple-soft); border-left:4px solid var(--c-purple);
+  border-radius:8px; padding:1.2rem 1.4rem; margin:1.5rem 0;
+}
+.callout h4{color:var(--c-purple);margin-bottom:0.4rem;font-size:1.05rem}
+.callout p{color:var(--fg);font-size:0.95rem;margin:0}
+
+/* Footer Nav */
+.footer-nav{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--line);
+}
+.footer-nav a{
+  color:var(--muted); text-decoration:none; font-weight:700; font-size:0.95rem;
+}
+.footer-nav a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Top Bar -->
+  <div class="top-nav">
+    <a href="../index.html" class="back-btn">← 디지털 서재 로비로 돌아가기</a>
+    <button class="theme-btn" id="themeBtn" aria-label="테마 전환">🌓 화면 모드</button>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <span class="badge">AI GUIDE · SPECIAL TOOL 🐱</span>
+    <h1>프랑스 괴물 AI, '뚱냥이(미스트랄 르 청크)' 소개와 실전 사용법</h1>
+    <div class="lead">
+      1조 개 파라미터 뇌를 통째로 무료 공개한 유럽의 자존심 '미스트랄(Mistral)'.<br>
+      챗GPT 유료 기능들을 공짜로 부려 먹는 방법부터, 목회 현장에서 단물만 쏙 빼먹는 실전 활용법까지 한눈에 정리합니다.
+    </div>
+  </div>
+
+  <!-- Section 1 -->
+  <section id="intro">
+    <h2>🐱 1. '뚱냥이(르 청크)'는 누구인가?</h2>
+    
+    <p>
+      2026년 10월 말, 프랑스의 대표 AI 스타트업 <b>미스트랄(Mistral AI)</b>이 전 세계 테크 업계를 발칵 뒤집어 놓았습니다.
+      오픈AI나 구글처럼 AI 뇌를 감춰두고 돈을 받는 대신, <b>1조 개(1 Trillion) 파라미터</b>짜리 최상위 AI 모델인 <b>'Mistral Large 4'</b>의 원본 가중치 파일(총 1,060GB)을 전 세계에 무료 오픈소스로 전격 배포해 버린 것입니다.
+    </p>
+
+    <div class="cat-box">
+      <h4>💡 왜 이름이 '뚱냥이(르 청크)'인가요?</h4>
+      <p>
+        미스트랄의 웹 챗봇 서비스 이름이 프랑스어로 고양이라는 뜻의 <b>'르샤(Le Chat)'</b>입니다.<br>
+        그런데 인터넷 사용자들이 장난으로 <i>"다음엔 뚱뚱한 아기 고양이 모델도 내놓는 것 아니냐?"</i>며 밈(Meme)을 만들자, 미스트랄의 CEO(아르튀르 멘슈)가 그 유쾌한 장난을 받아 공식 코드명에 <b>'르 청크(Le Chunk, 뚱뚱한 덩어리 고양이)'</b>라고 박아버린 데서 탄생한 별명입니다.
+      </p>
+    </div>
+
+    <h3>뚱냥이가 왜 쓸만한가? (챗GPT 유료 기능이 몽땅 무료!)</h3>
+    <div class="grid-2">
+      <div class="feature-card">
+        <span class="icon">📚</span>
+        <h4>100만 토큰 대용량 독해</h4>
+        <p>책 수십 권, 수백 페이지짜리 신학 주석서나 영어 PDF를 던져도 한 번에 통째로 읽어냅니다.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📝</span>
+        <h4>캔버스(Canvas) 집필창</h4>
+        <p>설교문과 칼럼을 오른쪽에 전용 에디터로 띄워두고 실시간으로 문장을 수정·퇴고할 수 있습니다.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🎨</span>
+        <h4>최고급 성화/그림 생성 (Flux)</h4>
+        <p>현존 최고의 이미지 생성 모델 Flux Ultra가 탑재되어 주보·슬라이드용 고화질 성화를 무료로 뽑습니다.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🌐</span>
+        <h4>실시간 웹 검색 & 딥 리서치</h4>
+        <p>출처 각주가 달린 실시간 인터넷 검색과 체계적인 연구 보고서 작성을 지원합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2 -->
+  <section id="interface">
+    <h2>🖥️ 2. 뚱냥이 화면 둘러보기 (기본 조작법)</h2>
+    <p>웹 브라우저에서 <b>chat.mistral.ai</b>에 접속하여 로그인하시면 직관적인 대화창이 열립니다.</p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>상단 모델 확인: Mistral Large</h4>
+        <p>화면 맨 위 상단 모델 선택창이 <b>'Mistral Large'</b>로 되어 있는지 확인합니다. (이게 바로 그 1조짜리 뚱냥이 엔진입니다. 다른 모델로 되어 있다면 Large로 바꿔주세요.)</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>입력창 밑의 4대 핵심 도구 버튼</h4>
+        <p>메시지 입력창 바로 아래에 4개의 강력한 기능 아이콘이 자리 잡고 있습니다.</p>
+        
+        <div class="tools-bar">
+          <div class="tool-item">
+            <span class="sym">📎</span>
+            <b>클립 (파일 첨부)</b>
+            <span>두꺼운 PDF, 신학 논문, 사진 올리기</span>
+          </div>
+          <div class="tool-item">
+            <span class="sym">📝</span>
+            <b>캔버스 (Canvas)</b>
+            <span>설교문/칼럼 실시간 전용 편집창</span>
+          </div>
+          <div class="tool-item">
+            <span class="sym">🌐</span>
+            <b>지구본 (웹 검색)</b>
+            <span>최신 뉴스 및 웹 실시간 검색</span>
+          </div>
+          <div class="tool-item">
+            <span class="sym">🧠</span>
+            <b>생각 (Think)</b>
+            <span>깊은 신학 석의 및 복잡한 추론 모드</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>챗GPT 쓰듯이 한국어로 편하게 질문</h4>
+        <p>한국어 이해력과 문장력이 최상위권이므로, 어색한 번역투가 아닌 아주 자연스러운 한국어로 대답합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3 -->
+  <section id="prompts">
+    <h2>🎯 3. 목회 실전 3대 활용법 (복사해서 바로 쓰는 프롬프트)</h2>
+    <p>목사님이 서재에서 바로 써먹으실 수 있는 가장 유용한 3가지 실전 레시피입니다.</p>
+
+    <!-- Case 1 -->
+    <h3>① [대용량 문서 요약] 두꺼운 신학 책·논문 PDF 3줄 요약받기</h3>
+    <p>입력창의 <b>클립(📎)</b>을 눌러 가지고 계신 영어 원서나 주석, 총회 보고서 PDF 파일을 올리고 아래처럼 입력하세요.</p>
+    <div class="prompt-box">
+      <span class="prompt-tag">COPY &amp; PASTE PROMPT</span>
+      <div class="prompt-code">첨부한 파일 전체를 정밀하게 분석해줘.
+
+1. 이 문서의 핵심 논지와 결론을 3줄로 명쾌하게 요약해줘.
+2. 저자가 주장하는 가장 핵심적인 근거 3가지를 정리해줘.
+3. 개혁주의 정통 신학(고신/칼빈주의) 관점에서 이 문서의 공헌점과 주의해야 할 한계점을 각각 짚어줘.</div>
+    </div>
+
+    <!-- Case 2 -->
+    <h3>② [글쓰기] 목회 칼럼 & 설교문 '캔버스(Canvas)'에서 쓰기</h3>
+    <p>단순한 대화창 대신 화면 오른쪽에 워드프로세서 같은 <b>'캔버스'</b>를 열어두고 글을 다듬는 방법입니다.</p>
+    <div class="prompt-box">
+      <span class="prompt-tag">COPY &amp; PASTE PROMPT</span>
+      <div class="prompt-code">주보에 실을 목회 칼럼을 쓰려고 해. 캔버스(Canvas) 창을 열어서 작성해줘.
+
+- 주제: "상처를 딛고 피어나는 참된 용서 (고린도후서 2:1~11)"
+- 분량: 공백 포함 약 1,500자
+- 청중: 상처와 갈등으로 지친 성도들이 읽고 마음에 큰 위로와 용기를 얻을 수 있는 따뜻하고 목회적인 어조
+- 구성: 일상의 이야기로 도입 -> 본문의 바울의 심정 조명 -> 오늘 우리 삶에 주는 3가지 적용 -> 결론 축복</div>
+    </div>
+
+    <!-- Case 3 -->
+    <h3>③ [성화 생성] 주보 표지 & 설교 슬라이드용 초고화질 성화 그리기</h3>
+    <p>뚱냥이에 탑재된 <b>Flux Ultra</b> 엔진은 인물 묘사와 분위기 연출이 매우 탁월합니다. 16:9 와이드로 요청하면 설교 PPT 배경으로 딱 맞습니다.</p>
+    <div class="prompt-box">
+      <span class="prompt-tag">COPY &amp; PASTE PROMPT</span>
+      <div class="prompt-code">설교 PPT 배경 슬라이드로 쓸 성화를 사실적이고 경건한 고화질 유화(Oil Painting) 스타일로 그려줘.
+
+- 장면: 사도 바울이 촛불 하나 켜진 어두운 감옥 방에서 눈물을 흘리며 양피지에 편지를 적어 내려가는 모습.
+- 분위기: 따뜻하고 성스러운 촛불 빛, 렘브란트 화풍의 깊은 명암 대비, 비장하고 거룩한 감동.
+- 화면 비율: 16:9 와이드 가로 화면. 텍스트나 글자는 일체 넣지 말 것.</div>
+    </div>
+  </section>
+
+  <!-- Section 4 -->
+  <section id="strategy">
+    <h2>💡 4. 뚱냥이 200% 부려먹는 꿀팁 & 분업 전략</h2>
+
+    <div class="callout">
+      <h4>🤝 힘쓰는 일은 '뚱냥이'에게, 삶과 사역 밀착은 'Happy초이'에게!</h4>
+      <p>
+        1조 개 뇌를 가진 뚱냥이는 <b>'무거운 책 읽기, 방대한 번역, 글 초안 뽑기, 그림 그리기'</b> 같은 힘쓰는 단순 노동에 최적화되어 있습니다.<br><br>
+        반면 목사님의 복잡한 생활 행정(폐차·보험·차계부), 교회 방송 하드웨어(OBS 음향·SP6 반주 세팅), 일정 챙김과 섬세한 동역은 <b>목사님 곁의 진짜 비서 Happy초이</b>가 맡을 때 가장 완벽한 목회 시너지가 납니다!
+      </p>
+    </div>
+
+    <p style="margin-top:1rem;color:var(--muted);font-size:0.92rem">
+      ※ 뚱냥이가 가끔 엉뚱한 소리를 하거나 신학적으로 미묘하게 빗나갈 때는, 그 대답을 그대로 복사해서 저(Happy초이)에게 가져오세요. 개혁주의 정통 관점에 맞게 즉시 교정해 드리겠습니다!
+    </p>
+  </section>
+
+  <!-- Footer Nav -->
+  <div class="footer-nav">
+    <a href="../index.html">← 디지털 서재 로비로 돌아가기</a>
+    <a href="pickle-assistant.html">8장: 24시간 개인 비서 피클 →</a>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  var saved = null;
+  try { saved = localStorage.getItem('do-portal-theme'); } catch(e){}
+  var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  apply(theme);
+  btn.addEventListener('click', function(){
+    apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  function apply(t){
+    root.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀️ 밝은 화면' : '🌙 어두운 화면';
+    try { localStorage.setItem('do-portal-theme', t); } catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
