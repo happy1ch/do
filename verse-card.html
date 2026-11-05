@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>말씀카드 &amp; 숏폼 모션 스튜디오 | 문경 행복한교회</title>
+<meta name="description" content="갓피플 감성을 담은 고화질 성경 말씀카드 제작부터 9:16 인스타·유튜브 쇼츠용 줄별 모션 영상(MP4) 추출까지 지원하는 맞춤형 웹 스튜디오">
+
+<!-- Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@400;600;700;900&family=Song+Myung&family=Gowun+Dodum&family=Do+Hyeon&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+<style>
+@font-face {
+  font-family: 'MaruBuri';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MaruBuriBold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #0b0f17;
+  --bg-card: #141b26;
+  --bg-card-sub: #1a2332;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-focus: #f59e0b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --gold: #f59e0b;
+  --gold-hover: #d97706;
+  --gold-glow: rgba(245, 158, 11, 0.18);
+  --emerald: #10b981;
+  --navy: #0f172a;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+}
+
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-sub: #f1f5f9;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-focus: #d97706;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --gold: #d97706;
+  --gold-hover: #b45309;
+  --gold-glow: rgba(217, 119, 6, 0.15);
+  --emerald: #059669;
+  --navy: #e2e8f0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-sub);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.back-btn:hover {
+  background: var(--gold-glow);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.header-title h1 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header-title p {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.theme-btn {
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* App Container */
+.app-container {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px;
+  gap: 28px;
+  flex: 1;
+}
+
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 1fr;
+    padding: 16px 12px;
+    gap: 20px;
+  }
+}
+
+/* Left Column: Canvas Preview */
+.preview-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 76px;
+  height: fit-content;
+}
+
+.canvas-wrapper {
+  background: #000;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 440px;
+  background-image: radial-gradient(circle at center, #1b2434 0%, #090d14 100%);
+}
+
+canvas#cardCanvas {
+  display: block;
+  max-width: 100%;
+  max-height: 520px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: opacity 0.2s;
+}
+
+.ratio-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  color: var(--gold);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.canvas-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: var(--gold);
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.action-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.28);
+  transition: all 0.2s;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
+}
+.btn-video {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.28);
+  transition: all 0.2s;
+}
+.btn-video:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.4);
+}
+.sub-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.btn-sub {
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.btn-sub:hover {
+  background: var(--bg-card-sub);
+  border-color: var(--border-focus);
+  color: var(--gold);
+}
+
+/* Right Column: Controls */
+.controls-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+.panel-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Preset Pills */
+.preset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  background: var(--bg-card-sub);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.chip:hover, .chip.active {
+  background: var(--gold-glow);
+  color: var(--gold);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
+/* Form Controls */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+textarea.input-text {
+  width: 100%;
+  min-height: 100px;
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+textarea.input-text:focus {
+  border-color: var(--gold);
+}
+input.input-text {
+  width: 100%;
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 12px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+}
+input.input-text:focus {
+  border-color: var(--gold);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* Button Groups */
+.btn-group {
+  display: flex;
+  background: var(--bg-card-sub);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  border: 1px solid var(--border);
+  gap: 2px;
+}
+.btn-group button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  white-space: nowrap;
+}
+.btn-group button.active {
+  background: var(--gold);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Background Thumbs */
+.bg-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 4px;
+}
+.bg-thumb {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s;
+  background-size: cover;
+  background-position: center;
+}
+.bg-thumb:hover {
+  transform: scale(1.04);
+  border-color: var(--gold);
+}
+.bg-thumb.active {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px var(--gold-glow);
+}
+.bg-thumb-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 9px;
+  text-align: center;
+  padding: 2px 0;
+}
+
+/* Color Palette */
+.color-palette {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.color-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.color-dot:hover {
+  transform: scale(1.1);
+}
+.color-dot.active {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px var(--gold);
+}
+input[type="color"] {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Slider Controls */
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.slider-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--gold);
+}
+.slider-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  width: 42px;
+  text-align: right;
+}
+
+/* Toast Message */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  border: 1px solid var(--gold);
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="index.html" class="back-btn">← 서재 로비</a>
+    <div class="header-title">
+      <h1>✨ 말씀카드 &amp; 숏폼 모션 스튜디오</h1>
+      <p>문경 행복한교회 디지털 미디어 랩</p>
+    </div>
+  </div>
+  <button id="themeToggle" class="theme-btn">🌙 다크</button>
+</header>
+
+<div class="app-container">
+  <!-- Left: Canvas Live Preview & Action Bar -->
+  <div class="preview-col">
+    <div class="canvas-wrapper">
+      <div id="ratioBadge" class="ratio-badge">1:1 정방형 (1080×1080)</div>
+      <canvas id="cardCanvas" width="1080" height="1080"></canvas>
+      <div id="canvasProgress" class="canvas-progress"></div>
+    </div>
+
+    <!-- Main Export Buttons -->
+    <div class="action-bar">
+      <button id="btnExportImage" class="btn-primary">
+        <span>🖼️</span> 이미지 다운로드 (PNG)
+      </button>
+      <button id="btnExportVideo" class="btn-video">
+        <span>🎬</span> 숏폼 모션 영상 (MP4)
+      </button>
+    </div>
+
+    <!-- Sub Action Buttons -->
+    <div class="sub-actions">
+      <button id="btnPlayMotion" class="btn-sub">
+        <span>▶</span> 모션 미리보기
+      </button>
+      <button id="btnCopyClipboard" class="btn-sub">
+        <span>📋</span> 클립보드 복사
+      </button>
+      <button id="btnShare" class="btn-sub">
+        <span>📤</span> 모바일 공유
+      </button>
+    </div>
+  </div>
+
+  <!-- Right: Control Panels -->
+  <div class="controls-col">
+    <!-- Panel 1: Scripture & Text -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">📖 성경 말씀 입력 &amp; 추천 성구</div>
+        <span style="font-size: 11px; color: var(--text-muted);">원클릭 빠른 채우기</span>
+      </div>
+
+      <!-- Quick Scripture Presets -->
+      <div class="preset-chips" id="scriptureChips">
+        <div class="chip active" data-ref="사무엘하 13:39" data-text="다윗 왕의 마음이 압살롬을 향하여 간절하니 암논은 이미 죽었으므로 왕이 위로를 받았음이더라">삼하 13:39</div>
+        <div class="chip" data-ref="시편 23:1-2" data-text="여호와는 나의 목자시니 내게 부족함이 없으리로다 그가 나를 푸른 풀밭에 누이시며 쉴 만한 물 가로 인도하시는도다">시편 23:1-2</div>
+        <div class="chip" data-ref="이사야 41:10" data-text="두려워하지 말라 내가 너와 함께 함이라 놀라지 말라 나는 네 하나님이 됨이라 내가 너를 굳세게 하리라 참으로 너를 도와 주리라">사 41:10</div>
+        <div class="chip" data-ref="빌립보서 4:6-7" data-text="아무 것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라 그리하면 모든 지각에 뛰어난 하나님의 평강이 그리스도 예수 안에서 너희 마음과 생각을 지키시리라">빌 4:6-7</div>
+        <div class="chip" data-ref="고린도전서 15:31" data-text="형제들아 내가 그리스도 예수 우리 주 안에서 가진 바 너희에 대한 나의 자랑을 두고 단언하노니 나는 날마다 죽노라">고전 15:31</div>
+        <div class="chip" data-ref="요한복음 14:27" data-text="평안을 너희에게 끼치노니 곧 나의 평안을 너희에게 주노라 내가 너희에게 주는 것은 세상이 주는 것과 같지 아니하니라 너희는 마음에 근심하지도 말고 두려워하지도 말라">요 14:27</div>
+        <div class="chip" data-ref="로마서 8:38-39" data-text="내가 확신하노니 사망이나 생명이나 천사들이나 권세자들이나 현재 일이나 장래 일이나 능력이나 높음이나 깊음이나 다른 어떤 피조물이라도 우리를 우리 주 그리스도 예수 안에 있는 하나님의 사랑에서 끊을 수 없으리라">롬 8:38-39</div>
+        <div class="chip" data-ref="마태복음 11:28" data-text="수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라">마 11:28</div>
+      </div>
+
+      <!-- Verse Content -->
+      <div class="form-group">
+        <label class="form-label" for="inputVerse">
+          <span>말씀 본문 (엔터로 줄바꿈 가능)</span>
+          <span id="charCount" style="color: var(--gold);">54자</span>
+        </label>
+        <textarea id="inputVerse" class="input-text" placeholder="여기에 성경 말씀을 입력하세요...">다윗 왕의 마음이 압살롬을 향하여 간절하니
+암논은 이미 죽었으므로
+왕이 위로를 받았음이더라</textarea>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label" for="inputRef">성경 장절</label>
+          <input type="text" id="inputRef" class="input-text" value="사무엘하 13:39">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="inputChurch">
+            <span>서명 / 출처</span>
+            <label style="display: inline-flex; align-items: center; gap: 4px; font-weight: normal; cursor: pointer;">
+              <input type="checkbox" id="checkChurch" checked> 표시
+            </label>
+          </label>
+          <input type="text" id="inputChurch" class="input-text" value="문경 행복한교회">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">상단 장식 아이콘</label>
+        <div class="btn-group" id="iconGroup">
+          <button data-icon="✝" class="active">✝ 십자가</button>
+          <button data-icon="🕊">🕊 비둘기</button>
+          <button data-icon="📖">📖 성경</button>
+          <button data-icon="✦">✦ 별빛</button>
+          <button data-icon="none">없음</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: Aspect Ratio & Background -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">🖼️ 화면 비율 &amp; 배경 선택</div>
+        <label class="btn-sub" style="padding: 4px 10px; cursor: pointer;">
+          📁 내 사진 올리기
+          <input type="file" id="uploadFile" accept="image/*" style="display: none;">
+        </label>
+      </div>
+
+      <!-- Ratio Selector -->
+      <div class="form-group">
+        <label class="form-label">카드 비율 선택</label>
+        <div class="btn-group" id="ratioGroup">
+          <button data-ratio="1:1" class="active">1:1 피드</button>
+          <button data-ratio="4:5">4:5 세로</button>
+          <button data-ratio="9:16">9:16 쇼츠/스토리</button>
+          <button data-ratio="16:9">16:9 와이드</button>
+        </div>
+      </div>
+
+      <!-- Background Gallery -->
+      <div class="form-group">
+        <label class="form-label">
+          <span>배경 갤러리 (자체 감성 배경 &amp; 성경 고화질)</span>
+          <span id="bgTypeLabel" style="color: var(--gold);">은혜의 여명</span>
+        </label>
+        <div class="bg-gallery" id="bgGallery">
+          <!-- Procedural Presets -->
+          <div class="bg-thumb active" data-bg="dawn" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 35%, #7c2d12 70%, #d97706 100%);">
+            <div class="bg-thumb-label">은혜의 여명</div>
+          </div>
+          <div class="bg-thumb" data-bg="rembrandt" style="background: radial-gradient(circle at center, #78350f 0%, #291205 60%, #0d0402 100%);">
+            <div class="bg-thumb-label">렘브란트</div>
+          </div>
+          <div class="bg-thumb" data-bg="night" style="background: radial-gradient(circle at 50% 20%, #1e293b 0%, #0f172a 60%, #020617 100%);">
+            <div class="bg-thumb-label">깊은 묵상</div>
+          </div>
+          <div class="bg-thumb" data-bg="forest" style="background: linear-gradient(135deg, #064e3b 0%, #022c22 60%, #01140f 100%);">
+            <div class="bg-thumb-label">푸른 초원</div>
+          </div>
+          <div class="bg-thumb" data-bg="sea" style="background: linear-gradient(135deg, #0c4a6e 0%, #075985 40%, #082f49 100%);">
+            <div class="bg-thumb-label">갈릴리 바다</div>
+          </div>
+          <div class="bg-thumb" data-bg="cross" style="background: radial-gradient(circle at 50% 40%, #451a03 0%, #1c0a00 70%, #000 100%);">
+            <div class="bg-thumb-label">골고다 빛</div>
+          </div>
+          <!-- Unsplash Christian Presets -->
+          <div class="bg-thumb" data-bg="unsplash-bible" style="background-image: url('https://images.unsplash.com/photo-1507692049790-de58290a4334?w=200&q=80');">
+            <div class="bg-thumb-label">성경책</div>
+          </div>
+          <div class="bg-thumb" data-bg="unsplash-light" style="background-image: url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=200&q=80');">
+            <div class="bg-thumb-label">숲의 햇살</div>
+          </div>
+          <div class="bg-thumb" data-bg="unsplash-mist" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=200&q=80');">
+            <div class="bg-thumb-label">아침 안개</div>
+          </div>
+          <div class="bg-thumb" data-bg="unsplash-candle" style="background-image: url('https://images.unsplash.com/photo-1508873696983-2df5293cb395?w=200&q=80');">
+            <div class="bg-thumb-label">따뜻한 촛불</div>
+          </div>
+          <div class="bg-thumb" data-bg="unsplash-flower" style="background-image: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=200&q=80');">
+            <div class="bg-thumb-label">들에 핀 꽃</div>
+          </div>
+          <div class="bg-thumb" data-bg="unsplash-wheat" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=200&q=80');">
+            <div class="bg-thumb-label">황금 들녘</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dim & Blur Sliders -->
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">어둡기(딤 투명도)</label>
+          <div class="slider-row">
+            <input type="range" id="sliderDim" min="0" max="90" value="45">
+            <span id="valDim" class="slider-val">45%</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">배경 블러(흐림)</label>
+          <div class="slider-row">
+            <input type="range" id="sliderBlur" min="0" max="15" value="0">
+            <span id="valBlur" class="slider-val">0px</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 3: Typography & Style -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">✍️ 글꼴 &amp; 스타일</div>
+      </div>
+
+      <!-- Font Selector -->
+      <div class="form-group">
+        <label class="form-label">한글 감성 글꼴</label>
+        <div class="btn-group" id="fontGroup">
+          <button data-font="MaruBuri, serif" class="active">마루 부리</button>
+          <button data-font="'Gowun Batang', serif">고운 바탕</button>
+          <button data-font="'Nanum Myeongjo', serif">나눔 명조</button>
+          <button data-font="'Song Myung', serif">송명체</button>
+          <button data-font="Pretendard, sans-serif">프리텐다드</button>
+        </div>
+      </div>
+
+      <!-- Font Size & Align -->
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">글자 크기</label>
+          <div class="slider-row">
+            <input type="range" id="sliderFontSize" min="24" max="60" value="36">
+            <span id="valFontSize" class="slider-val">36pt</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">텍스트 정렬</label>
+          <div class="btn-group" id="alignGroup">
+            <button data-align="left">좌측</button>
+            <button data-align="center" class="active">중앙</button>
+            <button data-align="right">우측</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colors -->
+      <div class="form-group">
+        <label class="form-label">글자 색상</label>
+        <div class="color-palette" id="colorPalette">
+          <div class="color-dot active" data-color="#FFFFFF" style="background: #FFFFFF;"></div>
+          <div class="color-dot" data-color="#FBF7F0" style="background: #FBF7F0;"></div>
+          <div class="color-dot" data-color="#EAD5A6" style="background: #EAD5A6;"></div>
+          <div class="color-dot" data-color="#D4E2CD" style="background: #D4E2CD;"></div>
+          <div class="color-dot" data-color="#D1E4FA" style="background: #D1E4FA;"></div>
+          <div class="color-dot" data-color="#F8D9DD" style="background: #F8D9DD;"></div>
+          <input type="color" id="customColor" value="#FFFFFF" title="직접 색상 선택">
+        </div>
+      </div>
+
+      <!-- Text Shadow -->
+      <div class="form-group">
+        <label class="form-label">글자 그림자(가독성 향상)</label>
+        <div class="btn-group" id="shadowGroup">
+          <button data-shadow="none">끄기</button>
+          <button data-shadow="soft" class="active">부드럽게</button>
+          <button data-shadow="strong">또렷하게</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 4: Motion Video Settings -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">🎬 모션 영상 설정 (숏폼·스토리용)</div>
+        <span style="font-size: 11px; color: #3b82f6;">갓피플 스타일 줄별 떠오름 지원</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">모션 애니메이션 효과</label>
+          <div class="btn-group" id="motionGroup">
+            <button data-motion="line-rise" class="active">줄별 떠오름</button>
+            <button data-motion="fade">은은한 페이드</button>
+            <button data-motion="zoom">시네마틱 줌</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">영상 재생 길이</label>
+          <div class="btn-group" id="durationGroup">
+            <button data-dur="3">3초</button>
+            <button data-dur="4" class="active">4초</button>
+            <button data-dur="5">5초</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast">알림 메시지</div>
+
+<script>
+// State
+const state = {
+  verseText: `다윗 왕의 마음이 압살롬을 향하여 간절하니\n암논은 이미 죽었으므로\n왕이 위로를 받았음이더라`,
+  refText: '사무엘하 13:39',
+  churchText: '문경 행복한교회',
+  showChurch: true,
+  icon: '✝',
+  ratio: '1:1', // '1:1', '4:5', '9:16', '16:9'
+  width: 1080,
+  height: 1080,
+  bgType: 'dawn',
+  customBgImg: null,
+  dimOpacity: 0.45,
+  bgBlur: 0,
+  fontFamily: 'MaruBuri, serif',
+  fontSize: 36,
+  textAlign: 'center',
+  textColor: '#FFFFFF',
+  shadowMode: 'soft',
+  motionStyle: 'line-rise',
+  durationSec: 4,
+  isAnimating: false
+};
+
+// Canvas & Context
+const canvas = document.getElementById('cardCanvas');
+const ctx = canvas.getContext('2d');
+const ratioBadge = document.getElementById('ratioBadge');
+const canvasProgress = document.getElementById('canvasProgress');
+
+// Image cache for external images
+const imageCache = {};
+
+// Unsplash presets
+const unsplashMap = {
+  'unsplash-bible': 'https://images.unsplash.com/photo-1507692049790-de58290a4334?w=1200&q=85',
+  'unsplash-light': 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1200&q=85',
+  'unsplash-mist': 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=85',
+  'unsplash-candle': 'https://images.unsplash.com/photo-1508873696983-2df5293cb395?w=1200&q=85',
+  'unsplash-flower': 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&q=85',
+  'unsplash-wheat': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=85'
+};
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
+// Update Canvas Size based on Ratio
+function updateCanvasSize() {
+  switch (state.ratio) {
+    case '1:1':
+      state.width = 1080;
+      state.height = 1080;
+      ratioBadge.textContent = '1:1 정방형 (1080×1080)';
+      break;
+    case '4:5':
+      state.width = 1080;
+      state.height = 1350;
+      ratioBadge.textContent = '4:5 세로형 (1080×1350)';
+      break;
+    case '9:16':
+      state.width = 1080;
+      state.height = 1920;
+      ratioBadge.textContent = '9:16 숏폼/스토리 (1080×1920)';
+      break;
+    case '16:9':
+      state.width = 1920;
+      state.height = 1080;
+      ratioBadge.textContent = '16:9 와이드/PPT (1920×1080)';
+      break;
+  }
+  canvas.width = state.width;
+  canvas.height = state.height;
+}
+
+// Draw Background (Procedural or Image)
+function drawBackground(progress = 1, motionType = 'none') {
+  const w = state.width;
+  const h = state.height;
+  ctx.save();
+
+  // If blur is applied
+  if (state.bgBlur > 0) {
+    ctx.filter = `blur(${state.bgBlur * 2}px)`;
+  }
+
+  // Cinematic zoom for motion
+  let scale = 1.0;
+  if (motionType === 'zoom') {
+    scale = 1.0 + (progress * 0.08); // slow zoom in
+    ctx.translate(w / 2, h / 2);
+    ctx.scale(scale, scale);
+    ctx.translate(-w / 2, -h / 2);
+  }
+
+  if (state.bgType === 'custom' && state.customBgImg) {
+    drawCoverImage(state.customBgImg, w, h);
+  } else if (state.bgType.startsWith('unsplash-')) {
+    const url = unsplashMap[state.bgType];
+    if (imageCache[url] && imageCache[url].complete) {
+      drawCoverImage(imageCache[url], w, h);
+    } else {
+      drawProceduralBg('dawn', w, h);
+      preloadImage(url, () => renderCard());
+    }
+  } else {
+    drawProceduralBg(state.bgType, w, h);
+  }
+
+  ctx.restore();
+
+  // Draw Dim Overlay
+  if (state.dimOpacity > 0) {
+    ctx.save();
+    ctx.fillStyle = `rgba(0, 0, 0, ${state.dimOpacity})`;
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
+  }
+
+  // Draw Vignette
+  drawVignette(w, h);
+}
+
+function drawCoverImage(img, w, h) {
+  const imgRatio = img.width / img.height;
+  const canvasRatio = w / h;
+  let dw, dh, dx, dy;
+  if (imgRatio > canvasRatio) {
+    dh = h;
+    dw = h * imgRatio;
+    dx = (w - dw) / 2;
+    dy = 0;
+  } else {
+    dw = w;
+    dh = w / imgRatio;
+    dx = 0;
+    dy = (h - dh) / 2;
+  }
+  ctx.drawImage(img, dx, dy, dw, dh);
+}
+
+function drawProceduralBg(type, w, h) {
+  let grad;
+  switch (type) {
+    case 'rembrandt':
+      grad = ctx.createRadialGradient(w * 0.5, h * 0.45, w * 0.1, w * 0.5, h * 0.5, w * 0.85);
+      grad.addColorStop(0, '#853e0d');
+      grad.addColorStop(0.5, '#3b1704');
+      grad.addColorStop(1, '#0c0401');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+      break;
+    case 'night':
+      grad = ctx.createRadialGradient(w * 0.5, h * 0.2, w * 0.05, w * 0.5, h * 0.6, w * 0.9);
+      grad.addColorStop(0, '#1e293b');
+      grad.addColorStop(0.5, '#0f172a');
+      grad.addColorStop(1, '#020617');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+      // subtle stars
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      for (let i = 0; i < 40; i++) {
+        const sx = (Math.sin(i * 99) * 0.5 + 0.5) * w;
+        const sy = (Math.cos(i * 37) * 0.5 + 0.5) * h * 0.6;
+        ctx.fillRect(sx, sy, 1.5, 1.5);
+      }
+      break;
+    case 'forest':
+      grad = ctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, '#064e3b');
+      grad.addColorStop(0.5, '#022c22');
+      grad.addColorStop(1, '#01140f');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+      break;
+    case 'sea':
+      grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, '#0c4a6e');
+      grad.addColorStop(0.6, '#075985');
+      grad.addColorStop(1, '#082f49');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+      break;
+    case 'cross':
+      grad = ctx.createRadialGradient(w * 0.5, h * 0.4, w * 0.05, w * 0.5, h * 0.5, w * 0.85);
+      grad.addColorStop(0, '#592205');
+      grad.addColorStop(0.6, '#1f0b01');
+      grad.addColorStop(1, '#000000');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+      // Subtle cross silhouette
+      ctx.fillStyle = 'rgba(245, 158, 11, 0.06)';
+      const cw = w * 0.035;
+      const ch = h * 0.45;
+      ctx.fillRect(w / 2 - cw / 2, h * 0.2, cw, ch);
+      const armW = w * 0.22;
+      const armH = h * 0.035;
+      ctx.fillRect(w / 2 - armW / 2, h * 0.32, armW, armH);
+      break;
+    case 'dawn':
+    default:
+      grad = ctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, '#1e1b4b');
+      grad.addColorStop(0.35, '#312e81');
+      grad.addColorStop(0.7, '#7c2d12');
+      grad.addColorStop(1, '#d97706');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+      break;
+  }
+}
+
+function drawVignette(w, h) {
+  const rad = Math.max(w, h) * 0.8;
+  const vig = ctx.createRadialGradient(w / 2, h / 2, rad * 0.4, w / 2, h / 2, rad);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(0,0,0,0.5)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, w, h);
+}
+
+function preloadImage(url, cb) {
+  if (imageCache[url]) {
+    if (imageCache[url].complete) cb(imageCache[url]);
+    return;
+  }
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    imageCache[url] = img;
+    cb(img);
+  };
+  img.src = url;
+}
+
+// Split verse into lines with max width
+function wrapText(text, maxWidth, fontStr) {
+  ctx.font = fontStr;
+  const rawParagraphs = text.split('\n');
+  const lines = [];
+
+  for (const para of rawParagraphs) {
+    if (para.trim() === '') {
+      lines.push('');
+      continue;
+    }
+    const words = para.split(' ');
+    let currentLine = words[0];
+
+    for (let i = 1; i < words.length; i++) {
+      const word = words[i];
+      const testLine = currentLine + ' ' + word;
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth) {
+        lines.push(currentLine);
+        currentLine = word;
+      } else {
+        currentLine = testLine;
+      }
+    }
+    lines.push(currentLine);
+  }
+  return lines;
+}
+
+// Render Card Content
+function renderCard(motionProgress = 1, motionType = 'none') {
+  const w = state.width;
+  const h = state.height;
+
+  // Clear Canvas
+  ctx.clearRect(0, 0, w, h);
+
+  // Draw Background
+  drawBackground(motionProgress, motionType);
+
+  // Set Shadow
+  ctx.save();
+  if (state.shadowMode === 'soft') {
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.75)';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 3;
+  } else if (state.shadowMode === 'strong') {
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.95)';
+    ctx.shadowBlur = 18;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 5;
+  } else {
+    ctx.shadowColor = 'transparent';
+  }
+
+  // Calculate Text Layout
+  const paddingX = w * 0.12;
+  const maxTextWidth = w - (paddingX * 2);
+  const scaleFactor = w / 1080;
+  const currentFontSize = state.fontSize * scaleFactor;
+  const fontStr = `${currentFontSize}px ${state.fontFamily}`;
+  const lineHeight = currentFontSize * 1.65;
+
+  const lines = wrapText(state.verseText, maxTextWidth, fontStr);
+
+  // Calculate total block height
+  const iconHeight = (state.icon !== 'none') ? (currentFontSize * 1.5) : 0;
+  const iconGap = (state.icon !== 'none') ? (currentFontSize * 1.2) : 0;
+  const verseHeight = lines.length * lineHeight;
+  const refHeight = currentFontSize * 0.85;
+  const refGap = currentFontSize * 1.4;
+  const churchHeight = (state.showChurch && state.churchText) ? (currentFontSize * 0.7) : 0;
+  const churchGap = (state.showChurch && state.churchText) ? (currentFontSize * 0.9) : 0;
+
+  const totalBlockHeight = iconHeight + iconGap + verseHeight + refGap + refHeight + churchGap + churchHeight;
+
+  // Starting Y (Centered)
+  let startY = (h - totalBlockHeight) / 2;
+
+  // X alignment anchor
+  let anchorX = w / 2;
+  if (state.textAlign === 'left') anchorX = paddingX;
+  if (state.textAlign === 'right') anchorX = w - paddingX;
+  ctx.textAlign = state.textAlign;
+
+  // 1. Draw Decorative Icon
+  if (state.icon !== 'none') {
+    let iconAlpha = 1;
+    if (motionType === 'line-rise') {
+      iconAlpha = Math.min(1, Math.max(0, (motionProgress - 0.05) / 0.2));
+    } else if (motionType === 'fade') {
+      iconAlpha = motionProgress;
+    }
+
+    if (iconAlpha > 0) {
+      ctx.save();
+      ctx.globalAlpha = iconAlpha * 0.85;
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = `${currentFontSize * 1.2}px 'Pretendard', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(state.icon, w / 2, startY + (iconHeight * 0.8));
+      ctx.restore();
+    }
+    startY += iconHeight + iconGap;
+  }
+
+  // 2. Draw Verse Lines
+  ctx.fillStyle = state.textColor;
+  ctx.font = fontStr;
+
+  const numLines = lines.length;
+  lines.forEach((line, idx) => {
+    let lineAlpha = 1;
+    let offsetY = 0;
+
+    if (motionType === 'line-rise') {
+      // Staggered rise
+      const startT = (idx / Math.max(1, numLines)) * 0.55;
+      const endT = startT + 0.25;
+      const progressRatio = Math.min(1, Math.max(0, (motionProgress - startT) / (endT - startT)));
+      lineAlpha = progressRatio;
+      offsetY = (1 - progressRatio) * (currentFontSize * 0.6); // Float up
+    } else if (motionType === 'fade') {
+      lineAlpha = motionProgress;
+    }
+
+    if (lineAlpha > 0) {
+      ctx.save();
+      ctx.globalAlpha = lineAlpha;
+      ctx.fillText(line, anchorX, startY + (idx * lineHeight) + offsetY);
+      ctx.restore();
+    }
+  });
+
+  startY += verseHeight + refGap;
+
+  // 3. Draw Reference (e.g. 사무엘하 13:39)
+  if (state.refText) {
+    let refAlpha = 1;
+    let refOffsetY = 0;
+    if (motionType === 'line-rise') {
+      const startT = 0.65;
+      const progressRatio = Math.min(1, Math.max(0, (motionProgress - startT) / 0.25));
+      refAlpha = progressRatio;
+      refOffsetY = (1 - progressRatio) * (currentFontSize * 0.4);
+    } else if (motionType === 'fade') {
+      refAlpha = motionProgress;
+    }
+
+    if (refAlpha > 0) {
+      ctx.save();
+      ctx.globalAlpha = refAlpha * 0.9;
+      ctx.fillStyle = '#f59e0b'; // Gold accent for Scripture reference
+      ctx.font = `600 ${currentFontSize * 0.72}px 'Pretendard', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(`- ${state.refText} -`, w / 2, startY + refOffsetY);
+      ctx.restore();
+    }
+  }
+
+  startY += refHeight + churchGap;
+
+  // 4. Draw Church Signature (e.g. 문경 행복한교회)
+  if (state.showChurch && state.churchText) {
+    let churchAlpha = 1;
+    if (motionType === 'line-rise') {
+      const startT = 0.75;
+      const progressRatio = Math.min(1, Math.max(0, (motionProgress - startT) / 0.25));
+      churchAlpha = progressRatio;
+    } else if (motionType === 'fade') {
+      churchAlpha = motionProgress;
+    }
+
+    if (churchAlpha > 0) {
+      ctx.save();
+      ctx.globalAlpha = churchAlpha * 0.55;
+      ctx.fillStyle = state.textColor;
+      ctx.font = `500 ${currentFontSize * 0.55}px 'Pretendard', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.letterSpacing = '1px';
+      ctx.fillText(state.churchText, w / 2, startY);
+      ctx.restore();
+    }
+  }
+
+  ctx.restore();
+}
+
+// Motion Animation Runner
+function runMotionAnimation(durationMs, onFrame, onComplete) {
+  if (state.isAnimating) return;
+  state.isAnimating = true;
+  const startTime = performance.now();
+
+  function step(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(1, elapsed / durationMs);
+
+    canvasProgress.style.width = (progress * 100) + '%';
+    renderCard(progress, state.motionStyle);
+
+    if (onFrame) onFrame(progress);
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      setTimeout(() => {
+        state.isAnimating = false;
+        canvasProgress.style.width = '0%';
+        renderCard(1, 'none');
+        if (onComplete) onComplete();
+      }, 600);
+    }
+  }
+
+  requestAnimationFrame(step);
+}
+
+// Export High-Res PNG Image
+function exportImage() {
+  renderCard(1, 'none');
+  canvas.toBlob(blob => {
+    if (!blob) {
+      showToast('이미지 변환에 실패했습니다.');
+      return;
+    }
+    const cleanRef = state.refText.replace(/[\s:]+/g, '_');
+    const filename = `말씀카드_${cleanRef}.png`;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    showToast(`🎉 ${filename} 다운로드 완료!`);
+  }, 'image/png');
+}
+
+// Copy Image to Clipboard
+async function copyToClipboard() {
+  renderCard(1, 'none');
+  if (!navigator.clipboard || !window.ClipboardItem) {
+    showToast('이 브라우저는 클립보드 복사를 지원하지 않습니다.');
+    return;
+  }
+  try {
+    canvas.toBlob(async blob => {
+      await navigator.clipboard.write([
+        new ClipboardItem({ 'image/png': blob })
+      ]);
+      showToast('📋 이미지가 클립보드에 복사되었습니다! (Ctrl+V로 붙여넣기)');
+    }, 'image/png');
+  } catch (err) {
+    showToast('복사 실패: 보안 설정 또는 미지원');
+  }
+}
+
+// Native Web Share (Mobile)
+async function shareCard() {
+  renderCard(1, 'none');
+  if (!navigator.share) {
+    showToast('이 기기에서는 직접 공유를 지원하지 않아 다운로드합니다.');
+    exportImage();
+    return;
+  }
+  canvas.toBlob(async blob => {
+    const cleanRef = state.refText.replace(/[\s:]+/g, '_');
+    const file = new File([blob], `말씀카드_${cleanRef}.png`, { type: 'image/png' });
+    try {
+      await navigator.share({
+        title: `말씀카드 - ${state.refText}`,
+        text: `${state.verseText}\n- ${state.refText} -`,
+        files: [file]
+      });
+      showToast('📤 공유창이 열렸습니다.');
+    } catch (e) {
+      if (e.name !== 'AbortError') {
+        showToast('공유 취소 또는 실패');
+      }
+    }
+  }, 'image/png');
+}
+
+// Export Video (MediaRecorder)
+async function exportVideo() {
+  if (!window.MediaRecorder) {
+    alert('이 브라우저는 영상 녹화(MediaRecorder)를 지원하지 않습니다. 이미지 저장을 이용해 주세요.');
+    return;
+  }
+
+  showToast('🎬 숏폼 영상 렌더링을 시작합니다...');
+  const durationMs = state.durationSec * 1000;
+
+  // Capture stream from canvas at 30fps
+  const stream = canvas.captureStream(30);
+
+  // Check supported mime types
+  let mimeType = '';
+  const types = [
+    'video/mp4;codecs=avc1',
+    'video/mp4',
+    'video/webm;codecs=vp9',
+    'video/webm;codecs=vp8',
+    'video/webm'
+  ];
+  for (const t of types) {
+    if (MediaRecorder.isTypeSupported(t)) {
+      mimeType = t;
+      break;
+    }
+  }
+
+  const recordedChunks = [];
+  const options = mimeType ? { mimeType } : undefined;
+  let recorder;
+  try {
+    recorder = new MediaRecorder(stream, options);
+  } catch (err) {
+    recorder = new MediaRecorder(stream);
+  }
+
+  recorder.ondataavailable = e => {
+    if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+  };
+
+  recorder.onstop = () => {
+    const isMp4 = mimeType.includes('mp4');
+    const ext = isMp4 ? 'mp4' : 'webm';
+    const blob = new Blob(recordedChunks, { type: mimeType || 'video/webm' });
+    const cleanRef = state.refText.replace(/[\s:]+/g, '_');
+    const filename = `말씀모션_${cleanRef}.${ext}`;
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    showToast(`🎉 ${filename} 숏폼 영상 저장 완료!`);
+  };
+
+  recorder.start();
+  runMotionAnimation(durationMs, null, () => {
+    setTimeout(() => recorder.stop(), 200);
+  });
+}
+
+// Event Listeners Setup
+function setupEvents() {
+  // Input Verse
+  const inputVerse = document.getElementById('inputVerse');
+  const charCount = document.getElementById('charCount');
+  inputVerse.addEventListener('input', e => {
+    state.verseText = e.target.value;
+    charCount.textContent = `${e.target.value.replace(/\s/g, '').length}자`;
+    renderCard();
+  });
+
+  // Input Ref
+  const inputRef = document.getElementById('inputRef');
+  inputRef.addEventListener('input', e => {
+    state.refText = e.target.value;
+    renderCard();
+  });
+
+  // Input Church
+  const inputChurch = document.getElementById('inputChurch');
+  inputChurch.addEventListener('input', e => {
+    state.churchText = e.target.value;
+    renderCard();
+  });
+  document.getElementById('checkChurch').addEventListener('change', e => {
+    state.showChurch = e.target.checked;
+    renderCard();
+  });
+
+  // Scripture Chips
+  document.querySelectorAll('#scriptureChips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#scriptureChips .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      state.refText = chip.dataset.ref;
+      state.verseText = chip.dataset.text;
+      inputRef.value = state.refText;
+      inputVerse.value = state.verseText;
+      charCount.textContent = `${state.verseText.replace(/\s/g, '').length}자`;
+      renderCard();
+    });
+  });
+
+  // Icons
+  document.querySelectorAll('#iconGroup button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#iconGroup button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.icon = btn.dataset.icon;
+      renderCard();
+    });
+  });
+
+  // Ratio
+  document.querySelectorAll('#ratioGroup button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#ratioGroup button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.ratio = btn.dataset.ratio;
+      updateCanvasSize();
+      renderCard();
+    });
+  });
+
+  // Background Gallery
+  document.querySelectorAll('#bgGallery .bg-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      document.querySelectorAll('#bgGallery .bg-thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+      state.bgType = thumb.dataset.bg;
+      const label = thumb.querySelector('.bg-thumb-label');
+      if (label) document.getElementById('bgTypeLabel').textContent = label.textContent;
+      renderCard();
+    });
+  });
+
+  // Upload Custom Background
+  document.getElementById('uploadFile').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        state.customBgImg = img;
+        state.bgType = 'custom';
+        document.getElementById('bgTypeLabel').textContent = `내 사진 (${file.name})`;
+        document.querySelectorAll('#bgGallery .bg-thumb').forEach(t => t.classList.remove('active'));
+        renderCard();
+        showToast('📁 내 사진이 배경으로 설정되었습니다!');
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Dim Slider
+  document.getElementById('sliderDim').addEventListener('input', e => {
+    state.dimOpacity = parseInt(e.target.value, 10) / 100;
+    document.getElementById('valDim').textContent = `${e.target.value}%`;
+    renderCard();
+  });
+
+  // Blur Slider
+  document.getElementById('sliderBlur').addEventListener('input', e => {
+    state.bgBlur = parseInt(e.target.value, 10);
+    document.getElementById('valBlur').textContent = `${e.target.value}px`;
+    renderCard();
+  });
+
+  // Font
+  document.querySelectorAll('#fontGroup button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#fontGroup button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.fontFamily = btn.dataset.font;
+      renderCard();
+    });
+  });
+
+  // Font Size Slider
+  document.getElementById('sliderFontSize').addEventListener('input', e => {
+    state.fontSize = parseInt(e.target.value, 10);
+    document.getElementById('valFontSize').textContent = `${e.target.value}pt`;
+    renderCard();
+  });
+
+  // Text Align
+  document.querySelectorAll('#alignGroup button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#alignGroup button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.textAlign = btn.dataset.align;
+      renderCard();
+    });
+  });
+
+  // Colors
+  document.querySelectorAll('#colorPalette .color-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      document.querySelectorAll('#colorPalette .color-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+      state.textColor = dot.dataset.color;
+      renderCard();
+    });
+  });
+  document.getElementById('customColor').addEventListener('input', e => {
+    document.querySelectorAll('#colorPalette .color-dot').forEach(d => d.classList.remove('active'));
+    state.textColor = e.target.value;
+    renderCard();
+  });
+
+  // Text Shadow
+  document.querySelectorAll('#shadowGroup button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#shadowGroup button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.shadowMode = btn.dataset.shadow;
+      renderCard();
+    });
+  });
+
+  // Motion Style
+  document.querySelectorAll('#motionGroup button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#motionGroup button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.motionStyle = btn.dataset.motion;
+    });
+  });
+
+  // Duration
+  document.querySelectorAll('#durationGroup button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#durationGroup button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.durationSec = parseInt(btn.dataset.dur, 10);
+    });
+  });
+
+  // Action Buttons
+  document.getElementById('btnExportImage').addEventListener('click', exportImage);
+  document.getElementById('btnExportVideo').addEventListener('click', exportVideo);
+  document.getElementById('btnPlayMotion').addEventListener('click', () => {
+    runMotionAnimation(state.durationSec * 1000);
+  });
+  document.getElementById('btnCopyClipboard').addEventListener('click', copyToClipboard);
+  document.getElementById('btnShare').addEventListener('click', shareCard);
+
+  // Theme Toggle
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      document.getElementById('themeToggle').textContent = '🌙 다크';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.getElementById('themeToggle').textContent = '☀️ 라이트';
+    }
+  });
+}
+
+// Init
+window.addEventListener('DOMContentLoaded', () => {
+  updateCanvasSize();
+  setupEvents();
+
+  // Ensure fonts ready
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => renderCard());
+  } else {
+    setTimeout(renderCard, 500);
+  }
+});
+</script>
+
+</body>
+</html>
