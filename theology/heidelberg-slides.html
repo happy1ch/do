@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하이델베르크 교리문답 서론 강의 슬라이드 | 행복한교회</title>
+    <!-- Pretendard & Noto Serif KR -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Serif+KR:wght@600;700;900&display=swap">
+    <style>
+        :root {
+            --bg-page: #0f172a;
+            --bg-slide: #1e293b;
+            --gold-accent: #f59e0b;
+            --gold-light: #fef3c7;
+            --blue-accent: #38bdf8;
+            --blue-soft: #082f49;
+            --crimson: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-slide: #334155;
+            --font-display: 'Do Hyeon', 'Pretendard', sans-serif;
+            --font-serif: 'Noto Serif KR', serif;
+            --font-body: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        }
+
+        [data-theme="light"] {
+            --bg-page: #f1f5f9;
+            --bg-slide: #ffffff;
+            --gold-accent: #d97706;
+            --gold-light: #fffbeb;
+            --blue-accent: #0284c7;
+            --blue-soft: #e0f2fe;
+            --crimson: #dc2626;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-slide: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            user-select: none;
+            transition: background 0.3s ease;
+        }
+
+        /* Top Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+        .progress-bar {
+            height: 100%; width: 6.66%;
+            background: linear-gradient(90deg, #f59e0b, #38bdf8);
+            transition: width 0.3s ease;
+        }
+
+        /* Presentation Wrapper */
+        .pres-wrap {
+            width: 100%;
+            max-width: 1360px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Top Control Header */
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+        }
+        .back-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--gold-accent); }
+        .control-btns {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-ctrl {
+            background: var(--bg-slide);
+            color: var(--text-muted);
+            border: 1px solid var(--border-slide);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-ctrl:hover { color: var(--text-main); border-color: var(--gold-accent); }
+
+        /* Slide Stage (16:9 Aspect Ratio) */
+        .slide-stage {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: var(--bg-slide);
+            border: 1px solid var(--border-slide);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+            display: flex;
+        }
+
+        @media (max-width: 960px) {
+            .slide-stage {
+                aspect-ratio: auto;
+                min-height: 600px;
+            }
+        }
+
+        /* Slide Items */
+        .slide {
+            position: absolute;
+            inset: 0;
+            padding: 56px 64px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.97) translateY(12px);
+            transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+            z-index: 2;
+        }
+
+        /* Header in slide */
+        .slide-tag {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            color: var(--gold-accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .slide-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3.6vw, 3rem);
+            line-height: 1.25;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        /* Slide Body Content */
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-slide);
+            border-radius: 14px;
+            padding: 24px 26px;
+        }
+        [data-theme="light"] .box {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .box-gold {
+            border-color: var(--gold-accent);
+            background: rgba(245, 158, 11, 0.06);
+        }
+        .box-blue {
+            border-color: var(--blue-accent);
+            background: rgba(56, 189, 248, 0.06);
+        }
+        .box h3 {
+            font-size: 1.3rem;
+            color: var(--gold-accent);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .box p, .box li {
+            font-size: 1.12rem;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+        .box ul {
+            padding-left: 20px;
+        }
+        .box li {
+            margin-bottom: 8px;
+        }
+
+        /* Scripture Quote Box */
+        .scripture-box {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 6px solid var(--gold-accent);
+            border-radius: 0 14px 14px 0;
+            padding: 26px 32px;
+            margin: 16px 0;
+        }
+        .scripture-box p {
+            font-family: var(--font-serif);
+            font-size: clamp(1.2rem, 2.1vw, 1.65rem);
+            line-height: 1.65;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+        .scripture-box cite {
+            display: block;
+            margin-top: 12px;
+            font-size: 1rem;
+            color: var(--gold-accent);
+            font-style: normal;
+            font-family: var(--font-body);
+            font-weight: 700;
+        }
+
+        /* Huge Center Callout */
+        .huge-center {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .huge-center .main-q {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 3.8vw, 3.2rem);
+            font-weight: 900;
+            line-height: 1.35;
+            color: var(--gold-accent);
+            margin-bottom: 24px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .huge-center .sub-desc {
+            font-size: 1.35rem;
+            color: var(--text-muted);
+            max-width: 42ch;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Bottom Status & Nav */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 18px;
+            border-top: 1px solid var(--border-slide);
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .slide-nav-btns {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .nav-btn {
+            background: var(--gold-accent);
+            color: #000000;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        .nav-btn:hover { opacity: 0.9; }
+        .nav-btn:active { transform: scale(0.96); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        /* Keyboard Hints Bar */
+        .kbd-hints {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding: 4px 0;
+        }
+        kbd {
+            background: var(--bg-slide);
+            border: 1px solid var(--border-slide);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--text-main);
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="pres-wrap">
+
+    <!-- Top Controls -->
+    <div class="header-controls">
+        <a href="../index.html" class="back-link">← 디지털 서재 로비로 돌아가기</a>
+        <div class="control-btns">
+            <button class="btn-ctrl" id="themeToggleBtn">🌓 화면 모드</button>
+            <button class="btn-ctrl" id="fullscreenBtn">⛶ 전체 화면</button>
+        </div>
+    </div>
+
+    <!-- 16:9 Presentation Stage -->
+    <div class="slide-stage" id="stage">
+
+        <!-- Slide 1: Cover -->
+        <div class="slide active" data-slide="1">
+            <div class="slide-tag">✨ HEIDELBERG CATECHISM 1563 · ORIENTATION</div>
+            <div class="slide-body huge-center">
+                <div style="font-size: 1.25rem; color: var(--blue-accent); font-weight: 700; margin-bottom: 12px; letter-spacing: 0.08em;">
+                    대한예수교장로회(고신) 문경 행복한교회 교리대학
+                </div>
+                <div class="main-q" style="font-size: clamp(2.4rem, 4.4vw, 3.8rem); line-height: 1.2;">
+                    살아서나 죽어서나<br>
+                    <span style="color: var(--text-main);">나의 유일한 위로</span>
+                </div>
+                <div class="sub-desc" style="font-size: 1.3rem; margin-top: 14px;">
+                    하이델베르크 교리문답 52주 오케스트레이션 서론 강해
+                </div>
+                <div style="margin-top: 24px; font-size: 1.1rem; color: var(--gold-accent); font-weight: 700;">
+                    강사 : 최성광 담임목사
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>로마서 14:8 — "사나 죽으나 우리는 주의 것이라"</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Ultimate Question -->
+        <div class="slide" data-slide="2">
+            <div class="slide-tag">❓ LIFE'S FIRST & ULTIMATE QUESTION</div>
+            <h1 class="slide-title">인생을 뒤흔드는 첫 번째 질문</h1>
+            <div class="slide-body">
+                <div class="scripture-box">
+                    <p>"살아서나 죽어서나, 당신의 유일한 위로는 무엇입니까?"</p>
+                    <cite>— 하이델베르크 교리문답 제1문 (1563년)</cite>
+                </div>
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="box box-gold">
+                        <h3>🕊️ 단순한 심리적 위로가 아닙니다</h3>
+                        <p>잠깐의 기분 전환이나 세상의 긍정적 사고방식이 아닙니다. 죄와 하나님의 진노, 피할 수 없는 육체의 죽음 앞에서도 영원히 흔들리지 않는 <b>'구원의 객관적 확신'</b>을 묻고 있습니다.</p>
+                    </div>
+                    <div class="box box-blue">
+                        <h3>👑 460년을 관통한 신앙의 반석</h3>
+                        <p>1563년 종교개혁의 소용돌이 속에서 쓰여진 이 한 문장은, 지난 460년간 개혁교회 성도들이 삶의 환난과 임종의 순간마다 목숨 걸고 고백해 온 가장 영광스러운 신앙의 노래입니다.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>제1부 : 오리엔테이션 및 시작 질문</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: What is Catechism? -->
+        <div class="slide" data-slide="3">
+            <div class="slide-tag">📖 DEFINITION & BIBLICAL ROOTS</div>
+            <h1 class="slide-title">교리문답(카테키즘)이란 무엇인가?</h1>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="box">
+                        <h3>🔊 어원 : 카테케오 (κατηχέω)</h3>
+                        <ul>
+                            <li><b>'위에서 아래로 울려 퍼지는 소리'</b>를 뜻하는 헬라어</li>
+                            <li>앞선 세대의 순전한 신앙을 다음 세대의 가슴에 메아리치듯 전수하는 거룩한 교육</li>
+                            <li>머리로 암기하는 딱딱한 교과서가 아니라, <b>입으로 함께 고백하는 신앙의 찬가</b></li>
+                        </ul>
+                    </div>
+                    <div class="box box-gold">
+                        <h3>📜 성경적 당위성과 전통</h3>
+                        <ul>
+                            <li><b>마 28:20</b> — "내가 너희에게 분부한 모든 것을 가르쳐 지키게 하라"</li>
+                            <li><b>딤후 1:13</b> — "너는 그리스도 예수 안에 있는 믿음과 사랑으로써 내게 들은 바 바른 말을 본받아 지키고"</li>
+                            <li>초대교회 세례문답 ➡️ 루터 소교리문답(1529) ➡️ <b>하이델베르크 교리문답(1563, 정점)</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>신앙의 유산을 전수하는 살아있는 고백</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Historical Context 1 -->
+        <div class="slide" data-slide="4">
+            <div class="slide-tag">🏰 HISTORICAL BACKGROUND · 1563 PFALZ</div>
+            <h1 class="slide-title">역사적 배경 (1) : 팔츠와 경건한 선제후</h1>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="box box-gold">
+                        <h3>👑 프리드리히 3세 (Friedrich III, 1515~1576)</h3>
+                        <p style="margin-bottom: 12px;">독일 팔츠(Pfalz)의 선제후, <b>"경건한 프리드리히"</b>로 불림.</p>
+                        <ul>
+                            <li>영지 내 루터파, 개혁파, 재세례파, 가톨릭 간의 극심한 분열을 종식시킬 표준 신앙고백서 절감</li>
+                            <li>1562년 하이델베르크 교회 총회에 교리문답 작성을 위임하고 초안을 직접 검토</li>
+                            <li>1566년 아우크스부르크 제국회의에서 황제의 위협 앞에서도 <b>"왕관을 벗을지언정 신앙고백을 타협하지 않겠다"</b>며 변호</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h3>⚔️ 시대적 정황과 필요성</h3>
+                        <ul>
+                            <li><b>가톨릭 트리엔트 공의회(1545~1563)</b>의 반격에 맞서 개신교 복음의 진리를 명확히 규정</li>
+                            <li>영지 내 교회와 학교에서 청소년과 성도들을 바른 교리로 가르칠 통합적 신앙 지침서의 필요</li>
+                            <li>교리문답은 한 영주의 정치적 산물이 아닌, <b>목양과 영혼 구원을 위한 거룩한 결단</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>1563년 독일 팔츠 종교개혁의 중심지 하이델베르크</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Historical Context 2 (Authorship) -->
+        <div class="slide" data-slide="5">
+            <div class="slide-tag">✍️ AUTHORSHIP & HISTORICAL ACCURACY</div>
+            <h1 class="slide-title">역사적 배경 (2) : 저자 우르시누스의 단독 집필</h1>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="box box-blue">
+                        <h3>🎓 자카리아스 우르시누스 (1534~1583)</h3>
+                        <p style="margin-bottom: 10px;">당시 28세의 하이델베르크 대학 신학교수이자 멜란히톤의 수제자.</p>
+                        <ul>
+                            <li><b>실질적인 단독 주 저자 (Primary Author)</b></li>
+                            <li>자신의 대교리문답·소교리문답 초안을 바탕으로 본문의 신학적 뼈대와 질문을 집필</li>
+                            <li>후에 방대한 『하이델베르크 교리문답 해설』을 저술하여 1차 정통 주석의 기준을 세움</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h3>🏛️ 카스파르 올레비아누스와 21세기 역사학</h3>
+                        <ul>
+                            <li>과거 통설은 두 사람의 '공동 저작'으로 알려졌으나, <b>최신 개혁주의 역사신학(클루스터, 비어마 등)</b>에 의해 정정됨</li>
+                            <li>올레비아누스는 시무 목사로서 선제후를 설득하고 교회 현장에 맞게 다듬는 <b>편집·조율자</b> 역할을 감당</li>
+                            <li>하이델베르크 신학부와 교회의 공동 협력 속에서 우르시누스의 천재적 학문이 빚어낸 걸작</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>21세기 개혁주의 최신 연구를 반영한 정밀한 역사관</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Historical Context 3 (Reception) -->
+        <div class="slide" data-slide="6">
+            <div class="slide-tag">🌍 GLOBAL RECEPTION · FROM DORT TO KOREA</div>
+            <h1 class="slide-title">역사적 배경 (3) : 하이델베르크에서 한국까지</h1>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="box">
+                        <h3 style="color:var(--text-main);">1. 도르트 총회 (1618~19)</h3>
+                        <p>네덜란드 도르트 총회에서 벨직 신앙고백, 도르트 신조와 함께 <b>'세 일치 신조(Three Forms of Unity)'</b>로 공식 채택.</p>
+                    </div>
+                    <div class="box box-gold">
+                        <h3>2. 주일 오후 교리 강해</h3>
+                        <p>52주일로 나누어 매주 주일 오후 예배 설교에서 교리문답을 강해하는 전통 확립. 네덜란드 개혁교회의 영적 척추가 됨.</p>
+                    </div>
+                    <div class="box box-blue">
+                        <h3 style="color:var(--blue-accent);">3. 북미 이민 ➡️ 한국 장로교</h3>
+                        <p>RCA, CRC 등 북미 개혁교회를 거쳐, 고신·합동 등 한국 정통 개혁교단 선교사들을 통해 오늘 우리 손에 닿음.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>역사 속에서 검증된 정통 개혁주의 신앙의 유산</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Book of Comfort -->
+        <div class="slide" data-slide="7">
+            <div class="slide-tag">❤️ THE HEART OF THE CATECHISM</div>
+            <h1 class="slide-title">이 책의 심장 : 오직 '위로(Trost)'의 책</h1>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="box box-gold">
+                        <h3>🕊️ 시작도 위로요, 끝은 확증이라</h3>
+                        <ul>
+                            <li><b>제1문 시작</b> : "살아서나 죽어서나 나의 유일한 <b>위로(Trost)</b>는..."</li>
+                            <li><b>제129문 끝</b> : "<b>아멘(Amen)</b>은 무엇을 의미합니까? — 참되고 확실합니다!"</li>
+                            <li>냉랭한 교리 지식의 나열이 아닌, <b>환난 많은 인생을 싸매는 따뜻한 목회적 위로</b></li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h3>💎 라틴어 Consolatio의 어원적 깊이</h3>
+                        <ul>
+                            <li>라틴어 <i>Consolatio</i> = <b>Con(함께) + Solidare(견고하게 굳세게 하다)</b></li>
+                            <li>흔들리는 죄인을 그리스도와 함께 굳게 세우는 영원한 닻</li>
+                            <li>돈, 건강, 세상의 성공, 인간적 종교 공로를 완전히 대체하는 <b>"유일한(Einzig)" 위로</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>신학과 신앙, 지식과 위로가 완전한 조화를 이루는 걸작</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: The Threefold Structure -->
+        <div class="slide" data-slide="8">
+            <div class="slide-tag">🗺️ THE MASTER ROADMAP · ROMANS STRUCTURE</div>
+            <h1 class="slide-title">거대한 3부 구조 : 로마서의 구속사 지도</h1>
+            <div class="slide-body">
+                <div style="text-align:center; font-size: 1.15rem; color: var(--gold-accent); margin-bottom: 20px; font-weight: 700;">
+                    주일 1 (문 1~2) : 전체의 서론이자 축소판 — "살아서나 죽어서나 유일한 위로"
+                </div>
+                <div class="grid-3">
+                    <div class="box" style="border-top: 5px solid var(--crimson);">
+                        <h3 style="color:var(--crimson);">제1부 : 우리의 비참</h3>
+                        <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:8px;">주일 2~4 (문 3~11)</p>
+                        <p>율법을 통해 <b>나의 죄와 비참</b>이 얼마나 큰지를 깨달음.<br>(로마서 1~3장)</p>
+                    </div>
+                    <div class="box box-gold" style="border-top: 5px solid var(--gold-accent);">
+                        <h3>제2부 : 우리의 구원</h3>
+                        <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:8px;">주일 5~31 (문 12~85)</p>
+                        <p>중보자 예수 그리스도를 통한 구원.<br><b>사도신경 · 칭의 · 성례(세례/성찬)</b><br>(로마서 3~11장)</p>
+                    </div>
+                    <div class="box box-blue" style="border-top: 5px solid var(--blue-accent);">
+                        <h3 style="color:var(--blue-accent);">제3부 : 우리의 감사</h3>
+                        <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:8px;">주일 32~52 (문 86~129)</p>
+                        <p>구원받은 성도의 열매 맺는 삶.<br><b>십계명(행실) · 주기도문(기도)</b><br>(로마서 12~16장)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>죄의 자각(비참) ➡️ 십자가 은혜(구원) ➡️ 거룩한 순종(감사)</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Question 1 Reading -->
+        <div class="slide" data-slide="9">
+            <div class="slide-tag">📜 QUESTION 1 · FULL RECITATION</div>
+            <h1 class="slide-title">제1문 : 한목소리로 낭독하는 영혼의 고백</h1>
+            <div class="slide-body">
+                <div class="scripture-box" style="padding: 24px 28px;">
+                    <p style="font-size: 1.25rem; font-weight: 500; line-height: 1.8;">
+                        <span style="color:var(--gold-accent); font-weight: 900;">"나는 나의 것이 아니요, 몸도 영혼도 살아서나 죽어서나 나의 신실하신 구주 예수 그리스도의 것입니다."</span><br><br>
+                        그리스도께서는 그의 보혈로 나의 모든 죄값을 완전히 치르셨고, 마귀의 모든 권세에서 나를 해방하셨습니다. 또한 하늘에 계신 나의 아버지의 뜻이 아니면 머리털 하나도 땅에 떨어지지 않도록 나를 보호하시며, 참으로 모든 것이 합력하여 나의 구원을 이루도록 하십니다.<br><br>
+                        그러므로 그의 성령으로 나에게 영생을 확신시켜 주시고, 이제부터는 마음을 다하여 즐거이 그리고 신속하게 주를 위해 살도록 하십니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>하이델베르크 교리문답 제1문 대답 전문</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Ownership Transfer -->
+        <div class="slide" data-slide="10">
+            <div class="slide-tag">✝️ THE THEOLOGICAL CORE · TRANSFER OF OWNERSHIP</div>
+            <h1 class="slide-title">소유권의 위대한 이전 : "나는 내 것이 아니다!"</h1>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="box box-gold">
+                        <h3>🩸 피값으로 사신 영원한 소유권</h3>
+                        <ul>
+                            <li><b>고전 6:19~20</b> : "너희는 너희 자신의 것이 아니라 값으로 산 것이 되었으니"</li>
+                            <li><b>롬 14:8</b> : "살아도 주를 위하여 살고 죽어도 주를 위하여 죽나니 사나 죽으나 우리는 주의 것이라"</li>
+                            <li>내가 내 인생의 주인이었을 때는 불안과 공포였으나, <b>소유권이 신실한 그리스도께로 넘어갔을 때 참된 평안</b>이 시작됨</li>
+                        </ul>
+                    </div>
+                    <div class="box box-blue">
+                        <h3>🛡️ 머리털 하나도 떨어지지 않는 섭리</h3>
+                        <ul>
+                            <li><b>마 10:30~31</b> : "너희에게는 심지어 머리털까지 다 세신 바 되었나니"</li>
+                            <li>우연이나 운명에 내맡겨진 인생이 아닌, 하늘 아버지의 세밀한 절대 주권적 섭리</li>
+                            <li><b>롬 8:28</b> : 모든 것이 합력하여 나의 구원을 이루시는 하나님의 신실하심</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>참된 자유는 '내 것'을 주장하는 데 있지 않고 '그리스도의 소유'가 되는 데 있습니다</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Question 2 Three Knowledge -->
+        <div class="slide" data-slide="11">
+            <div class="slide-tag">💡 QUESTION 2 · THE THREEFOLD KNOWLEDGE</div>
+            <h1 class="slide-title">제2문 : 위로 속에 복되게 살기 위한 3가지 지식</h1>
+            <div class="slide-body">
+                <div class="scripture-box" style="margin-bottom: 24px;">
+                    <p style="font-size: 1.35rem;">"이러한 위로 가운데 복되게 살고 죽기 위해 당신은 무엇을 알아야 합니까?"</p>
+                </div>
+                <div class="grid-3">
+                    <div class="box">
+                        <div style="font-size: 1.8rem; font-family:var(--font-display); color:var(--crimson); margin-bottom:8px;">01. 비참의 지식</div>
+                        <p>첫째, <b>나의 죄와 비참</b>이 얼마나 큰지를 알아야 합니다.<br>(치유 전에 질병의 심각성을 자각함)</p>
+                    </div>
+                    <div class="box box-gold">
+                        <div style="font-size: 1.8rem; font-family:var(--font-display); color:var(--gold-accent); margin-bottom:8px;">02. 구원의 지식</div>
+                        <p>둘째, 내가 어떻게 모든 죄와 비참에서 <b>구원을 받는가</b>를 알아야 합니다.<br>(유일한 중보자 그리스도)</p>
+                    </div>
+                    <div class="box box-blue">
+                        <div style="font-size: 1.8rem; font-family:var(--font-display); color:var(--blue-accent); margin-bottom:8px;">03. 감사의 지식</div>
+                        <p>셋째, 그러한 구원을 주신 하나님께 <b>어떻게 감사해야 하는가</b>를 알아야 합니다.<br>(선한 열매와 성도의 순종)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>바른 지식 위에 세워지는 흔들리지 않는 신앙</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: 52 Weeks Curriculum -->
+        <div class="slide" data-slide="12">
+            <div class="slide-tag">📅 52-WEEK ANNUAL CURRICULUM ROADMAP</div>
+            <h1 class="slide-title">행복한교회 교리대학 52주 연간 진도표</h1>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="box">
+                        <h3>🌱 상반기 : 복음의 뼈대 세우기</h3>
+                        <ul>
+                            <li><b>1~3주</b> : 오리엔테이션 및 주일 1 (유일한 위로)</li>
+                            <li><b>4~6주</b> : [제1부 비참] 율법과 죄의 자각 (주일 2~4)</li>
+                            <li><b>7~19주</b> : [제2부 구원] 중보자 그리스도 & 사도신경 강해 (하나님·예수 그리스도)</li>
+                            <li><b>20~24주</b> : 성령, 교회, 칭의와 참된 믿음 (주일 20~24)</li>
+                        </ul>
+                    </div>
+                    <div class="box box-gold">
+                        <h3>🌿 하반기 : 성례와 감사의 열매 맺기</h3>
+                        <ul>
+                            <li><b>25~31주</b> : [은혜의 방편] 세례와 성찬 (주일 25~31)</li>
+                            <li><b>32~33주</b> : [제3부 감사] 선행의 이유와 감사 (주일 32~33)</li>
+                            <li><b>34~44주</b> : 성도의 삶의 규범 — 십계명 강해 (주일 34~44)</li>
+                            <li><b>45~52주</b> : 성도의 호흡 — 주기도문 강해 & "아멘" 수료 (주일 45~52)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>1년 동안 성경 66권의 핵심 진리를 온전히 통달하는 영적 여정</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Weekly Routine -->
+        <div class="slide" data-slide="13">
+            <div class="slide-tag">⏱️ 60~75 MIN WEEKLY LECTURE ROUTINE</div>
+            <h1 class="slide-title">매주 강의의 6단계 실전 루틴</h1>
+            <div class="slide-body">
+                <div class="grid-3" style="gap:16px;">
+                    <div class="box">
+                        <h3 style="color:var(--text-main);">1. 도입 (5분)</h3>
+                        <p>지난주 핵심 문답 암송 확인 및 지난 삶의 나눔</p>
+                    </div>
+                    <div class="box box-gold">
+                        <h3>2. 낭독 (5분)</h3>
+                        <p>이번 주일 문답 전문을 온 회중이 한목소리로 소리 내어 낭독</p>
+                    </div>
+                    <div class="box box-blue">
+                        <h3 style="color:var(--blue-accent);">3. 강해 (25~30분)</h3>
+                        <p>원어 핵심 단어 분석, 성경 구속사 본문 증거 및 신학적 강해</p>
+                    </div>
+                    <div class="box">
+                        <h3 style="color:var(--crimson);">4. 논쟁점 (10분)</h3>
+                        <p>당대 이단(가톨릭/재세례파) 논박과 오늘날의 세속적 오해 경계</p>
+                    </div>
+                    <div class="box box-gold">
+                        <h3>5. 나눔 (10분)</h3>
+                        <p>내 삶의 실존적 질문과 적용 토론 ("나는 오늘 무엇을 위로 삼는가?")</p>
+                    </div>
+                    <div class="box box-blue">
+                        <h3 style="color:var(--text-main);">6. 결론 (5분)</h3>
+                        <p><b>'오늘의 한 문장'</b> 선포 및 한 주간 암송 과제 제시</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>머리와 가슴과 손발이 함께 움직이는 입체적 성경 공부</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Learner's Heart -->
+        <div class="slide" data-slide="14">
+            <div class="slide-tag">🎯 THE ULTIMATE PURPOSE</div>
+            <h1 class="slide-title">교리문답을 배우는 자의 참된 자세</h1>
+            <div class="slide-body huge-center" style="padding: 20px 0;">
+                <div class="main-q" style="font-size: clamp(2.2rem, 3.8vw, 3.4rem); line-height: 1.35; color: var(--text-main);">
+                    "이 문장을 <span style="color:var(--crimson);">암기하는 사람</span>에서,<br>
+                    이 문장으로 <span style="color:var(--gold-accent);">살아내는 사람</span>으로!"
+                </div>
+                <div class="sub-desc" style="font-size: 1.3rem; margin-top: 24px;">
+                    지식의 자랑을 넘어, 고난과 질병과 죽음의 어두운 골짜기에서도<br>
+                    <b>"주님, 나는 주의 것입니다"</b>라고 담대히 외치는<br>
+                    참된 그리스도의 제자로 빚어지는 것입니다.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>로마서 8:38~39 — 그 어떤 피조물도 우리를 끊을 수 없으리라</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Conclusion -->
+        <div class="slide" data-slide="15">
+            <div class="slide-tag">👑 SOLI DEO GLORIA · CONCLUSION</div>
+            <div class="slide-body huge-center">
+                <div style="font-size: 1.3rem; color: var(--text-muted); margin-bottom: 18px; font-weight: 600;">
+                    1563년 하이델베르크 교회가 오늘 우리에게 건네는 초대
+                </div>
+                <div class="main-q" style="font-size: clamp(2.6rem, 4.8vw, 4rem); line-height: 1.25;">
+                    살아서나 죽어서나,<br>
+                    <span style="color: var(--gold-accent);">나는 나의 것이 아닙니다.</span>
+                </div>
+                <div style="font-size: 1.45rem; color: var(--blue-accent); font-weight: 700; margin-top: 20px;">
+                    "신실하신 구주 예수 그리스도의 것입니다."
+                </div>
+                <div style="margin-top: 36px; font-size: 1.15rem; color: var(--text-muted);">
+                    문경 행복한교회 교리대학 52주 여정의 시작을 축복합니다!
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>오직 하나님께 영광 (Soli Deo Gloria)</div>
+                <div class="slide-nav-btns">
+                    <button class="nav-btn" onclick="prevSlide()">◀ 이전</button>
+                    <button class="nav-btn" onclick="goToSlide(1)">처음으로 ↺</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Keyboard Help -->
+    <div class="kbd-hints">
+        <span>키보드 조작 : <kbd>←</kbd> <kbd>→</kbd> 슬라이드 이동</span>
+        <span><kbd>Space</kbd> 다음 슬라이드</span>
+        <span><kbd>F</kbd> 전체화면</span>
+        <span><kbd>T</kbd> 화면모드</span>
+    </div>
+
+</div>
+
+<script>
+    let currentSlide = 1;
+    const totalSlides = 15;
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progressBar');
+
+    function updateSlide() {
+        slides.forEach(slide => {
+            const num = parseInt(slide.getAttribute('data-slide'));
+            if (num === currentSlide) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        const progress = (currentSlide / totalSlides) * 100;
+        progressBar.style.width = progress + '%';
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides) {
+            currentSlide++;
+            updateSlide();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 1) {
+            currentSlide--;
+            updateSlide();
+        }
+    }
+
+    function goToSlide(num) {
+        if (num >= 1 && num <= totalSlides) {
+            currentSlide = num;
+            updateSlide();
+        }
+    }
+
+    // Keyboard Navigation
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+            e.preventDefault();
+            nextSlide();
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            e.preventDefault();
+            prevSlide();
+        } else if (e.key === 'f' || e.key === 'F') {
+            toggleFullscreen();
+        } else if (e.key === 't' || e.key === 'T') {
+            toggleTheme();
+        } else if (e.key === 'Home') {
+            goToSlide(1);
+        } else if (e.key === 'End') {
+            goToSlide(totalSlides);
+        }
+    });
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggleBtn');
+    function toggleTheme() {
+        const root = document.documentElement;
+        const isLight = root.getAttribute('data-theme') === 'light';
+        if (isLight) {
+            root.removeAttribute('data-theme');
+            themeBtn.textContent = '🌓 화면 모드 (다크)';
+        } else {
+            root.setAttribute('data-theme', 'light');
+            themeBtn.textContent = '🌓 화면 모드 (라이트)';
+        }
+    }
+    themeBtn.addEventListener('click', toggleTheme);
+
+    // Fullscreen Toggle
+    const fsBtn = document.getElementById('fullscreenBtn');
+    function toggleFullscreen() {
+        const stage = document.getElementById('stage');
+        if (!document.fullscreenElement) {
+            stage.requestFullscreen().catch(err => {
+                alert(`전체화면 오류: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    fsBtn.addEventListener('click', toggleFullscreen);
+
+    // Mobile Swipe Support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const stage = document.getElementById('stage');
+    stage.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+    stage.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+        const diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > 50) {
+            if (diff < 0) nextSlide();
+            else prevSlide();
+        }
+    }
+
+    // Initialize
+    updateSlide();
+</script>
+</body>
+</html>
