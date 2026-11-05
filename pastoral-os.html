@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>농어촌·개척교회를 위한 1인 스마트 목회 OS | The Happy Pastoral OS</title>
+<meta name="description" content="예산도 동역자도 부족한 개척·농어촌교회 목회자를 위한 1인 전천후 스마트 목회 도구 모음. 예배 음향, 방송 자막, 말씀카드 미디어, AI 신학 연구를 0원으로 완결하는 오픈소스 목회 시스템입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&family=Pretendard:wght@400;500;600;700;800&family=MaruBuri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0f14;
+  --bg-soft: #141923;
+  --panel: #1a2230;
+  --panel-hover: #222d40;
+  --border: rgba(255,255,255,.09);
+  --border-focus: rgba(212,176,99,.4);
+  --text: #e9edf3;
+  --text-dim: #9aa8b8;
+  --accent: #d4b063;
+  --accent-soft: rgba(212,176,99,.13);
+  --accent-blue: #60a5fa;
+  --accent-blue-soft: rgba(96,165,250,.12);
+  --accent-green: #34d399;
+  --accent-green-soft: rgba(52,211,153,.12);
+  --accent-purple: #c084fc;
+  --accent-purple-soft: rgba(192,132,252,.12);
+  --accent-amber: #fbbf24;
+  --accent-amber-soft: rgba(251,191,36,.12);
+  --shadow: 0 14px 38px rgba(0,0,0,.45);
+  --glow: radial-gradient(1100px 550px at 50% -10%, rgba(212,176,99,.15), transparent 70%);
+}
+[data-theme="light"] {
+  --bg: #f8f6f0;
+  --bg-soft: #ede8dc;
+  --panel: #ffffff;
+  --panel-hover: #fcfbf9;
+  --border: rgba(30,40,55,.10);
+  --border-focus: rgba(169,129,46,.4);
+  --text: #1f2732;
+  --text-dim: #5c6c7d;
+  --accent: #a9812e;
+  --accent-soft: rgba(169,129,46,.10);
+  --accent-blue: #2563eb;
+  --accent-blue-soft: rgba(37,99,235,.09);
+  --accent-green: #059669;
+  --accent-green-soft: rgba(5,150,105,.09);
+  --accent-purple: #7c3aed;
+  --accent-purple-soft: rgba(124,58,237,.09);
+  --accent-amber: #d97706;
+  --accent-amber-soft: rgba(217,119,6,.09);
+  --shadow: 0 12px 30px rgba(50,60,70,.09);
+  --glow: radial-gradient(1100px 550px at 50% -10%, rgba(169,129,46,.12), transparent 70%);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  background-image: var(--glow);
+  background-repeat: no-repeat;
+  transition: background-color .3s ease, color .3s ease;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── 탑바 ── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px clamp(16px, 5vw, 44px);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.brand .mark {
+  width: 34px; height: 34px; border-radius: 10px;
+  display: grid; place-items: center; font-size: 17px;
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent-green-soft));
+  border: 1px solid var(--border);
+}
+.brand small { display: block; font-size: 10.5px; font-weight: 500; color: var(--text-dim); }
+.top-actions { display: flex; align-items: center; gap: 8px; }
+.top-btn {
+  font-size: 12.5px; font-weight: 600; padding: 7px 13px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--panel);
+  transition: all .2s ease; display: inline-flex; align-items: center; gap: 6px;
+}
+.top-btn:hover { background: var(--panel-hover); transform: translateY(-1px); border-color: var(--border-focus); }
+.top-btn.primary { background: var(--accent); color: #1a1608; border-color: var(--accent); font-weight: 700; }
+.top-btn.primary:hover { opacity: .92; }
+#themeToggle {
+  width: 36px; height: 36px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--panel);
+  color: var(--text); font-size: 15px; display: grid; place-items: center;
+  transition: all .2s ease;
+}
+#themeToggle:hover { transform: rotate(-10deg) scale(1.05); }
+
+/* ── 히어로 ── */
+.hero {
+  max-width: 980px; margin: 0 auto;
+  padding: clamp(40px, 7vh, 76px) 20px 36px;
+  text-align: center;
+}
+.badge-os {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--accent); background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  padding: 6px 16px; border-radius: 999px; margin-bottom: 22px;
+}
+.hero h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(26px, 5vw, 44px);
+  font-weight: 900; letter-spacing: -1px; line-height: 1.32;
+  margin-bottom: 18px;
+}
+.hero h1 span.gold { color: var(--accent); }
+.hero h1 span.green { color: var(--accent-green); }
+.hero .intro {
+  font-size: clamp(14.5px, 2.2vw, 16.5px);
+  color: var(--text-dim); max-width: 720px; margin: 0 auto 28px;
+  line-height: 1.75; word-break: keep-all;
+}
+
+/* ── 목회자 서문 편지 카드 ── */
+.pastor-letter {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--panel) 90%, var(--accent-soft)), var(--panel));
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  border-radius: 20px; padding: clamp(22px, 4vw, 34px);
+  margin: 0 auto 46px; text-align: left;
+  position: relative; box-shadow: var(--shadow);
+}
+.pastor-letter::before {
+  content: "“"; font-family: 'Noto Serif KR', serif;
+  position: absolute; top: 16px; right: 24px;
+  font-size: 72px; line-height: 1; color: var(--accent); opacity: .18;
+}
+.letter-tag {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+  color: var(--accent); margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px;
+}
+.letter-body {
+  font-family: 'MaruBuri', 'Noto Serif KR', serif;
+  font-size: clamp(14px, 2vw, 15.5px); line-height: 1.85; color: var(--text);
+  word-break: keep-all;
+}
+.letter-body p { margin-bottom: 12px; }
+.letter-body p:last-child { margin-bottom: 0; }
+.letter-sign {
+  margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  font-size: 13px; color: var(--text-dim);
+}
+.letter-sign strong { color: var(--accent); font-weight: 700; }
+
+/* ── 필터 탭 ── */
+.filter-tabs {
+  display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 34px; padding: 0 10px;
+}
+.tab-btn {
+  font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg-soft); color: var(--text-dim);
+  cursor: pointer; transition: all .2s ease; display: inline-flex; align-items: center; gap: 6px;
+}
+.tab-btn:hover { color: var(--text); border-color: var(--accent); }
+.tab-btn.active {
+  background: var(--accent); color: #1a1608; border-color: var(--accent); font-weight: 700;
+  box-shadow: 0 4px 14px rgba(212,176,99,.28);
+}
+
+/* ── 메인 컨테이너 & 그리드 ── */
+main { max-width: 1140px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 36px) 70px; }
+
+.section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 46px 0 18px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  flex-wrap: wrap; gap: 10px;
+}
+.section-head .title-wrap { display: flex; align-items: center; gap: 10px; }
+.section-head .icon { font-size: 24px; }
+.section-head h2 {
+  font-family: 'Noto Serif KR', serif; font-size: clamp(19px, 2.6vw, 23px);
+  font-weight: 700; letter-spacing: -.4px;
+}
+.section-head .tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border);
+  color: var(--text-dim); background: var(--bg-soft);
+}
+.section-head .cost-tag {
+  font-size: 11.5px; font-weight: 800; color: var(--accent-green);
+  background: var(--accent-green-soft); border: 1px solid color-mix(in srgb, var(--accent-green) 30%, transparent);
+  padding: 4px 12px; border-radius: 999px;
+}
+
+.os-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* ── OS 카드 디자인 ── */
+.os-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 18px;
+  padding: 26px 24px 22px; display: flex; flex-direction: column; gap: 14px;
+  box-shadow: var(--shadow); position: relative; overflow: hidden;
+  transition: transform .25s ease, border-color .25s ease, background .25s ease;
+}
+.os-card::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, var(--card-color, var(--accent)), transparent 70%);
+  opacity: .7; transition: opacity .25s ease;
+}
+.os-card:hover {
+  transform: translateY(-4px); border-color: color-mix(in srgb, var(--card-color, var(--accent)) 45%, var(--border));
+  background: var(--panel-hover);
+}
+.os-card:hover::before { opacity: 1; }
+
+.os-card.sound { --card-color: var(--accent-amber); }
+.os-card.broadcast { --card-color: var(--accent-blue); }
+.os-card.media { --card-color: var(--accent-green); }
+.os-card.ai { --card-color: var(--accent-purple); }
+
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card-kicker {
+  font-size: 10.5px; font-weight: 800; letter-spacing: 1.4px;
+  color: var(--card-color, var(--accent)); text-transform: uppercase;
+}
+.card-badge {
+  font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px;
+  background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-dim);
+}
+.os-card h3 {
+  font-size: 18.5px; font-weight: 700; letter-spacing: -.3px; line-height: 1.4;
+}
+.card-problem {
+  background: var(--bg-soft); border-left: 3px solid color-mix(in srgb, var(--card-color) 70%, var(--border));
+  padding: 8px 12px; border-radius: 0 8px 8px 0; font-size: 12.5px; color: var(--text-dim); line-height: 1.5;
+}
+.card-problem strong { color: var(--text); font-weight: 600; }
+.os-card p.desc {
+  font-size: 13.5px; color: var(--text-dim); line-height: 1.65; flex: 1; word-break: keep-all;
+}
+.card-specs { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0; }
+.card-specs span {
+  font-size: 11px; font-weight: 500; color: var(--text-dim);
+  background: color-mix(in srgb, var(--bg-soft) 80%, var(--card-color));
+  border: 1px solid var(--border); padding: 3px 9px; border-radius: 6px;
+}
+.card-actions {
+  display: flex; gap: 8px; margin-top: 6px; pt: 10px; border-top: 1px solid var(--border);
+}
+.action-btn {
+  flex: 1; font-size: 12.5px; font-weight: 700; padding: 9px 12px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--bg-soft); color: var(--text);
+  cursor: pointer; text-align: center; transition: all .2s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+}
+.action-btn:hover {
+  background: var(--panel-hover); border-color: var(--card-color, var(--accent));
+  color: var(--card-color, var(--accent)); transform: translateY(-1px);
+}
+.action-btn.primary {
+  background: var(--card-color, var(--accent)); color: #10141a;
+  border-color: var(--card-color, var(--accent));
+}
+.action-btn.primary:hover { opacity: .92; color: #10141a; }
+
+/* ── 0원 견적 비교 바 ── */
+.zero-cost-banner {
+  margin: 50px auto 20px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--panel) 90%, var(--accent-green-soft)), var(--panel));
+  border: 1px solid color-mix(in srgb, var(--accent-green) 40%, var(--border));
+  border-radius: 20px; padding: clamp(24px, 4vw, 36px);
+  box-shadow: var(--shadow);
+}
+.zero-head {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  margin-bottom: 20px;
+}
+.zero-head h3 {
+  font-family: 'Noto Serif KR', serif; font-size: clamp(18px, 2.5vw, 22px);
+  font-weight: 800; color: var(--accent-green); display: flex; align-items: center; gap: 8px;
+}
+.zero-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;
+}
+.zero-item {
+  background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px; font-size: 13px;
+}
+.zero-item .label { color: var(--text-dim); font-size: 11.5px; margin-bottom: 4px; }
+.zero-item .before { text-decoration: line-through; color: #ef4444; font-size: 12px; }
+.zero-item .after { font-size: 16px; font-weight: 800; color: var(--accent-green); margin-top: 2px; }
+
+/* ── 푸터 ── */
+footer {
+  border-top: 1px solid var(--border);
+  text-align: center; padding: 40px 20px 52px;
+  color: var(--text-dim); font-size: 12.5px; line-height: 2;
+}
+footer .verse {
+  font-family: 'Noto Serif KR', serif; font-size: 14px; color: var(--accent); margin-bottom: 6px;
+}
+footer .copy { font-size: 11.5px; opacity: .8; }
+
+/* ── 모달 팝업 ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal-box {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 20px;
+  max-width: 620px; width: 100%; max-height: 85vh; overflow-y: auto;
+  padding: 28px; box-shadow: 0 20px 50px rgba(0,0,0,.6); position: relative;
+}
+.modal-close {
+  position: absolute; top: 18px; right: 20px; font-size: 20px;
+  background: none; border: none; color: var(--text-dim); cursor: pointer;
+}
+.modal-close:hover { color: var(--text); }
+.modal-title { font-family: 'Noto Serif KR', serif; font-size: 20px; margin-bottom: 12px; font-weight: 700; color: var(--accent); }
+.modal-content { font-size: 13.5px; line-height: 1.7; color: var(--text-dim); }
+.modal-code {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px; font-family: monospace; font-size: 12px; color: var(--accent-green);
+  margin: 10px 0; overflow-x: auto; white-space: pre-wrap;
+}
+
+@media (max-width: 640px) {
+  .top-btn span.text { display: none; }
+  .os-grid { grid-template-columns: 1fr; }
+  .hero { padding-top: 30px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── 최상단 네비게이션 ── -->
+<header class="topbar">
+  <div class="brand">
+    <span class="mark">⛪</span>
+    <span>1인 스마트 목회 OS<small>The Happy Pastoral OS</small></span>
+  </div>
+  <div class="top-actions">
+    <a href="index.html" class="top-btn" title="서재 메인 로비로 이동">
+      <span>🏛️</span><span class="text">서재 로비</span>
+    </a>
+    <a href="timeline.html" class="top-btn" title="사역 타임라인">
+      <span>📅</span><span class="text">타임라인</span>
+    </a>
+    <button id="themeToggle" aria-label="다크/라이트 모드 전환" title="다크/라이트 모드">🌙</button>
+  </div>
+</header>
+
+<!-- ── 히어로 헤더 ── -->
+<section class="hero">
+  <div class="badge-os">✦ OPEN-SOURCE MINISTRY OPERATING SYSTEM ✦</div>
+  <h1>농어촌·개척교회를 위한<br><span class="gold">1인 스마트 목회 OS</span></h1>
+  <p class="intro">
+    동역자도, 장비도, 예산도 부족한 개척·농어촌교회 목회자를 위하여.<br>
+    혼자서 방송 선을 꽂고, 반주기를 틀고, 자막을 넘기며 설교까지 도맡는 고된 사역을<br>
+    <strong style="color:var(--text);">단 한 대의 PC와 무료 웹 기술</strong>로 해결하는 4대 전천후 목회 시스템입니다.
+  </p>
+
+  <!-- ── 목사님의 편지 ── -->
+  <div class="pastor-letter">
+    <div class="letter-tag">✦ 동역자 목회자들에게 드리는 글</div>
+    <div class="letter-body">
+      <p>"개척교회와 농어촌교회 목회 현장은 늘 외롭고 고됩니다. 예배 30분 전부터 땀을 뻘뻘 흘리며 음향 케이블을 점검하고, 방송 프로그램을 켜고, 반주자 구하기가 어려워 스마트폰 반주기를 조작하다가 강단에 올라가 설교해야 합니다."</p>
+      <p>"수천만 원짜리 방송 장비나 전문 미디어 간사를 둘 수 없는 작은 교회에서도, 하나님의 복음은 가장 맑고 웅장하게 선포되어야 합니다. 제가 행복한교회 현장에서 직접 부딪치며 검증하고 완성한 0원 오픈소스 목회 도구들을 전국의 동역자 목사님들과 기쁜 마음으로 거저 나눕니다. 이 작은 도구들이 목사님들의 목회 짐을 덜어드리고 오직 말씀 연구와 성도 사랑에 전념하는 힘이 되기를 기도합니다."</p>
+    </div>
+    <div class="letter-sign">
+      <div>문경 점촌 행복한교회 담임목사 <strong>최성광</strong></div>
+      <div>Happy초이 AI 비서 오케스트레이션 제작 · 전액 무료 배포</div>
+    </div>
+  </div>
+
+  <!-- ── 카테고리 필터 탭 ── -->
+  <div class="filter-tabs">
+    <button class="tab-btn active" data-filter="all">전체 도구 보기 (8)</button>
+    <button class="tab-btn" data-filter="sound">🎹 예배 음향·반주</button>
+    <button class="tab-btn" data-filter="broadcast">🎙️ 방송·자막</button>
+    <button class="tab-btn" data-filter="media">🎨 미디어·디자인</button>
+    <button class="tab-btn" data-filter="ai">🤖 AI 설교연구</button>
+  </div>
+</section>
+
+<!-- ── 메인 콘텐츠 그리드 ── -->
+<main>
+
+  <!-- 1. 음향 & 반주 팩 -->
+  <div class="section-head" data-category="sound">
+    <div class="title-wrap">
+      <span class="icon">🎹</span>
+      <h2>1. 예배 음향 &amp; 반주 OS</h2>
+      <span class="tag">SOUND &amp; ACCOMPANIMENT</span>
+    </div>
+    <span class="cost-tag">비용 0원 (자체 개발)</span>
+  </div>
+
+  <div class="os-grid" data-category="sound">
+    <!-- 카드 1: SP6 사운드 가이드 -->
+    <div class="os-card sound">
+      <div class="card-top">
+        <span class="card-kicker">KURZWEIL SP6 · PRESETS</span>
+        <span class="card-badge">하드웨어 실측 완료</span>
+      </div>
+      <h3>커즈와일 SP6 5대 황금 멀티 프리셋 가이드</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> 신디사이저 반주자가 1명뿐이거나 서툴러서 찬양이 얇고 빈약하게 들립니다.
+      </div>
+      <p class="desc">
+        신디사이저 1대로 피아노, 풍성한 패드, 웅장한 스트링을 한 번에 울리는 5대 멀티 프리셋(Favorites 1~5) 설정 번호와 레이어 볼륨 비율, 4개 존 물리 킬 스위치 매뉴얼을 수록했습니다.
+      </p>
+      <div class="card-specs">
+        <span>Favorites 1~5번 실측</span>
+        <span>피아노+패드 황금비율</span>
+        <span>CC 페달 볼륨주법</span>
+        <span>원클릭 카톡 복사</span>
+      </div>
+      <div class="card-actions">
+        <a href="sp6.html" class="action-btn primary">사운드 가이드 열기 →</a>
+        <button class="action-btn" onclick="openModal('sp6')">설정 요약</button>
+      </div>
+    </div>
+
+    <!-- 카드 2: 찬송가 오케스트라 반주기 -->
+    <div class="os-card sound">
+      <div class="card-top">
+        <span class="card-kicker">HYMN ORCHESTRA · WEB</span>
+        <span class="card-badge">웹 브라우저 즉시 재생</span>
+      </div>
+      <h3>찬송가 오케스트라 &amp; 파이프오르간 웹 반주기</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> 반주자가 아예 없어 찬송가 부를 때 음이탈이 나고 성도들이 소극적이 됩니다.
+      </div>
+      <p class="desc">
+        별도 반주기 기계 구매 없이, PC나 스마트폰 브라우저에서 찬송가를 선택하면 웅장한 4부 SATB 파이프오르간과 관현악 사운드가 전 예배당에 울려 퍼집니다.
+      </p>
+      <div class="card-specs">
+        <span>찬송가 1장~ 송영</span>
+        <span>SATB 4성부 오르간</span>
+        <span>전조/템포 조절</span>
+        <span>무설치 웹 플레이어</span>
+      </div>
+      <div class="card-actions">
+        <button class="action-btn primary" onclick="openModal('hymn')">반주기 플레이어 안내 →</button>
+        <button class="action-btn" onclick="openModal('hymn')">사용법</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 방송 & 자막 팩 -->
+  <div class="section-head" data-category="broadcast">
+    <div class="title-wrap">
+      <span class="icon">🎙️</span>
+      <h2>2. 온라인 방송 &amp; 실시간 자막 OS</h2>
+      <span class="tag">BROADCAST &amp; CAPTIONS</span>
+    </div>
+    <span class="cost-tag">비용 0원 (OBS 연동)</span>
+  </div>
+
+  <div class="os-grid" data-category="broadcast">
+    <!-- 카드 3: OBS 2채널 오디오 분리 -->
+    <div class="os-card broadcast">
+      <div class="card-top">
+        <span class="card-kicker">OBS AUDIO · 2-CHANNEL ROUTING</span>
+        <span class="card-badge">오디오 인터페이스 직결</span>
+      </div>
+      <h3>OBS 2채널 오디오 분리 &amp; 마이크 황금 필터 세팅법</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> 방송으로 나가는 목사님 설교 음성에 '치-' 하는 앰프 잡음이 섞이고 신디 소리에 목소리가 묻힙니다.
+      </div>
+      <p class="desc">
+        스칼렛 2i2 1번(마이크)과 2번(신디)을 완벽히 분리하고, ReaGate(노이즈 게이트), ReaComp(컴프레서), Limiter를 무료 플러그인으로 세팅하여 잡음 없는 공중파 방송급 사운드를 완성합니다.
+      </p>
+      <div class="card-specs">
+        <span>ReaGate 잡음 차단</span>
+        <span>2채널 독립 볼륨 제어</span>
+        <span>마이크 피크 방지</span>
+        <span>무료 VST 플러그인</span>
+      </div>
+      <div class="card-actions">
+        <a href="ai/obs-tuner.html" class="action-btn primary">오디오 진단기 열기 →</a>
+        <button class="action-btn" onclick="openModal('obs-audio')">황금값 처방전</button>
+      </div>
+    </div>
+
+    <!-- 카드 4: OBS 실시간 자막 & 성경 감지 -->
+    <div class="os-card broadcast">
+      <div class="card-top">
+        <span class="card-kicker">OBS OVERLAY · SMART CAPTIONS</span>
+        <span class="card-badge">브라우저 소스 100% 무료</span>
+      </div>
+      <h3>OBS 실시간 음성 자막 &amp; 성경 본문 감지 오버레이</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> 자막 넘겨줄 청년이 없어 방송 화면에 성경 구절이나 설교 자막을 띄우지 못합니다.
+      </div>
+      <p class="desc">
+        OBS 브라우저 소스에 URL 하나만 넣으면 끝! 목사님의 마이크 음성을 Web Speech AI가 실시간 인식해 하단 자막을 띄우고, "로마서 8장"을 말하면 해당 성경 본문 카드가 자동 오버레이됩니다.
+      </p>
+      <div class="card-specs">
+        <span>Web Speech 음성인식</span>
+        <span>성경 구절 자동 감지</span>
+        <span>투명 배경 크로마키 불필요</span>
+        <span>무료 오픈소스</span>
+      </div>
+      <div class="card-actions">
+        <a href="obs-overlay.html" class="action-btn primary">오버레이 열기 →</a>
+        <button class="action-btn" onclick="openModal('obs-overlay')">OBS 등록 가이드</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 미디어 & 디자인 팩 -->
+  <div class="section-head" data-category="media">
+    <div class="title-wrap">
+      <span class="icon">🎨</span>
+      <h2>3. 목회 미디어 &amp; 주보 디자인 OS</h2>
+      <span class="tag">MEDIA &amp; VISUAL DESIGN</span>
+    </div>
+    <span class="cost-tag">비용 0원 (웹 자체 생성)</span>
+  </div>
+
+  <div class="os-grid" data-category="media">
+    <!-- 카드 5: 말씀카드 & 숏폼 모션 스튜디오 -->
+    <div class="os-card media">
+      <div class="card-top">
+        <span class="card-kicker">SCRIPTURE CARD &amp; MOTION SHORTS</span>
+        <span class="card-badge">1080p 고화질 + MP4 영상</span>
+      </div>
+      <h3>말씀카드 &amp; 숏폼 모션 스튜디오</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> 교인들에게 매일 아침 전할 말씀 이미지나 주보 성구 카드를 만들 디자이너가 없습니다.
+      </div>
+      <p class="desc">
+        성경 구절만 고르면 4대 비율(1:1, 4:5, 9:16, 16:9) 고화질 이미지와, 인스타 릴스·유튜브 쇼츠에 바로 올릴 수 있는 '글자 떠오름 모션 영상(MP4)'을 30초 만에 추출합니다.
+      </p>
+      <div class="card-specs">
+        <span>4대 종횡비 지원</span>
+        <span>마루 부리 감성 폰트</span>
+        <span>9:16 MP4 모션 추출</span>
+        <span>스마트폰 갤러리 업로드</span>
+      </div>
+      <div class="card-actions">
+        <a href="verse-card.html" class="action-btn primary">말씀카드 스튜디오 열기 →</a>
+        <button class="action-btn" onclick="openModal('verse-card')">30초 제작 팁</button>
+      </div>
+    </div>
+
+    <!-- 카드 6: 하이델베르크 16:9 강단 슬라이드 -->
+    <div class="os-card media">
+      <div class="card-top">
+        <span class="card-kicker">HEIDELBERG CATECHISM · 16:9 SLIDES</span>
+        <span class="card-badge">리모컨 · 전체화면</span>
+      </div>
+      <h3>하이델베르크 교리문답 16:9 강단 와이드 슬라이드</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> 오후 예배나 주중 성경공부 때 빔프로젝터에 띄울 수준 높은 교리 PPT 교재가 없습니다.
+      </div>
+      <p class="desc">
+        1563년 하이델베르크 교리문답 서론 강의를 16:9 와이드 화면에 담았습니다. 렘브란트풍 고대비 배색으로 본당 맨 뒷자리에서도 선명하며, 무선 프리젠터 리모컨과 F키 전체화면을 지원합니다.
+      </p>
+      <div class="card-specs">
+        <span>15장 와이드 덱</span>
+        <span>우르시누스 역사관 정정</span>
+        <span>F키 100% 전체화면</span>
+        <span>T키 조명 토글</span>
+      </div>
+      <div class="card-actions">
+        <a href="theology/heidelberg-slides.html" class="action-btn primary">강단 슬라이드 열기 →</a>
+        <button class="action-btn" onclick="openModal('slides')">조작 단축키</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. AI 신학 연구 팩 -->
+  <div class="section-head" data-category="ai">
+    <div class="title-wrap">
+      <span class="icon">🤖</span>
+      <h2>4. AI 설교 연구 &amp; 디지털 서재 OS</h2>
+      <span class="tag">AI THEOLOGY &amp; SERMON STUDY</span>
+    </div>
+    <span class="cost-tag">비용 0원 (오픈 모델 무료 활용)</span>
+  </div>
+
+  <div class="os-grid" data-category="ai">
+    <!-- 카드 7: 뚱냥이 미스트랄 가이드 -->
+    <div class="os-card ai">
+      <div class="card-top">
+        <span class="card-kicker">MISTRAL LE CHUNK · 1-TRILLION</span>
+        <span class="card-badge">완전 무료 100만 토큰</span>
+      </div>
+      <h3>'뚱냥이(미스트랄 르 청크)' 무료 활용 &amp; 목회 실전 가이드</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> 비싼 영문 신학 주석서를 살 예산이 없고, 번역기를 돌려도 내용이 너무 방대해 막막합니다.
+      </div>
+      <p class="desc">
+        1조 파라미터 괴물 AI를 웹에서 0원에 사용하는 법! 두꺼운 신학 논문 PDF를 캔버스에 올려 목차별로 요약받고, Flux 엔진으로 주보에 넣을 렘브란트풍 성경 삽화를 무료 생성하는 비법을 전수합니다.
+      </p>
+      <div class="card-specs">
+        <span>100만 토큰 스캔 PDF 독해</span>
+        <span>Flux 초고화질 성화 생성</span>
+        <span>설교 리라이팅 프롬프트</span>
+        <span>월 구독료 0원</span>
+      </div>
+      <div class="card-actions">
+        <a href="ai/le-chunk-guide.html" class="action-btn primary">뚱냥이 가이드 열기 →</a>
+        <button class="action-btn" onclick="openModal('chunk')">프롬프트 3선</button>
+      </div>
+    </div>
+
+    <!-- 카드 8: 후크세마 개혁교의학 영한 대조 리더 -->
+    <div class="os-card ai">
+      <div class="card-top">
+        <span class="card-kicker">HOEKSEMA · BILINGUAL STUDY</span>
+        <span class="card-badge">개혁주의 정통 강해</span>
+      </div>
+      <h3>허먼 후크세마 『개혁교의학』 영한 대조 리더</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> 개혁주의 정통 신학 원서를 읽고 싶지만 영어가 약해 원서 강독에 엄두가 안 납니다.
+      </div>
+      <p class="desc">
+        허먼 후크세마의 『Reformed Dogmatics』 영문 원서와 정통 한글 번역을 문단별로 나란히 배치하여, 영어 울렁증 없이 깊은 구속사적 우정의 언약 교리를 정밀 연구할 수 있는 전용 웹 리더입니다.
+      </p>
+      <div class="card-specs">
+        <span>문단별 영한 나란히 대조</span>
+        <span>우정의 언약 교리</span>
+        <span>폰트 크기 조절</span>
+        <span>목회적 요약 주해</span>
+      </div>
+      <div class="card-actions">
+        <a href="theology/reformed-dogmatics-reader.html" class="action-btn primary">대조 리더 열기 →</a>
+        <button class="action-btn" onclick="openModal('reader')">연구 팁</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 0원 견적 비교 배너 ── -->
+  <div class="zero-cost-banner">
+    <div class="zero-head">
+      <h3><span>💰</span> 시중 상용 솔루션 vs 1인 스마트 목회 OS 예산 비교</h3>
+      <span class="cost-tag">전국 개척교회 연간 수백만 원 절감</span>
+    </div>
+    <div class="zero-grid">
+      <div class="zero-item">
+        <div class="label">예배 반주기 하드웨어</div>
+        <div class="before">상용 반주기 약 1,500,000원</div>
+        <div class="after">찬송가 웹 반주기 0원</div>
+      </div>
+      <div class="zero-item">
+        <div class="label">전문 방송 자막 프로그램</div>
+        <div class="before">유료 소프트웨어 월 3~5만 원</div>
+        <div class="after">OBS 브라우저 오버레이 0원</div>
+      </div>
+      <div class="zero-item">
+        <div class="label">디자인/숏폼 영상 툴</div>
+        <div class="before">캔바/어도비 유료 구독 월 2~3만 원</div>
+        <div class="after">말씀카드 스튜디오 0원</div>
+      </div>
+      <div class="zero-item">
+        <div class="label">신학 주석 및 고문서 번역</div>
+        <div class="before">AI 상용 구독료 월 3~6만 원</div>
+        <div class="after">뚱냥이 1조 오픈모델 0원</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── 푸터 ── -->
+<footer>
+  <div class="verse">"내 은혜가 네게 족하도다 이는 내 능력이 약한 데서 온전하여짐이라" — 고후 12:9</div>
+  <div>대한예수교장로회(고신) 문경 행복한교회 · 최성광 목사의 1인 스마트 목회 OS 오픈 프로젝트</div>
+  <div class="copy">제작: Happy초이 AI 비서 오케스트레이션 · Vercel &amp; GitHub Pages 기반 완전 무료 개방</div>
+</footer>
+
+<!-- ── 모달 팝업 구조 ── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModalDirect()">&times;</button>
+    <div class="modal-title" id="modalTitle">세부 정보</div>
+    <div class="modal-content" id="modalBody">내용이 여기에 표시됩니다.</div>
+  </div>
+</div>
+
+<script>
+// 테마 토글
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var saved = null;
+  try { saved = localStorage.getItem('pastoral-os-theme'); } catch(e){}
+  var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  apply(theme);
+  btn.addEventListener('click', function () {
+    apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  function apply(t) {
+    root.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀️' : '🌙';
+    try { localStorage.setItem('pastoral-os-theme', t); } catch(e){}
+  }
+})();
+
+// 카테고리 필터링
+(function () {
+  var tabs = document.querySelectorAll('.tab-btn');
+  var heads = document.querySelectorAll('.section-head');
+  var grids = document.querySelectorAll('.os-grid');
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      var filter = tab.getAttribute('data-filter');
+
+      heads.forEach(function (head) {
+        var cat = head.getAttribute('data-category');
+        head.style.display = (filter === 'all' || filter === cat) ? 'flex' : 'none';
+      });
+      grids.forEach(function (grid) {
+        var cat = grid.getAttribute('data-category');
+        grid.style.display = (filter === 'all' || filter === cat) ? 'grid' : 'none';
+      });
+    });
+  });
+})();
+
+// 모달 안내 팝업 데이터
+var modalData = {
+  'sp6': {
+    title: '🎹 커즈와일 SP6 5대 황금 멀티 프리셋 요약',
+    body: '<p>문경 행복한교회 본당에서 실측 검증된 Favorites 1~5번 프리셋입니다.</p>' +
+          '<div class="modal-code">' +
+          '1번: Piano + Warm Pad (잔잔한 기도·설교 후 결단)\n' +
+          '2번: Piano + Full Strings (웅장한 입례·송영·찬송)\n' +
+          '3번: Worship Organ + Leslie (전통 찬송가 파이프오르간)\n' +
+          '4번: EP (Fender Rhodes) + Soft Pad (현대 워십·CCM)\n' +
+          '5번: Layered Octave Strings (클라이맥스 합창 찬양)' +
+          '</div>' +
+          '<p><strong>팁:</strong> 본체 상단 4개 슬라이더로 패드/스트링 볼륨을 실시간 조절하고, Zone Mute 버튼으로 피아노 단독과 레이어를 즉시 전환할 수 있습니다.</p>'
+  },
+  'hymn': {
+    title: '🎼 찬송가 오케스트라 웹 반주기 안내',
+    body: '<p>반주자가 없어도 스마트폰이나 태블릿 터치 한 번으로 본당 스피커에 파이프오르간 사운드를 재생할 수 있는 웹 플레이어입니다.</p>' +
+          '<div class="modal-code">' +
+          '• 찬송가 1장(만복의 근원 하나님) SATB 4성부 오케스트라 탑재\n' +
+          '• 전주 4마디 후 본 찬송 진입 자동 가이드 카운트\n' +
+          '• 1절~4절 반복 및 아멘 코다 완벽 연주' +
+          '</div>' +
+          '<p>서재의 [찬송가 위젯] 또는 별도 오디오 링크로 예배 전 미리 세팅해 두실 수 있습니다.</p>'
+  },
+  'obs-audio': {
+    title: '🎙️ OBS 마이크 노이즈 차단 황금 세팅 처방',
+    body: '<p>포커스라이트 Scarlett 2i2 등 오디오 인터페이스 직결 시 설정값입니다.</p>' +
+          '<div class="modal-code">' +
+          '1. ReaGate (노이즈 게이트):\n' +
+          '   - Threshold: -38dB ~ -36dB (숨소리·팬소음 완벽 차단)\n' +
+          '   - Attack: 2ms, Release: 150ms\n\n' +
+          '2. ReaComp (컴프레서):\n' +
+          '   - Ratio: 3:1 ~ 4:1\n' +
+          '   - Attack: 5ms, Release: 100ms\n\n' +
+          '3. Limiter:\n' +
+          '   - Ceiling: -1.0dB (절대 찢어지지 않는 음압 확보)' +
+          '</div>'
+  },
+  'obs-overlay': {
+    title: '📺 OBS 브라우저 소스 자막 등록 방법',
+    body: '<p>비싼 자막기 없이 OBS에서 1분 만에 등록하는 방법입니다.</p>' +
+          '<div class="modal-code">' +
+          '1. OBS 스튜디오 실행 → [소스 목록] 하단 [+] 클릭\n' +
+          '2. [브라우저] 선택 → 이름 "실시간 자막" 입력\n' +
+          '3. URL에 서재의 "obs-overlay.html" 주소 입력\n' +
+          '4. 너비: 1920, 높이: 1080 입력 후 확인\n' +
+          '5. 설교 시 마이크로 "로마서 8장" 말씀하시면 자막 자동 표출' +
+          '</div>'
+  },
+  'verse-card': {
+    title: '🎨 말씀카드 & 숏폼 모션 30초 제작 팁',
+    body: '<p>인스타그램, 카카오톡 프로필, 유튜브 쇼츠를 위한 3단계 팁입니다.</p>' +
+          '<div class="modal-code">' +
+          '1. [프레임] 선택: 피드용 1:1 또는 쇼츠용 9:16 클릭\n' +
+          '2. [대표 성구] 클릭: 시편 23편 등 원클릭 자동 입력\n' +
+          '3. [영상 저장] 클릭: 4초 만에 글자가 스르륵 떠오르는 MP4 다운로드' +
+          '</div>'
+  },
+  'slides': {
+    title: '📽️ 강단 16:9 슬라이드 조작 단축키',
+    body: '<p>강대상이나 방송실에서 리모컨(무선 프리젠터)과 키보드로 조작하는 단축키입니다.</p>' +
+          '<div class="modal-code">' +
+          '• [ → ] 또는 [ Space ]: 다음 슬라이드\n' +
+          '• [ ← ]: 이전 슬라이드\n' +
+          '• [ F ]: 100% 브라우저 창 없는 전체화면 토글\n' +
+          '• [ T ]: 다크 모드 / 라이트 모드 전환 (본당 조명용)\n' +
+          '• [ 1 ] ~ [ 9 ]: 해당 번호 슬라이드로 원클릭 즉시 점프' +
+          '</div>'
+  },
+  'chunk': {
+    title: '🐱 뚱냥이(미스트랄) 목회 실전 프롬프트 3선',
+    body: '<p>chat.mistral.ai 웹에서 복사해 바로 쓰는 질문 양식입니다.</p>' +
+          '<div class="modal-code">' +
+          '1. [신학 논문 PDF 요약]:\n' +
+          '   "첨부한 신학 논문에서 전통 개혁주의 관점의 핵심 논점 3가지를 도출하고, 주일 설교에 바로 쓸 수 있는 현대적 예화 2개를 만들어줘."\n\n' +
+          '2. [성경 시대 성화 생성]:\n' +
+          '   "Rembrandt oil painting style, Apostle Paul writing letters in Roman prison, warm golden candlelight, dramatic shadow."' +
+          '</div>'
+  },
+  'reader': {
+    title: '📖 후크세마 개혁교의학 영한 대조 리더 활용 팁',
+    body: '<p>깊은 구속사적 신학의 뼈대를 세우는 활용법입니다.</p>' +
+          '<div class="modal-code">' +
+          '• 좌측 영문 원서로 칼빈주의 원문의 엄밀한 신학 어휘 확인\n' +
+          '• 우측 한글 번역으로 매끄러운 개념 이해 및 설교 적용점 파악\n' +
+          '• 삼위일체 하나님의 풍성한 교제(우정의 언약) 챕터 강력 추천' +
+          '</div>'
+  }
+};
+
+function openModal(key) {
+  var data = modalData[key];
+  if (!data) return;
+  document.getElementById('modalTitle').innerHTML = data.title;
+  document.getElementById('modalBody').innerHTML = data.body;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) {
+    closeModalDirect();
+  }
+}
+</script>
+</body>
+</html>
