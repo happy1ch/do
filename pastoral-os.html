@@ -388,11 +388,12 @@ footer .copy { font-size: 11.5px; opacity: .8; }
 
   <!-- ── 카테고리 필터 탭 ── -->
   <div class="filter-tabs">
-    <button class="tab-btn active" data-filter="all">전체 도구 보기 (8)</button>
+    <button class="tab-btn active" data-filter="all">전체 도구 보기 (10)</button>
     <button class="tab-btn" data-filter="sound">🎹 예배 음향·반주</button>
     <button class="tab-btn" data-filter="broadcast">🎙️ 방송·자막</button>
     <button class="tab-btn" data-filter="media">🎨 미디어·디자인</button>
     <button class="tab-btn" data-filter="ai">🤖 AI 설교연구</button>
+    <button class="tab-btn" data-filter="hardware">💻 PC·하드웨어</button>
   </div>
 </section>
 
@@ -643,6 +644,68 @@ footer .copy { font-size: 11.5px; opacity: .8; }
       <div class="card-actions">
         <a href="theology/reformed-dogmatics-reader.html" class="action-btn primary">대조 리더 열기 →</a>
         <button class="action-btn" onclick="openModal('reader')">연구 팁</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 목회 PC 하드웨어 & 디스크 관리 OS -->
+  <div class="section-head" data-category="hardware">
+    <div class="title-wrap">
+      <span class="icon">💻</span>
+      <h2>5. 목회 PC 하드웨어 &amp; 디스크 관리 OS</h2>
+      <span class="tag">PC HARDWARE &amp; DISK MAINTENANCE</span>
+    </div>
+    <span class="cost-tag">비용 0원 (자체 개발 스크립트)</span>
+  </div>
+
+  <div class="os-grid" data-category="hardware">
+    <!-- 카드 9: C드라이브 다이어트 -->
+    <div class="os-card" style="--card-color: #ef4444;">
+      <div class="card-top">
+        <span class="card-kicker">C-DRIVE RESCUE · ONE-CLICK DIET ⭐ NEW</span>
+        <span class="card-badge">더블클릭 원클릭 청소</span>
+      </div>
+      <h3>목회자 PC C드라이브 다이어트 스튜디오 &amp; 원클릭 청소기</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> D드라이브는 비어있는데 C드라이브에 빨간 불이 들어오고, 캡컷 영상 캐시와 윈도우 업데이트 잔여물이 수십 GB씩 잠식합니다.
+      </div>
+      <p class="desc">
+        프로젝트 원본은 안전하게 보존하면서 캡컷 임시 캐시, 구버전 업데이트 잔여 폴더(1~2GB씩), 윈도우 업데이트 찌꺼기, hiberfil.sys(16~32GB)를 더블클릭 한 번으로 싹 날려줍니다.
+      </p>
+      <div class="card-specs">
+        <span>캡컷 캐시·구버전 청소</span>
+        <span>윈도우 업데이트 찌꺼기</span>
+        <span>hiberfil.sys 32GB 회수</span>
+        <span>원클릭 .bat &amp; 웹 가이드</span>
+      </div>
+      <div class="card-actions">
+        <a href="disk-diet.html" class="action-btn primary">다이어트 스튜디오 열기 →</a>
+        <a href="tools/disk_diet.bat" download="Pastor_Disk_Diet.bat" class="action-btn">.bat 다운로드 📥</a>
+      </div>
+    </div>
+
+    <!-- 카드 10: OBS 오디오 진단기 -->
+    <div class="os-card" style="--card-color: var(--accent-blue);">
+      <div class="card-top">
+        <span class="card-kicker">OBS AUDIO · DIAGNOSTICS</span>
+        <span class="card-badge">웹 브라우저 측정</span>
+      </div>
+      <h3>OBS 마이크 오디오 정밀 진단기</h3>
+      <div class="card-problem">
+        <strong>고민:</strong> 설교 녹음 파일의 음량이 적절한지, 말끝이 끊기거나 노이즈가 새어 들어가는지 수치로 알고 싶습니다.
+      </div>
+      <p class="desc">
+        녹음 파일을 올리면 음압 분포와 노이즈 게이트(ReaGate) 임계치, 릴리즈 황금 세팅 처방을 브라우저에서 즉시 도출해 드리는 PC 전용 음향 진단기입니다.
+      </p>
+      <div class="card-specs">
+        <span>ReaGate 처방전</span>
+        <span>음압 분포 측정</span>
+        <span>잡음·말끝 끊김 분석</span>
+        <span>웹 다이렉트 분석</span>
+      </div>
+      <div class="card-actions">
+        <a href="ai/obs-tuner.html" class="action-btn primary">오디오 진단기 열기 →</a>
+        <button class="action-btn" onclick="openModal('obs-audio')">세팅값 보기</button>
       </div>
     </div>
   </div>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>목회자 PC C드라이브 다이어트 가이드 &amp; 원클릭 청소기 | Pastor C-Drive Diet</title>
+<meta name="description" content="D드라이브는 널널한데 C드라이브는 빨간 불? 캡컷(CapCut) 영상 캐시와 윈도우 업데이트 찌꺼기를 안전하게 비워내는 목회자 전용 0원 디스크 다이어트 솔루션.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&family=Pretendard:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0f14;
+  --bg-soft: #141923;
+  --panel: #1a2230;
+  --panel-hover: #222d40;
+  --border: rgba(255,255,255,.09);
+  --border-focus: rgba(239,68,68,.4);
+  --text: #e9edf3;
+  --text-dim: #9aa8b8;
+  --accent: #ef4444;
+  --accent-soft: rgba(239,68,68,.12);
+  --accent-gold: #d4b063;
+  --accent-gold-soft: rgba(212,176,99,.13);
+  --accent-green: #10b981;
+  --accent-green-soft: rgba(16,185,129,.13);
+  --accent-blue: #3b82f6;
+  --accent-blue-soft: rgba(59,130,246,.13);
+  --shadow: 0 14px 38px rgba(0,0,0,.45);
+  --glow: radial-gradient(1100px 550px at 50% -10%, rgba(239,68,68,.12), transparent 70%);
+}
+[data-theme="light"] {
+  --bg: #f8f6f0;
+  --bg-soft: #ede8dc;
+  --panel: #ffffff;
+  --panel-hover: #fcfbf9;
+  --border: rgba(30,40,55,.10);
+  --border-focus: rgba(220,38,38,.4);
+  --text: #1f2732;
+  --text-dim: #5c6c7d;
+  --accent: #dc2626;
+  --accent-soft: rgba(220,38,38,.09);
+  --accent-gold: #a9812e;
+  --accent-gold-soft: rgba(169,129,46,.10);
+  --accent-green: #059669;
+  --accent-green-soft: rgba(5,150,105,.09);
+  --accent-blue: #2563eb;
+  --accent-blue-soft: rgba(37,99,235,.09);
+  --shadow: 0 12px 30px rgba(50,60,70,.09);
+  --glow: radial-gradient(1100px 550px at 50% -10%, rgba(220,38,38,.09), transparent 70%);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  background-image: var(--glow);
+  background-repeat: no-repeat;
+  transition: background-color .3s ease, color .3s ease;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── 탑바 ── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px clamp(16px, 5vw, 44px);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.brand .mark {
+  width: 34px; height: 34px; border-radius: 10px;
+  display: grid; place-items: center; font-size: 17px;
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent-gold-soft));
+  border: 1px solid var(--border);
+}
+.brand small { display: block; font-size: 10.5px; font-weight: 500; color: var(--text-dim); }
+.top-actions { display: flex; align-items: center; gap: 8px; }
+.top-btn {
+  font-size: 12.5px; font-weight: 600; padding: 7px 13px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--panel);
+  transition: all .2s ease; display: inline-flex; align-items: center; gap: 6px;
+}
+.top-btn:hover { background: var(--panel-hover); transform: translateY(-1px); }
+#themeToggle {
+  width: 36px; height: 36px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--panel);
+  color: var(--text); font-size: 15px; display: grid; place-items: center;
+  transition: all .2s ease;
+}
+
+/* ── 히어로 ── */
+.hero {
+  max-width: 940px; margin: 0 auto;
+  padding: clamp(36px, 6vh, 64px) 20px 32px;
+  text-align: center;
+}
+.badge-diet {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+  color: var(--accent); background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  padding: 6px 16px; border-radius: 999px; margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(26px, 4.8vw, 42px);
+  font-weight: 900; letter-spacing: -1px; line-height: 1.35;
+  margin-bottom: 16px;
+}
+.hero h1 span.red { color: var(--accent); }
+.hero h1 span.gold { color: var(--accent-gold); }
+.hero .intro {
+  font-size: clamp(14.5px, 2.2vw, 16.5px);
+  color: var(--text-dim); max-width: 740px; margin: 0 auto 28px;
+  line-height: 1.75; word-break: keep-all;
+}
+
+/* ── 디스크 빨간불 시뮬레이터 카드 ── */
+.disk-status-box {
+  background: var(--panel); border: 1.5px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+  border-radius: 20px; padding: clamp(20px, 3.5vw, 30px);
+  max-width: 760px; margin: 0 auto 40px; box-shadow: var(--shadow);
+  text-align: left;
+}
+.disk-label {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13.5px; font-weight: 700; margin-bottom: 8px;
+}
+.disk-label span.warning { color: var(--accent); font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
+.disk-bar-outer {
+  height: 24px; background: var(--bg-soft); border-radius: 999px;
+  border: 1px solid var(--border); overflow: hidden; position: relative; margin-bottom: 10px;
+}
+.disk-bar-inner {
+  height: 100%; width: 94%;
+  background: linear-gradient(90deg, #f59e0b, var(--accent));
+  border-radius: 999px; transition: width .5s ease;
+}
+.disk-desc { font-size: 12.5px; color: var(--text-dim); display: flex; justify-content: space-between; }
+
+/* ── 메인 컨테이너 ── */
+main { max-width: 1060px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 36px) 70px; }
+
+/* ── 5대 용량 도둑 카드 그리드 ── */
+.section-title {
+  display: flex; align-items: center; gap: 10px; margin: 40px 0 18px;
+  font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 800;
+}
+.thief-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 18px;
+}
+.thief-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+  padding: 22px; display: flex; flex-direction: column; gap: 10px;
+  box-shadow: var(--shadow); transition: transform .2s ease;
+}
+.thief-card:hover { transform: translateY(-3px); }
+.thief-rank {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: var(--accent);
+  background: var(--accent-soft); padding: 3px 10px; border-radius: 999px;
+  display: inline-block; align-self: flex-start;
+}
+.thief-card h3 { font-size: 17.5px; font-weight: 700; line-height: 1.4; }
+.thief-card p { font-size: 13.5px; color: var(--text-dim); line-height: 1.6; flex: 1; word-break: keep-all; }
+.thief-size {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+  color: var(--accent-gold); background: var(--bg-soft); padding: 6px 12px; border-radius: 8px;
+  border: 1px solid var(--border); display: flex; justify-content: space-between;
+}
+
+/* ── 실행 다운로드 & 복사 배너 ── */
+.action-banner {
+  margin: 46px 0; background: linear-gradient(135deg, color-mix(in srgb, var(--panel) 90%, var(--accent-gold-soft)), var(--panel));
+  border: 1.5px solid var(--accent-gold); border-radius: 20px;
+  padding: clamp(24px, 4vw, 36px); box-shadow: var(--shadow);
+}
+.action-banner h2 {
+  font-family: 'Noto Serif KR', serif; font-size: clamp(20px, 3vw, 25px);
+  margin-bottom: 10px; font-weight: 800; color: var(--accent-gold);
+}
+.action-banner p { font-size: 14px; color: var(--text-dim); margin-bottom: 22px; max-width: 720px; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+.download-btn {
+  font-size: 14.5px; font-weight: 700; padding: 12px 24px; border-radius: 12px;
+  background: var(--accent-gold); color: #1a1608; border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px; transition: all .2s ease;
+  box-shadow: 0 4px 14px rgba(212,176,99,.3);
+}
+.download-btn:hover { opacity: .92; transform: translateY(-1px); }
+.download-btn.secondary {
+  background: var(--bg-soft); color: var(--text); border: 1px solid var(--border);
+  box-shadow: none;
+}
+.download-btn.secondary:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+/* ── 파워쉘 복사 코드 상자 ── */
+.code-box {
+  background: #080a0f; border: 1px solid rgba(255,255,255,.12); border-radius: 12px;
+  padding: 16px 18px; position: relative; font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; color: #34d399; overflow-x: auto;
+}
+.copy-btn {
+  position: absolute; top: 12px; right: 12px;
+  font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 6px;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  color: #fff; cursor: pointer; transition: all .2s ease;
+}
+.copy-btn:hover { background: rgba(255,255,255,.2); }
+
+/* ── 캡컷 세팅 꿀팁 섹션 ── */
+.capcut-tip-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 20px;
+  padding: clamp(24px, 4vw, 34px); margin-top: 36px; box-shadow: var(--shadow);
+}
+.capcut-tip-card h3 {
+  font-family: 'Noto Serif KR', serif; font-size: 20px; font-weight: 800;
+  color: var(--accent-blue); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.tip-steps {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px;
+}
+.tip-step-item {
+  background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px;
+  padding: 18px; font-size: 13.5px; line-height: 1.6;
+}
+.tip-num {
+  font-size: 12px; font-weight: 800; color: var(--accent-blue);
+  background: var(--accent-blue-soft); padding: 3px 9px; border-radius: 6px;
+  display: inline-block; margin-bottom: 8px;
+}
+.tip-step-item strong { color: var(--text); }
+
+/* ── 푸터 ── */
+footer {
+  border-top: 1px solid var(--border);
+  text-align: center; padding: 40px 20px 52px;
+  color: var(--text-dim); font-size: 12.5px; line-height: 2;
+}
+footer .verse {
+  font-family: 'Noto Serif KR', serif; font-size: 14px; color: var(--accent-gold); margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+  .top-btn span.text { display: none; }
+  .btn-row { flex-direction: column; }
+  .download-btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="mark">🧹</span>
+    <span>C드라이브 다이어트<small>Happy Pastoral OS Tool</small></span>
+  </div>
+  <div class="top-actions">
+    <a href="pastoral-os.html" class="top-btn" title="1인 스마트 목회 OS 포털">
+      <span>⛪</span><span class="text">목회 OS</span>
+    </a>
+    <a href="index.html" class="top-btn" title="서재 메인 로비">
+      <span>🏛️</span><span class="text">서재 로비</span>
+    </a>
+    <button id="themeToggle" aria-label="다크/라이트 모드" title="다크/라이트 모드">🌙</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="badge-diet">✦ C-DRIVE STORAGE RESCUE SOLUTION ✦</div>
+  <h1>목사님 PC C드라이브<br><span class="red">빨간 불 탈출</span> &amp; <span class="gold">원클릭 다이어트</span></h1>
+  <p class="intro">
+    "D드라이브에는 수백 기가가 남아 있는데, C드라이브는 왜 항상 꽉 차서 빨간색일까?"<br>
+    지우려고 열어봐도 프로그램 외엔 보이지 않던 수십 기가의 정체는 바로<br>
+    <strong style="color:var(--text);">캡컷(CapCut) 영상 편집 캐시</strong>와 <strong style="color:var(--text);">윈도우 업데이트 찌꺼기</strong>입니다.
+  </p>
+
+  <!-- 가상 디스크 바 -->
+  <div class="disk-status-box">
+    <div class="disk-label">
+      <span>로컬 디스크 (C:)</span>
+      <span class="warning">⚠️ 위험: 232 GB 중 12 GB 남음 (94% 사용 중)</span>
+    </div>
+    <div class="disk-bar-outer">
+      <div class="disk-bar-inner"></div>
+    </div>
+    <div class="disk-desc">
+      <span>청소 전: 캡컷 캐시 48GB + 윈도우 임시 22GB</span>
+      <span style="color:var(--accent-green); font-weight:700;">청소 후: 약 70~100 GB 즉시 확보 가능!</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <!-- ── 6대 용량 도둑 ── -->
+  <div class="section-title">
+    <span>🕵️‍♂️</span> C드라이브를 몰래 잠식하는 6대 용량 도둑
+  </div>
+
+  <div class="thief-grid">
+    <!-- 1. 캡컷 캐시 -->
+    <div class="thief-card" style="border-color: var(--accent);">
+      <div class="thief-rank">주범 1위 (30~100 GB)</div>
+      <h3>🎬 캡컷(CapCut) 영상 편집 캐시</h3>
+      <p>
+        설교 영상이나 쇼츠를 몇 편 자르고 붙이면, 캡컷이 미리보기용 프록시(Proxy)와 임시 렌더 파일을 C드라이브 깊은 곳(<code>AppData\Local\CapCut\User Data\Cache</code>)에 통째로 쌓아둡니다.
+      </p>
+      <div class="thief-size">
+        <span>안전성: 100% 안전</span>
+        <span style="color:var(--accent-green);">프로젝트 원본은 안전 보존!</span>
+      </div>
+    </div>
+
+    <!-- 2. 캡컷 구버전 및 업데이트 찌꺼기 -->
+    <div class="thief-card" style="border-color: #f59e0b;">
+      <div class="thief-rank" style="color:#d97706; background:rgba(217,119,6,.12);">주범 2위 (5~20 GB) ⭐ 목사님 발견</div>
+      <h3>📦 캡컷 구버전 앱 &amp; 업데이트 설치 파일</h3>
+      <p>
+        캡컷이 자동 업데이트될 때마다, 기존 구버전 전체 파일(폴더당 1.5~2GB)과 다운로드된 설치 패키지(<code>CapCut\Apps\구버전</code>, <code>package</code>)를 지우지 않고 고스란히 방치합니다. 최신 버전만 남기고 안전하게 삭제할 수 있습니다.
+      </p>
+      <div class="thief-size">
+        <span>최신 버전 1개만 보존</span>
+        <span style="color:var(--accent-green);">구버전 폴더 전수 회수!</span>
+      </div>
+    </div>
+
+    <!-- 3. 윈도우 업데이트 -->
+    <div class="thief-card">
+      <div class="thief-rank">주범 3위 (10~25 GB)</div>
+      <h3>🪟 윈도우 업데이트 다운로드 찌꺼기</h3>
+      <p>
+        윈도우 11 정기 업데이트가 끝나고 나면, 이미 설치 완료된 거대한 설치 원본 파일들이 <code>C:\Windows\SoftwareDistribution\Download</code>에 지워지지 않고 영구 방치됩니다.
+      </p>
+      <div class="thief-size">
+        <span>안전성: 100% 안전</span>
+        <span style="color:var(--accent-green);">설치 완료 파일만 삭제</span>
+      </div>
+    </div>
+
+    <!-- 4. 최대절전모드 -->
+    <div class="thief-card">
+      <div class="thief-rank">주범 4위 (16~32 GB)</div>
+      <h3>⚡ 데스크톱 최대절전모드 파일</h3>
+      <p>
+        노트북이 아닌 데스크톱 PC인데도, 윈도우가 RAM 크기(16GB~32GB)만큼 C드라이브 루트에 <code>hiberfil.sys</code>라는 거대한 예약 파일을 만들어 공간을 낭비합니다.
+      </p>
+      <div class="thief-size">
+        <span>명령어 한 줄</span>
+        <span style="color:var(--accent-green);">powercfg -h off 로 즉시 회수</span>
+      </div>
+    </div>
+
+    <!-- 5. 임시폴더 -->
+    <div class="thief-card">
+      <div class="thief-rank">주범 5위 (5~20 GB)</div>
+      <h3>🗑️ 사용자 및 시스템 Temp 임시파일</h3>
+      <p>
+        프로그램 설치, 인터넷 서핑, 압축 해제 후 남겨진 임시 파일들이 <code>%TEMP%</code>와 <code>C:\Windows\Temp</code>에 수만 개씩 쌓여 부팅 속도까지 저하시킵니다.
+      </p>
+      <div class="thief-size">
+        <span>안전성: 100% 안전</span>
+        <span style="color:var(--accent-green);">잠겨있지 않은 임시파일 삭제</span>
+      </div>
+    </div>
+
+    <!-- 6. 브라우저/어도비 -->
+    <div class="thief-card">
+      <div class="thief-rank">주범 6위 (5~15 GB)</div>
+      <h3>🌐 크롬·엣지 &amp; 프리미어 미디어 캐시</h3>
+      <p>
+        유튜브 시청과 웹 검색 중에 누적된 브라우저 디스크 캐시와, 어도비 프리미어 프로/애프터이펙트의 Media Cache 찌꺼기를 말끔히 청소합니다.
+      </p>
+      <div class="thief-size">
+        <span>안전성: 100% 안전</span>
+        <span style="color:var(--accent-green);">웹 브라우징 쾌적화</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 원클릭 실행 배너 ── -->
+  <div class="action-banner">
+    <h2>🚀 목회자 원클릭 다이어트 도구 다운로드 &amp; 실행</h2>
+    <p>
+      복잡한 수동 폴더 찾기 없이, 더블클릭 한 번으로 위 5대 캐시를 스캔하고 안전하게 날려주는 목회자 전용 파워쉘 다이어트 프로그램입니다. (외부 설치 없는 순수 윈도우 내장 스크립트)
+    </p>
+
+    <div class="btn-row">
+      <a href="tools/disk_diet.bat" download="Pastor_Disk_Diet.bat" class="download-btn">
+        <span>📥</span> 원클릭 배치파일 다운로드 (.bat)
+      </a>
+      <a href="tools/disk_diet.ps1" download="disk_diet.ps1" class="download-btn secondary">
+        <span>📜</span> 파워쉘 원본 스크립트 (.ps1)
+      </a>
+    </div>
+
+    <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 8px;">
+      💡 파일 다운로드 없이 파워쉘(PowerShell)에 바로 붙여넣어 실행하기:
+    </div>
+    <div class="code-box">
+      <button class="copy-btn" onclick="copyCode()">코드 복사</button>
+      <span id="psCode">irm https://do-happy1ch.vercel.app/tools/disk_diet.ps1 | iex</span>
+    </div>
+    <div style="font-size: 12px; color: var(--text-dim); margin-top: 8px;">
+      * 윈도우 시작 버튼 우클릭 → <strong>[터미널(관리자)]</strong> 또는 <strong>[PowerShell(관리자)]</strong>을 열고 위 한 줄을 붙여넣고 엔터를 치시면 즉시 메뉴가 뜹니다.
+    </div>
+  </div>
+
+  <!-- ── 캡컷 영구 해결 꿀팁 ── -->
+  <div class="capcut-tip-card">
+    <h3><span>⚙️</span> 다시는 C드라이브가 차지 않게 하는 캡컷(CapCut) 황금 세팅</h3>
+    <p style="font-size: 14px; color: var(--text-dim);">
+      지우는 것도 중요하지만, 앞으로 캡컷 캐시가 C드라이브를 삼키지 못하도록 캡컷 안에서 1분 만에 세팅하는 비결입니다.
+    </p>
+
+    <div class="tip-steps">
+      <div class="tip-step-item">
+        <span class="tip-num">비법 1</span>
+        <div><strong>캐시 저장 위치를 D드라이브로 이전</strong></div>
+        <p style="color:var(--text-dim); font-size:12.5px; margin-top:6px;">
+          캡컷 우측 상단 <strong>[설정] (⚙️)</strong> → <strong>[전역 설정]</strong> → <strong>[캐시]</strong>에서 저장 경로를 C:가 아닌 <code>D:\CapCutCache</code>로 변경합니다. 이제 C드라이브 용량이 전혀 줄어들지 않습니다!
+        </p>
+      </div>
+
+      <div class="tip-step-item">
+        <span class="tip-num">비법 2</span>
+        <div><strong>캐시 자동 삭제 활성화</strong></div>
+        <p style="color:var(--text-dim); font-size:12.5px; margin-top:6px;">
+          동일한 캐시 설정 창에서 <strong>[캐시 자동 삭제]</strong>에 체크하고 <strong>'30일 후 자동 삭제'</strong>로 설정합니다. 작업이 끝난 한 달 전 영상 캐시를 캡컷이 알아서 비워줍니다.
+        </p>
+      </div>
+
+      <div class="tip-step-item">
+        <span class="tip-num">비법 3</span>
+        <div><strong>원클릭 캐시 비우기 버튼 활용</strong></div>
+        <p style="color:var(--text-dim); font-size:12.5px; margin-top:6px;">
+          캡컷 메인 홈 화면 우측 상단에도 <strong>[캐시 크기 (예: 42.5 GB)]</strong>가 표시된 휴지통 아이콘이 있습니다. 큰 프로젝트 납품 후 클릭 한 번으로 비우셔도 안전합니다.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="verse">"지혜 있는 자의 집에는 귀한 보배와 기름이 있으나 미련한 자는 이것을 다 삼켜 버리느니라" — 잠언 21:20</div>
+  <div>대한예수교장로회(고신) 문경 행복한교회 · 최성광 목사의 1인 스마트 목회 OS</div>
+  <div style="font-size:11.5px; opacity:.8;">Happy초이 AI 비서 오케스트레이션 · 전국의 동역자 목회자들을 위해 전액 무료 개방</div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var saved = null;
+  try { saved = localStorage.getItem('disk-diet-theme'); } catch(e){}
+  var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  apply(theme);
+  btn.addEventListener('click', function () {
+    apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  function apply(t) {
+    root.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀️' : '🌙';
+    try { localStorage.setItem('disk-diet-theme', t); } catch(e){}
+  }
+})();
+
+function copyCode() {
+  var code = document.getElementById('psCode').innerText;
+  navigator.clipboard.writeText(code).then(function() {
+    var btn = document.querySelector('.copy-btn');
+    btn.innerText = '복사 완료! ✓';
+    btn.style.background = '#059669';
+    setTimeout(function() {
+      btn.innerText = '코드 복사';
+      btn.style.background = 'rgba(255,255,255,.1)';
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
