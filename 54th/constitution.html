@@ -172,11 +172,11 @@
         <a href="2026/index.html" class="title">
             <span>←</span> 2026 가이드북으로
         </a>
-        <div class="controls">
-            <button class="btn-ctrl" onclick="adjustFont(0.05)">가+</button>
-            <button class="btn-ctrl" onclick="adjustFont(-0.05)">가-</button>
-            <button class="btn-ctrl" onclick="toggleDarkMode()">🌓 테마</button>
-            <button class="btn-ctrl" onclick="window.print()">🖨️ 인쇄/PDF</button>
+        <div class="controls" style="display:flex; align-items:center; gap:6px;">
+            <button class="btn-ctrl btn-large-toggle" onclick="toggleLargeFont()" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; font-weight:800;">🔍 글씨 크게</button>
+            <button class="btn-ctrl" onclick="adjustGlobalFont(1)" title="글씨 한 단계 더 크게" style="font-weight:700;">가+</button>
+            <button class="btn-ctrl" onclick="adjustGlobalFont(-1)" title="글씨 작게" style="font-weight:700;">가-</button>
+            <button class="btn-ctrl" onclick="toggleTheme()">🌓 테마</button>
         </div>
     </header>
 
@@ -578,14 +578,75 @@
     </div>
 
     <script>
-        let curScale = 0.98;
-        function adjustFont(delta) {
-            curScale = Math.max(0.85, Math.min(1.3, curScale + delta));
-            document.getElementById('constContent').style.fontSize = curScale + 'rem';
+        let fontLevels = [16, 18, 20, 22];
+        let curFontIndex = 0;
+
+        function setFontLevel(idx) {
+            curFontIndex = Math.max(0, Math.min(fontLevels.length - 1, idx));
+            const px = fontLevels[curFontIndex];
+            document.documentElement.style.fontSize = px + 'px';
+            try {
+                localStorage.setItem('54th_font_level', curFontIndex);
+            } catch (e) {}
+            updateFontButtons();
         }
-        function toggleDarkMode() {
+
+        function toggleLargeFont() {
+            if (curFontIndex === 0) {
+                setFontLevel(2); // Jump straight to 20px (125% large font for seniors)
+            } else {
+                setFontLevel(0); // Return to default
+            }
+        }
+
+        function adjustGlobalFont(delta) {
+            setFontLevel(curFontIndex + delta);
+        }
+
+        function updateFontButtons() {
+            const btns = document.querySelectorAll('.btn-large-toggle');
+            btns.forEach(btn => {
+                if (curFontIndex > 0) {
+                    btn.innerHTML = '🔍 보통 글씨로 (' + Math.round(fontLevels[curFontIndex]/16*100) + '%)';
+                    btn.style.background = '#dbeafe';
+                    btn.style.color = '#1e40af';
+                    btn.style.borderColor = '#93c5fd';
+                } else {
+                    btn.innerHTML = '🔍 글씨 크게';
+                    btn.style.background = '#fef3c7';
+                    btn.style.color = '#92400e';
+                    btn.style.borderColor = '#fde68a';
+                }
+            });
+        }
+
+        function toggleTheme() {
             document.body.classList.toggle('dark-mode');
+            try {
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            } catch (e) {}
         }
+
+        // Restore on page load
+        (function() {
+            try {
+                const saved = localStorage.getItem('54th_font_level');
+                if (saved !== null) {
+                    setFontLevel(parseInt(saved, 10));
+                }
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                }
+            } catch (e) {}
+        })();
     </script>
+
+    <!-- Floating Senior Zoom Button (Bottom Left) -->
+    <button class="btn-large-toggle font-float-btn" onclick="toggleLargeFont()" 
+            style="position:fixed; bottom:24px; left:20px; z-index:99; padding:12px 18px; border-radius:30px; font-weight:800; font-size:0.92rem; box-shadow:0 6px 20px rgba(0,0,0,0.15); cursor:pointer; border:1.5px solid #fde68a; background:#fef3c7; color:#92400e; display:flex; align-items:center; gap:6px; transition:all 0.2s;">
+        🔍 글씨 크게
+    </button>
+
 </body>
 </html>
