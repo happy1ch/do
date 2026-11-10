@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>네게 무슨 상관이냐, 너는 나를 따르라 | 요한복음 21장 54회 동기회 강단 설교</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maru-buri-webfont@0.1.0/maruburi.css">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #475569;
+            --accent: #b45309;
+            --accent-light: #fef3c7;
+            --border: #e2e8f0;
+            --code-bg: #f1f5f9;
+        }
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-sub: #cbd5e1;
+            --accent: #f59e0b;
+            --accent-light: #78350f;
+            --border: #334155;
+            --code-bg: #090d16;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'MaruBuri', 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.85;
+            padding: 24px 16px 80px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        @media(max-width: 640px) {
+            .container { padding: 24px 18px; }
+        }
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .top-nav a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .btn-toggle {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .photo-banner {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+        h1 {
+            font-size: 1.95rem;
+            line-height: 1.4;
+            color: var(--accent);
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 12px;
+        }
+        .meta-box {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .meta-box strong { color: var(--accent); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            color: var(--text-main);
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+        }
+        h3 {
+            font-size: 1.15rem;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: var(--text-sub);
+        }
+        p {
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+        blockquote {
+            background: var(--code-bg);
+            border-left: 4px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-sub);
+            font-size: 1.02rem;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+        .print-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 100;
+        }
+        @media print {
+            body { background: #fff; color: #000; padding: 0; }
+            .container { box-shadow: none; border: none; padding: 0; max-width: 100%; }
+            .top-nav, .print-btn, .controls { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-nav">
+            <a href="index.html">← 서재 홈으로</a>
+            <div class="controls">
+                <button class="btn-toggle" onclick="changeFontSize(1)">가+</button>
+                <button class="btn-toggle" onclick="changeFontSize(-1)">가-</button>
+                <button class="btn-toggle" onclick="toggleTheme()">🌓 테마</button>
+            </div>
+        </div>
+
+        <img src="../images/54th_assembly.jpg" alt="고려신학대학원 54회 동기회 제27차 정기총회 기념 사진" class="photo-banner">
+
+        <h1>요한복음 21장 18~22절 강단 설교문</h1>
+<p class="meta-line">**제목**: 『네게 무슨 상관이냐, 너는 나를 따르라』</p>
+<p class="meta-line">**부제**: 26년의 풍파를 지나, 여전히 이 자리를 지켜온 54회 동역자들에게</p>
+<p class="meta-line">**본문**: 요한복음 21장 18~22절</p>
+<p class="meta-line">**설교자**: 최성광 목사 (문경 행복한교회)</p>
+<p class="meta-line">**대상**: 고려신학대학원 54회 동기회 목회자 일동</p>
+<hr>
+<h2>[본문 낭독: 요한복음 21장 18~22절]</h2>
+<blockquote>
+<p>18 내가 진실로 진실로 네게 이르노니 네가 젊어서는 스스로 띠 띠고 원하는 곳으로 다녔거니와 늙어서는 네 팔을 벌리리니 남이 네게 띠 띠우고 원하지 아니하는 곳으로 데려가리라</p>
+<p>19 이 말씀을 하심은 베드로가 어떠한 죽음으로 하나님께 영광을 돌릴 것을 가리키심이러라 이 말씀을 하시고 베드로에게 이르시되 나를 따르라 하시니</p>
+<p>20 베드로가 돌이켜 예수께서 사랑하시는 그 제자가 따르는 것을 보니 그는 만찬석에서 예수의 품에 의지하여 주님 주님을 파는 자가 누구오니이까 묻던 자더라</p>
+<p>21 이에 베드로가 그를 보고 예수께 여짜오되 주님 이 사람은 어떻게 되겠사옵나이까</p>
+<p>22 예수께서 이르시되 내가 올 때까지 그를 머물게 하고자 할지라도 네게 무슨 상관이냐 너는 나를 따르라 하시니라</p>
+</blockquote>
+<hr>
+<h2>[서론: 26년의 세월, 그리고 늘 그 자리에 있는 얼굴들]</h2>
+<p>사랑하는 54회 동기 목사님들, 반갑습니다.</p>
+<p>우리가 천안 원성동과 삼룡동 신대원 언덕을 오르내리며 함께 울고 웃었던 때가 2000년이었습니다. 그때 푸르던 청년의 가슴에 신학의 열정을 품고 출발했던 우리가, 어느덧 26년이라는 긴 세월의 강을 건너 오늘 이 자리에 다시 모였습니다.</p>
+<p>어제도 마산에서 우리 동기들의 얼굴을 보면서 참 많은 생각이 들었습니다. 우리 동기회 모임을 가만히 돌아보면 참 신기한 특징이 하나 있습니다. 매년 모임에 나오는 사람들이 거의 고정되어 있다는 것입니다. 2000년부터 26년의 세월이 흘렀는데, 특히 최근 10년 동안은 비가 오나 눈이 오나 늘 얼굴을 비추는 바로 그 동기들이 이 자리를 묵묵히 지키고 있습니다.</p>
+<p>어떤 이는 묻습니다. "동기회 가봐야 늘 오는 사람만 오는데 왜 또 가느냐?"</p>
+<p>그러나 저는 반대로 묻고 싶습니다. <strong>"왜 우리는 10년이 넘도록, 아니 26년 동안 그 얼굴이 그 얼굴인데도 해마다 이 자리에 또 모이는 것일까요?"</strong></p>
+<p>우리가 대단한 목회 성공담을 자랑하기 위해 모이는 것입니까? 아닙니다. 내 목회가 얼마나 남보다 뛰어난지 과시하기 위해 오는 사람은 여기에 아무도 없습니다. 오히려 그 반대입니다. 26년 동안 거친 목회의 현장에서 세상의 비바람을 맞고, 성도들에게 상처받고, 뼈를 깎는 외로움과 탈진을 겪으면서, 머리가 희끗희끗해지고 얼굴에 깊게 파인 주름을 서로 바라보며 말 한마디 없이도 눈빛 하나로 "목사님, 견뎌내셨군요. 목사님, 아직 살아계셨군요. 그 자리를 지켜주셨군요" 하는 거룩한 안도와 위로를 나누기 위해 우리는 이 자리에 오는 것입니다.</p>
+<p>오늘 본문은 부활하신 예수님께서 디베랴 바닷가에서 낙심한 제자들에게 조반을 먹이신 직후, 베드로와 나누신 마지막 대화입니다. 26년 전 청운의 꿈을 안고 출발했던 우리에게, 그리고 오늘날 목회 후반전을 지나며 지친 우리 동역자들에게 주님은 바로 이 요한복음 21장을 통해 말씀하십니다. 오늘 이 말씀이 저와 동기 목사님들의 영혼을 다시 일으켜 세우는 하나님의 거룩한 생수가 되기를 간절히 소망합니다.</p>
+<hr>
+<h2>[제1대지: "젊어서는 스스로 띠를 띠고" — 우리의 열정과 야망의 출발점 (18절 상반절)]</h2>
+<p>18절 상반절을 보십시오.</p>
+<p><strong>"내가 진실로 진실로 네게 이르노니 네가 젊어서는 스스로 띠 띠고 원하는 곳으로 다녔거니와"</strong></p>
+<p>2000년 신대원 시절, 우리의 모습이 바로 이러했습니다.</p>
+<p>젊었을 때 우리는 '스스로 띠를 띠었습니다.' 헬라어로 보면 내가 스스로 옷깃을 동여매고(ἐζώννυες σεαυτὸν), 내가 계획한 곳, 내가 원하는 사역지(ὅπου ἤθελες)를 향해 당당하게 걸어갔습니다. 가슴에는 불이 붙어 있었고, 내가 맡은 교회는 부흥할 것 같았으며, 내 설교 한 편으로 세상을 뒤흔들 수 있을 것 같았습니다.</p>
+<p>그것은 하나님을 향한 순수한 열심이기도 했지만, 정직하게 고백하건대 그 안에는 '나의 야망'과 '나의 주도권(Initiative)'이 섞여 있었습니다. 내가 목회의 주어(Subject)가 되어 내 뜻과 내 힘으로 멋진 목회 성을 쌓아 올리려 했던 시절이었습니다.</p>
+<p>누구나 젊었을 때는 스스로 띠를 띱니다. 내 실력, 내 학위, 내 인맥, 내 건강을 믿고 내가 원하는 곳으로 거침없이 달려갑니다. 우리 54회 동기들도 그렇게 각자의 목회 현장으로 힘차게 흩어졌습니다.</p>
+<hr>
+<h2>[제2대지: "늙어서는 네 팔을 벌리리니... 원치 아니하는 곳으로" — 26년 풍파와 거룩한 수동성 (18절 하반절~19절)]</h2>
+<p>그러나 주님은 이어서 베드로에게, 그리고 26년 목회를 지나온 우리에게 청천벽력 같은 말씀을 하십니다. 18절 하반절입니다.</p>
+<p><strong>"늙어서는 네 팔을 벌리리니 남이 네게 띠 띠우고 원하지 아니하는 곳으로 데려가리라"</strong></p>
+<p>목회는 우리가 계획한 대로 흘러가지 않았습니다.</p>
+<p>지난 26년을 돌아보십시오. 우리 중에 자기가 원했던 완벽한 조건에서 목회하고 있는 사람이 몇이나 됩니까?</p>
+<p>배신을 당하고, 믿었던 교인이 등을 돌리고, 재정은 늘 바닥을 기고, 가족들의 눈물과 한숨을 보아야 했으며, 때로는 이름 없는 시골이나 외딴 개척지에서 아무도 알아주지 않는 고립감을 견뎌야 했습니다. 내가 원하지 않는 질병이 찾아왔고, 내가 원하지 않는 분쟁의 소용돌이에 휘말려야 했습니다.</p>
+<p>주님은 말씀하십니다. "남이 네게 띠 띠우고 원하지 아니하는 곳으로 데려가리라."</p>
+<p>이것은 단순한 실패의 저주가 아닙니다. 19절은 이것을 가리켜 <strong>"어떠한 죽음으로 하나님께 영광을 돌릴 것을 가리키심이러라"</strong>고 해석합니다.</p>
+<p>여기서 '네 팔을 벌린다'(ἐκτενεῖς τὰς χεῖράς σου)는 표현은 십자가 처형의 상징이자, 청교도들이 말한 <strong>'거룩한 수동성(Holy Passivity)'</strong>의 절정입니다. 팔을 벌린다는 것은 내 주도권을 완전히 포기하고 주님 앞에 무조건 항복하는 자세입니다.</p>
+<p>내가 스스로 띠를 띠고 활개 칠 때는 내가 일하고 하나님은 뒤따라오시는 조력자에 불과했습니다. 그러나 26년의 풍파 속에서 하나님은 우리의 힘을 하나씩 빼앗으셨습니다. 내 열심의 밑천이 바닥나고, 내 실력의 한계를 뼈저리게 절감하며, 마침내 두 팔을 벌려 주님 앞에 무릎 꿇게 만드셨습니다.</p>
+<p>"주님, 이제 제 힘으로는 한 걸음도 못 가겠습니다. 주님이 저를 묶어 끌고 가시옵소서."</p>
+<p>청교도 리처드 백스터는 말했습니다. <em>"하나님은 사역자의 자아를 부수기 전에는 그를 참된 목자로 쓰지 않으신다."</em></p>
+<p>우리가 원하지 않는 자리에서 눈물 흘렸던 그 26년은 버려진 시간이 아니었습니다. 나의 야망이 죽고 하나님의 주권이 다스리시는 참된 목회자로 빚어 가시는 거룩한 은혜의 손길이었습니다.</p>
+<hr>
+<h2>[제3대지: "주님, 이 사람은 어떻게 되겠사옵나이까" — 동역자 간의 비교와 고독의 치유 (20~22절)]</h2>
+<p>그런데 주님의 이 엄중한 부르심 앞에서 베드로가 무엇을 합니까? 20절과 21절을 보십시오.</p>
+<p><strong>"베드로가 돌이켜 예수께서 사랑하시는 그 제자가 따르는 것을 보니... 이에 베드로가 그를 보고 예수께 여짜오되 주님 이 사람은 어떻게 되겠사옵나이까"</strong></p>
+<p>베드로는 주님의 말씀을 듣자마자 고개를 돌려(돌이켜) 곁에 서 있던 요한을 쳐다봅니다. 그리고 묻습니다.</p>
+<p>"주님, 저는 원치 않는 곳으로 끌려가 처참하게 죽는다 치고, 저 친구는 어떻게 됩니까? 저 요한은 어떻게 되겠습니까?"</p>
+<p>사랑하는 동기 목사님들, 이것이 바로 26년 사역의 길에서 우리 영혼을 가장 깊이 병들게 만들었던 <strong>'곁눈질의 함정'</strong> 아닙니까?</p>
+<p>함께 출발했던 54회 동기들인데, 누구는 큰 교회 청빙을 받아 수천 명 교인 앞에서 설교하고, 누구는 총회나 노회에서 유력한 인사가 되고, 누구는 번듯한 예배당을 건축했습니다. 반면에 나는 여전히 교인 몇 명 붙들고 씨름하며 월세를 걱정하고 있습니다.</p>
+<p>그럴 때 사단은 우리 귓가에 끊임없이 속삭입니다.</p>
+<p>"주님, 저 사람은 저렇게 잘 나가는데, 나는 26년 동안 도대체 무엇을 한 것입니까? 저 사람은 어떻게 되고 나는 왜 이 모양입니까?"</p>
+<p>이 비교 의식은 두 가지 독을 뿜어냅니다. 남보다 조금 나으면 영적인 교만(Pride)에 빠지고, 남보다 뒤처지면 처절한 자괴감과 고립감(Despair)에 빠져 사역의 기쁨을 송두리째 잃어버리게 만듭니다.</p>
+<p>그때 주님께서 베드로에게 무엇이라 말씀하십니까? 22절 말씀을 다 함께 마음으로 들읍시다.</p>
+<p><strong>"예수께서 이르시되 내가 올 때까지 그를 머물게 하고자 할지라도 네게 무슨 상관이냐 너는 나를 따르라 하시니라"</strong></p>
+<p>헬라어로 단 두 마디입니다.</p>
+<p><strong>"티 프로스 세(τί πρὸς σέ, What is that to you? 그것이 너와 무슨 상관이냐)!"</strong></p>
+<p><strong>"쉬 모이 아콜루데이(σύ μοι ἀκολούθει, You follow me! 너는 나를 따르라)!"</strong></p>
+<p>주님은 단호하게 베드로의 뺨을 치듯 말씀하십니다.</p>
+<p>"베드로야, 요한이 살아서 내가 올 때까지 머물든, 그가 무슨 대단한 사역을 하든, 그것이 너와 무슨 상관이냐! 너는 왜 요한을 쳐다보느냐? 너는 왜 동역자를 보며 계산기를 두드리느냐? 목회는 요한과 비교하는 상대평가가 아니다. 목회는 목자장인 나와 너 사이의 1대 1 거룩한 독대(Coram Deo)다!"</p>
+<p>주님은 우리 각자에게 맡기신 잔과 사명이 다릅니다.</p>
+<p>베드로에게는 거꾸로 십자가에 못 박히는 순교의 잔을 주셨고, 요한에게는 밧모섬의 모진 외로움을 견디며 요한계시록을 기록하는 장수의 잔을 주셨습니다. 요한의 길도 주의 길이요, 베드로의 길도 주의 길입니다.</p>
+<p>대형교회 목회자도 주님의 종이요, 농촌과 도서 벽지에서 늙은 성도 서너 명을 눈물로 돌보는 개척교회 목회자도 주님의 거룩한 종입니다. 주님은 마지막 날 우리에게 "너는 몇 명을 모았느냐"를 묻지 않으십니다. "내가 네게 맡긴 그 몇 마리의 양 떼를 끝까지 먹이고 사랑했느냐"라는 충성의 신실함(Faithfulness)을 물으실 뿐입니다.</p>
+<hr>
+<h2>[제4대지: "너는 나를 따르라" — 26년, 특히 최근 10년을 지켜온 동기들에게 (적용과 위로)]</h2>
+<p>이제 말씀을 맺으며, 오늘 이 자리에 계신 우리 54회 동기 목사님들에게 묻고 싶습니다.</p>
+<p>2000년부터 시작해 26년이 흘렀습니다. 처음에 수백 명이 함께 입학하고 졸업했지만, 세월이 흐르며 동기회 모임에 참석하는 인원은 줄어들었고, 이제는 매년 고정된 20~30여 명의 얼굴들만이 남았습니다. 특히 최근 10년 동안은 바로 이 자리에 계신 목사님들이 한 해도 거르지 않고 계속해서 모이고 있습니다.</p>
+<p>왜 목사님들은 이 자리에 계속 나오십니까?</p>
+<p>서로를 한번 바라보십시오. 우리 중에 세상적으로 목회 성공해서 떵떵거리는 대형교회 목사가 몇이나 됩니까? 거의 없습니다. 대부분이 원하지 않는 곳에서, 척박한 땅에서 두 팔을 벌리고 주님의 띠에 묶여 눈물로 강단을 지켜온 분들입니다.</p>
+<p>그런데 왜 우리는 모입니까?</p>
+<p>우리는 서로의 얼굴을 보기 위해 모입니다. 10년 동안 매년 모이면서 우리는 깨달았습니다.</p>
+<p>"아, 나 혼자 외로운 줄 알았는데, 내 동기 아무개 목사도 저 자리에서 저렇게 피눈물을 흘리며 교회를 지키고 있었구나."</p>
+<p>"내가 넘어질 뻔한 순간마다, 그래도 1년에 한 번 동기회에 가서 그 친구 얼굴을 보면 다시 일어설 힘을 얻었구나."</p>
+<p>이 자리에 계신 동기 목사님들은 실패자가 아닙니다. 끝까지 낙오하지 않고, 주님이 맡기신 자리를 도망치지 않고, 26년 동안 주의 띠에 묶여 원치 않는 고난의 잔을 다 마셔가며 강단을 지켜낸 <strong>'하나님의 신실한 남은 자들(Remnant)'</strong>입니다!</p>
+<p>그러므로 오늘 우리는 서로를 향해 정죄나 비교의 눈빛이 아니라, 가장 깊은 존경과 감사의 눈빛을 보내야 합니다.</p>
+<p>"목사님, 26년 동안 포기하지 않고 버텨주셔서 고맙습니다."</p>
+<p>"목사님, 최근 10년 동안 한 번도 빠지지 않고 내 곁에서 얼굴을 보여주셔서 고맙습니다. 목사님이 그 자리에 살아계셔 주는 것만으로도 내 목회의 큰 위로였습니다."</p>
+<hr>
+<h2>[결론 및 기도: 다시 신발 끈을 매며]</h2>
+<p>사랑하는 54회 동기 목사님들,</p>
+<p>우리의 목회 시계는 이제 전반전을 지나 후반전의 종반을 향해 달려가고 있습니다. 머리는 희어지고 기력은 예전 같지 않습니다. 그러나 주님은 오늘 다시 우리를 향해 부드럽게 손을 내미십니다.</p>
+<p>"동역자들을 쳐다보며 낙심하지 마라. 그것이 너와 무슨 상관이냐. 너는 나를 따르라!"</p>
+<p>세상이 주는 성공의 면류관을 바라보지 맙시다. 다른 동역자의 사역지를 곁눈질하며 마음을 낭비하지 맙시다.</p>
+<p>오직 우리를 피 값으로 사시고, 26년 동안 졸지도 주무시지도 않고 우리를 업어 여기까지 오신 목자장 예수 그리스도만을 바라봅시다.</p>
+<p>오늘 모임이 끝나고 각자의 사역지로 흩어질 때, 우리 다시 두 팔을 벌리고 주님의 십자가를 짊어집시다. 그리고 내년에도, 내후년에도, 주님 부르시는 그날까지 건강하게 살아남아서 이 자리에서 다시 만납시다. "너는 나를 따르라" 하신 주님의 음성을 가슴에 품고 끝까지 승리하시는 복된 54회 모든 동역자님들이 되시기를 주님의 이름으로 간절히 축원합니다.</p>
+<p><strong>[기도]</strong></p>
+<p>하나님 아버지, 2000년 신대원 시절 젊어서 스스로 띠 띠고 달렸던 철없던 종들을 긍휼히 여기시고, 지난 26년의 풍파 속에서 우리의 자아를 깨뜨리시며 거룩한 십자가의 띠로 묶어 오늘까지 인도해 주심을 감사드립니다.</p>
+<p>목회의 거친 현장에서 외롭고 지칠 때마다, 곁눈질하며 비교하고 자괴감에 빠졌던 우리의 연약함을 용서하여 주옵소서. "네게 무슨 상관이냐, 너는 나를 따르라" 하신 주님의 음성을 듣습니다.</p>
+<p>특히 10년이 넘도록 변함없이 이 동기회의 자리를 지키며 서로의 버팀목이 되어 준 54회 사랑하는 동역자들을 축복하여 주옵소서. 그들이 눈물로 지키는 강단과 이름 없는 교회를 주께서 기억하시고, 하늘의 위로와 성령의 기름 부으심을 넘치도록 채워 주옵소서.</p>
+<p>남은 목회의 길, 오직 주님만 바라보며 끝까지 충성되게 달려가게 하옵소서.</p>
+<p>목자장이신 우리 주 예수 그리스도의 이름으로 기도하옵나이다. 아멘.</p>
+
+        <button class="print-btn" onclick="window.print()">🖨️ 인쇄 / PDF 저장</button>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+        let currentSize = 1.05;
+        function changeFontSize(delta) {
+            currentSize = Math.max(0.9, Math.min(1.4, currentSize + delta * 0.05));
+            document.querySelectorAll('p, blockquote, li').forEach(el => {
+                el.style.fontSize = currentSize + 'rem';
+            });
+        }
+    </script>
+</body>
+</html>
