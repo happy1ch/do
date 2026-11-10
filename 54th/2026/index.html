@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고려신학대학원 54회 동기회 제27차 정기총회 디지털 가이드북</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maru-buri-webfont@0.1.0/maruburi.css">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #334155;
+            --text-dim: #64748b;
+            --accent: #1e3a8a;
+            --accent-gold: #b45309;
+            --accent-light: #eff6ff;
+            --border: #e2e8f0;
+            --table-header: #f1f5f9;
+            --table-hover: #f8fafc;
+            --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        }
+        body.dark-mode {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --text-main: #f8fafc;
+            --text-sub: #cbd5e1;
+            --text-dim: #94a3b8;
+            --accent: #60a5fa;
+            --accent-gold: #fbbf24;
+            --accent-light: #1e293b;
+            --border: #243049;
+            --table-header: #1a243b;
+            --table-hover: #1e293b;
+            --shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.35);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.75;
+            padding-bottom: 120px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body.dark-mode .top-bar { background: rgba(19, 27, 46, 0.95); }
+        .top-bar .title { font-weight: 700; font-size: 0.95rem; color: var(--accent); }
+        .top-bar .controls { display: flex; gap: 8px; }
+        .btn-ctrl {
+            background: var(--accent-light);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Nav Quick Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+        .tab-btn {
+            white-space: nowrap;
+            background: var(--table-header);
+            color: var(--text-sub);
+            padding: 7px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .tab-btn:hover { background: var(--accent); color: #fff; }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 16px;
+        }
+
+        /* Cover Card */
+        .cover-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 28px 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+        .cover-badge {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+        }
+        .cover-title {
+            font-family: 'MaruBuri', serif;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+        .cover-sub {
+            font-size: 1.15rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+        .cover-img {
+            width: 100%;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .cover-meta {
+            background: var(--table-header);
+            border-radius: 10px;
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 0.92rem;
+            line-height: 1.8;
+            margin-top: 14px;
+        }
+        .cover-meta strong { color: var(--accent); }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 28px 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+            scroll-margin-top: 120px;
+        }
+        @media (max-width: 640px) {
+            .section-card { padding: 20px 16px; }
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--accent);
+        }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Tables */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 16px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        th, td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--table-header);
+            color: var(--text-sub);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        tr:hover td { background: var(--table-hover); }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .total-row {
+            background: var(--accent-light);
+            font-weight: 700;
+        }
+
+        /* Search input */
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .search-box:focus { border-color: var(--accent); }
+
+        /* Blockquote Callout */
+        .callout {
+            background: var(--table-header);
+            border-left: 4px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        /* PDF Download Float Button */
+        .pdf-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 20px;
+            background: var(--accent-gold);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 6px 20px rgba(180, 83, 9, 0.4);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.92rem;
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+        .pdf-btn:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="title">🏛️ 54회 동기회 제27차 정기총회</div>
+        <div class="controls">
+            <button class="btn-ctrl" onclick="toggleTheme()">🌓 테마</button>
+        </div>
+    </div>
+
+    <div class="nav-tabs">
+        <a href="#service" class="tab-btn">1. 예배 &amp; 회순</a>
+        <a href="#minutes" class="tab-btn">2. 전회의록(26차)</a>
+        <a href="#finance" class="tab-btn">3. 회계 결산</a>
+        <a href="#fees" class="tab-btn">4. 회비 납부 장부</a>
+        <a href="#executive" class="tab-btn">5. 임원회 결의</a>
+        <a href="#constitution" class="tab-btn">6. 동기회 회칙</a>
+        <a href="#members" class="tab-btn">7. 전국 주소록</a>
+        <a href="#history" class="tab-btn">8. 역대 임원 26년</a>
+    </div>
+
+    <div class="container">
+
+        <!-- Cover -->
+        <div class="cover-card">
+            <span class="cover-badge">2026년 정기총회 공식 가이드북</span>
+            <h1 class="cover-title">고려신학대학원 54회 동기회</h1>
+            <div class="cover-sub">제27차 정기총회 (마산제일교회)</div>
+            <img src="../../images/54th_assembly.jpg" alt="제27차 정기총회 기념 단체사진" class="cover-img">
+            <div class="cover-meta">
+                <div><strong>일 시:</strong> 2026년 11월 09일(월) 오전 11시</div>
+                <div><strong>장 소:</strong> 마산제일교회 (신동진 목사 시무)</div>
+                <div><strong>주 최:</strong> 고려신학대학원 54회 동기회</div>
+                <div><strong>발행인:</strong> 신동진 | <strong>편집인:</strong> 최성광, 황대원, 하영호, 백승한</div>
+            </div>
+        </div>
+
+        <!-- 1. 예배 & 회순 -->
+        <div class="section-card" id="service">
+            <div class="section-header">
+                <span class="section-title">◈◈ 개회 예배 &amp; 회의 순서 ◈◈</span>
+            </div>
+
+            <div class="callout">
+                <strong>2026년 신임/유임 임원회</strong><br>
+                • 회장: 신동진 목사 (마산제일교회)<br>
+                • 부회장: 최성광 목사 (수석 / 문경 행복한교회), 이하식(수도권), 강정웅(부산), 김은수B(전라경남서부), 신학창(동해남부), 황대원(경남남부)<br>
+                • 총무: 황대원 목사 (군북중앙교회) | 서기: 하영호 목사 (하양주님의교회)<br>
+                • 회계: 백승한 목사 (경주대광교회) | 감사: 진동식 목사, 임재황 목사 (부산천성교회)
+            </div>
+
+            <h3 style="margin: 18px 0 10px; color: var(--accent);">1부 개회 예배 (오전 11시) · 인도: 하영호 서기</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>순 서</th><th>내 용</th><th>담당자</th></tr>
+                    <tr><td>신앙고백</td><td>사도신경</td><td>다함께</td></tr>
+                    <tr><td>찬 양</td><td>90장 (주 예수 내가 알기 전)</td><td>다함께</td></tr>
+                    <tr><td>대표기도</td><td>-</td><td><strong>최성광 부회장 (행복한교회)</strong></td></tr>
+                    <tr><td>성경말씀</td><td>요한복음 13:34~35</td><td>인도자</td></tr>
+                    <tr><td>설 교</td><td><strong>“우리 서로 사랑하자”</strong></td><td><strong>신동진 회장 (마산제일교회)</strong></td></tr>
+                    <tr><td>축 도</td><td>-</td><td>설교자</td></tr>
+                    <tr><td>광 고</td><td>-</td><td>황대원 총무 (군북중앙교회)</td></tr>
+                </table>
+            </div>
+
+            <h3 style="margin: 24px 0 10px; color: var(--accent);">2부 회의 순서 (회무처리)</h3>
+            <ul style="margin-left: 20px; line-height: 1.9;">
+                <li>1) 회원 호명 및 개회 선언</li>
+                <li>2) 전 회의록 채택 (제26차 문경 행복한교회 회의록)</li>
+                <li>3) 임원 개선 (회장, 부회장, 총무, 회계, 서기, 감사 2인)</li>
+                <li>4) 각종 안건 및 사업·회계 보고</li>
+                <li>5) 기타 토의 (내회 장소 및 일시, 연회비)</li>
+                <li>6) 폐회 선언</li>
+            </ul>
+        </div>
+
+        <!-- 2. 전회의록 -->
+        <div class="section-card" id="minutes">
+            <div class="section-header">
+                <span class="section-title">◈◈ 제26차 정기총회 회의록 ◈◈</span>
+            </div>
+            <div class="callout">
+                <strong>일시:</strong> 2025년 11월 10일(월) 오전 11:00~12:00<br>
+                <strong>장소:</strong> 문경 행복한교회당 (최성광 목사 시무)<br>
+                <strong>출석 회원 (25명):</strong> 강정웅 강태원 김상훈 김은수 김호영 박상우 박성호 박용훈 배상철 백승한 소병현 신동진 이동희 이명우 이명환 이호정 임재황 장수득 조신일 최성광 하민호 하연정 하영호 하태경 황대원
+            </div>
+
+            <h4 style="margin: 16px 0 8px;">주요 결의 사항</h4>
+            <ul style="margin-left: 20px; line-height: 1.85;">
+                <li><strong>임원 개선:</strong> 회장 신동진 목사, 수석부회장 최성광 목사 선출. 총무 황대원, 서기 하영호, 회계 백승한 선임.</li>
+                <li><strong>메토코스선교회:</strong> 선교회 설립을 결의하고 정관을 수정하여 받기로 함. 선교회 임원은 동기회 임원회가 겸임.</li>
+                <li><strong>회비 결정:</strong> 2026년 연회비는 60,000원으로 결의.</li>
+                <li><strong>회칙 수정:</strong> 제14조 1항 전국동기회 일정을 '10-11월'로 수정.</li>
+            </ul>
+        </div>
+
+        <!-- 3. 회계 결산 -->
+        <div class="section-card" id="finance">
+            <div class="section-header">
+                <span class="section-title">◈◈ 2026 회계 결산 보고 ◈◈</span>
+            </div>
+            <p style="color:var(--text-dim); font-size:0.88rem;">회계기간: 2025.11.09 ~ 2026.11.04 (단위: 원) | 회계 백승한 목사</p>
+
+            <h3 style="margin: 20px 0 10px; color: var(--accent);">1. 일반 회계 결산</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>구분</th><th>항목</th><th>금액 (원)</th><th>비고</th></tr>
+                    <tr><td rowspan="3">수입</td><td>전기이월금</td><td class="text-right">1,920,237</td><td></td></tr>
+                    <tr><td>회 비</td><td class="text-right">3,928,000</td><td>회원 연회비 납입</td></tr>
+                    <tr><td>이 자</td><td class="text-right">1,358</td><td>통장 이자</td></tr>
+                    <tr class="total-row"><td>수입계</td><td>-</td><td class="text-right">5,849,595</td><td></td></tr>
+                    <tr><td rowspan="5">지출</td><td>총동창회</td><td class="text-right">621,600</td><td>점심식사 지원</td></tr>
+                    <tr><td>경조비</td><td class="text-right">2,100,000</td><td>회원 경조사 19건</td></tr>
+                    <tr><td>감사비</td><td class="text-right">200,000</td><td>행복한교회 감사</td></tr>
+                    <tr><td>사무비</td><td class="text-right">100,000</td><td>임원 서기 행정</td></tr>
+                    <tr><td>회의활동비</td><td class="text-right">1,600,000</td><td>회장 활동비 포함(임원회 6회)</td></tr>
+                    <tr class="total-row"><td>지출계</td><td>-</td><td class="text-right">4,621,600</td><td></td></tr>
+                    <tr class="total-row" style="background:var(--accent-gold); color:#fff;"><td colspan="2">차기이월 잔액</td><td class="text-right" colspan="2"><strong>1,227,995 원</strong></td></tr>
+                </table>
+            </div>
+
+            <h3 style="margin: 28px 0 10px; color: var(--accent-gold);">2. 특별 회계 (메토코스 선교회) 결산</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>일시</th><th>내역</th><th>수입 (원)</th><th>지출 (원)</th><th>잔액 (원)</th></tr>
+                    <tr><td>25.11.09</td><td>전기이월금</td><td class="text-right">6,882,728</td><td></td><td class="text-right">6,882,728</td></tr>
+                    <tr><td>26.07.13</td><td>故 이현길 목사 사모 위로</td><td></td><td class="text-right">3,000,000</td><td></td></tr>
+                    <tr><td>26.08.14</td><td>故 박현민 목사 사모 위로</td><td></td><td class="text-right">1,000,000</td><td></td></tr>
+                    <tr><td>26.09.18</td><td>김호영 목사 수술 위로</td><td></td><td class="text-right">500,000</td><td></td></tr>
+                    <tr><td>기간중</td><td>메토코스선교회 후원금</td><td class="text-right">9,580,000</td><td></td><td>후원 교회·동기</td></tr>
+                    <tr><td>기간중</td><td>이자 및 송금</td><td class="text-right">2,756</td><td></td><td></td></tr>
+                    <tr class="total-row" style="background:var(--accent-light);"><td colspan="2">합 계</td><td class="text-right">16,465,484</td><td class="text-right">4,500,000</td><td class="text-right"><strong>11,965,484 원</strong></td></tr>
+                </table>
+            </div>
+
+            <div class="callout" style="margin-top:20px;">
+                <strong>메토코스 선교회 후원 내역 (총 958만 원)</strong><br>
+                대구성동 90만, 대연중앙 100만, 마산제일 100만, 부산천성 100만, 사직동 100만, 문경행복한 100만, 군북중앙 100만, 박충식 200만, 최성대 50만, 박상우 8만, 이태호 5만, 하민호 5만
+            </div>
+        </div>
+
+        <!-- 4. 회비 납부 장부 -->
+        <div class="section-card" id="fees">
+            <div class="section-header">
+                <span class="section-title">◈◈ 11개년 회비 납입 현황 (2015~2026) ◈◈</span>
+            </div>
+            <p style="color:var(--text-dim); margin-bottom:12px; font-size:0.9rem;">총 117명 동기 회원의 11년간 누적 회비 납부 기록입니다. 본인 성함을 검색해 보세요.</p>
+            <input type="text" id="feeSearch" class="search-box" placeholder="🔍 회원 성함 검색 (예: 최성광, 신동진, 하영호...)" onkeyup="filterFeeTable()">
+            
+            <div class="table-wrap" style="max-height: 480px;">
+                <table id="feeTable">
+                    <thead>
+                        <tr><th>No</th><th>이름</th><th>'22</th><th>'23</th><th>'24</th><th>'25</th><th>'26년</th><th>누적총액(만원)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td><strong>강정웅</strong></td><td>10</td><td>6</td><td>6</td><td>6</td><td>6</td><td><strong>92</strong></td></tr>
+                        <tr><td>2</td><td><strong>강태원</strong></td><td>-</td><td>6</td><td>6</td><td>12</td><td>6</td><td><strong>58</strong></td></tr>
+                        <tr><td>3</td><td><strong>강화구</strong></td><td>6</td><td>6</td><td>6</td><td>6</td><td>6</td><td><strong>80</strong></td></tr>
+                        <tr><td>30</td><td><strong>박상우</strong></td><td>10</td><td>6</td><td>10</td><td>6</td><td>6</td><td><strong>95</strong></td></tr>
+                        <tr><td>50</td><td><strong>신동진</strong></td><td>-</td><td>10</td><td>-</td><td>6</td><td>6</td><td><strong>62</strong></td></tr>
+                        <tr><td>63</td><td><strong>이강욱</strong></td><td>6</td><td>6</td><td>6</td><td>30</td><td>6</td><td><strong>84</strong></td></tr>
+                        <tr><td>67</td><td><strong>이명우</strong></td><td>-</td><td>6</td><td>6</td><td>6</td><td>6</td><td><strong>64</strong></td></tr>
+                        <tr><td>74</td><td><strong>이태호</strong></td><td>10</td><td>10</td><td>10</td><td>-</td><td>10</td><td><strong>70</strong></td></tr>
+                        <tr><td>80</td><td><strong>임재황</strong></td><td>6</td><td>6</td><td>6</td><td>6</td><td>6</td><td><strong>68</strong></td></tr>
+                        <tr><td>98</td><td><strong>최성광</strong></td><td>3</td><td>6</td><td>6</td><td>6</td><td>12</td><td><strong>49</strong></td></tr>
+                        <tr><td>99</td><td><strong>최성대</strong></td><td>30</td><td>6</td><td>-</td><td>6</td><td>-</td><td><strong>95</strong></td></tr>
+                        <tr><td>109</td><td><strong>하영호</strong></td><td>6</td><td>6</td><td>6</td><td>-</td><td>18</td><td><strong>62</strong></td></tr>
+                        <tr><td>110</td><td><strong>하태경</strong></td><td>16</td><td>10</td><td>9</td><td>6</td><td>9</td><td><strong>283.5</strong></td></tr>
+                        <tr><td>113</td><td><strong>황대원</strong></td><td>-</td><td>10</td><td>10</td><td>6</td><td>6</td><td><strong>34</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-dim); margin-top:8px;">※ 전체 117명 원본 장부는 하단 원본 PDF 책자에서 전수 확인하실 수 있습니다.</p>
+        </div>
+
+        <!-- 5. 임원회 결의사항 -->
+        <div class="section-card" id="executive">
+            <div class="section-header">
+                <span class="section-title">◈◈ 2025~2026 임원회 주요 결의사항 ◈◈</span>
+            </div>
+            
+            <div class="callout">
+                <strong>1차 임원회 (2025.11.17, 경주 대광교회)</strong><br>
+                • 매토코스 선교회 설립 건 및 홍보 방안 논의.<br>
+                • 동기회 모임 시 명찰 패용은 생략하기로 결정.<br>
+                • 전국 임원들이 각 지역을 순회하며 지역장 간담회 추진.
+            </div>
+
+            <div class="callout">
+                <strong>2차 임원회 (2026.03.16, 대구 성서)</strong><br>
+                • 4.28 봄 동기회(경주대광교회) 식사비 동기회 실비 지원 결의.<br>
+                • 메토코스 선교회: 캄보디아 코람데오 선교센터 월 10만 원 지원(4월부터).<br>
+                • 故 이현길 목사 사모 일시금 위로(50만 원).
+            </div>
+
+            <div class="callout">
+                <strong>3차 임원회 (2026.06.14, 온라인 화상회의)</strong><br>
+                • 홀 사모 지원 건: 故 이현길, 故 박현민 목사 가정에 일시금 각 100만 원 방문 전달 결의.<br>
+                • 가을 정기총회 장소 마산제일교회로 확정.
+            </div>
+
+            <div class="callout">
+                <strong>4차 임원회 (2026.08.14, 대구 성서)</strong><br>
+                • 신대원 80주년 기념 강좌(10.29 천안) 참석 및 후원(800교회 8만 원).<br>
+                • 제27차 전체 정기총회 일시: 11월 09일(월) 오전 11시 확정.
+            </div>
+        </div>
+
+        <!-- 6. 회칙 -->
+        <div class="section-card" id="constitution">
+            <div class="section-header">
+                <span class="section-title">◈◈ 제54회 동기회 회칙 (전문) ◈◈</span>
+            </div>
+            <div style="font-size: 0.92rem; line-height: 1.85;">
+                <p><strong>제1조 (명칭)</strong> 본회는 ‘고려신학대학원 제54회 동기회’라 칭한다.</p>
+                <p><strong>제2조 (목적)</strong> 회원 상호 유대관계를 긴밀히 맺음으로 말씀대로 세워지는 개혁교회를 섬기는 사명을 효과적으로 감당함을 목적으로 한다.</p>
+                <p><strong>제7조 (조직)</strong> 6개 지역 동기회(수도권, 중부내륙권, 동해남부권, 부산광역권, 경남남부권, 전라경남서부권)를 두어 운영한다.</p>
+                <p><strong>제18조 (재정)</strong> 모든 회원의 연회비는 총회 시 정하며, 2026년 정규 회비는 60,000원으로 한다.</p>
+                <p><strong>제19조 (경조비)</strong> 경조사비는 일괄 10만 원(은퇴 위로금 20만 원)으로 한다. 직계가족 사망, 결혼, 교회개척, 위임, 은퇴, 선교사 파송 등.</p>
+            </div>
+        </div>
+
+        <!-- 7. 전국 주소록 -->
+        <div class="section-card" id="members">
+            <div class="section-header">
+                <span class="section-title">◈◈ 전국 동기 회원 명부 (147명) ◈◈</span>
+            </div>
+            <input type="text" id="memberSearch" class="search-box" placeholder="🔍 동기 목사님 성함 또는 교회명 검색..." onkeyup="filterMembers()">
+
+            <div class="table-wrap">
+                <table id="memberTable">
+                    <thead>
+                        <tr><th>권역</th><th>지역노회</th><th>성명</th><th>시무교회</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>중부내륙</td><td>경북서부</td><td><strong>최성광</strong></td><td>행복한교회(문경)</td></tr>
+                        <tr><td>중부내륙</td><td>경북서부</td><td>소병현</td><td>구산교회(문경)</td></tr>
+                        <tr><td>중부내륙</td><td>경북서부</td><td>이명환</td><td>우곡교회(문경)</td></tr>
+                        <tr><td>중부내륙</td><td>경북서부</td><td>최형진</td><td>신촌교회(구미)</td></tr>
+                        <tr><td>중부내륙</td><td>경북중부</td><td>하영호</td><td>하양주님의교회</td></tr>
+                        <tr><td>중부내륙</td><td>대구동부</td><td>김상훈</td><td>성동교회</td></tr>
+                        <tr><td>중부내륙</td><td>대구서부</td><td>이동희</td><td>예광교회</td></tr>
+                        <tr><td>경남남부</td><td>마산</td><td><strong>신동진</strong></td><td>마산제일교회</td></tr>
+                        <tr><td>경남남부</td><td>마산</td><td>황대원</td><td>군북중앙교회</td></tr>
+                        <tr><td>경남남부</td><td>경남남부</td><td>박상우</td><td>욕지서부교회(통영)</td></tr>
+                        <tr><td>부산광역</td><td>부산동부</td><td>이강욱</td><td>부산범천교회</td></tr>
+                        <tr><td>부산광역</td><td>부산서부</td><td>임재황</td><td>천성교회</td></tr>
+                        <tr><td>부산광역</td><td>부산</td><td>이명우</td><td>한소망교회</td></tr>
+                        <tr><td>동해남부</td><td>경북동부</td><td>백승한</td><td>경주대광교회</td></tr>
+                        <tr><td>동해남부</td><td>경북동부</td><td>신학창</td><td>효동교회(영천)</td></tr>
+                        <tr><td>수도권</td><td>경기동부</td><td>이하식</td><td>드림향상교회(용인)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-dim); margin-top:8px;">※ 147명 전국 전체 주소록과 선교사 명단은 PDF 책자에 전수 수록되어 있습니다.</p>
+        </div>
+
+        <!-- 8. 역대 임원 -->
+        <div class="section-card" id="history">
+            <div class="section-header">
+                <span class="section-title">◈◈ 54 동기회 26개년 역대 임원 연표 ◈◈</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>차수</th><th>연도</th><th>총회장소</th><th>회장</th><th>총무</th><th>회계</th></tr>
+                    <tr><td>1차</td><td>2000~2005</td><td>-</td><td>이강욱</td><td>-</td><td>-</td></tr>
+                    <tr><td>16차</td><td>2015</td><td>태동교회</td><td>전성일</td><td>이강욱</td><td>하무환</td></tr>
+                    <tr><td>20차</td><td>2019</td><td>횡천교회</td><td>하태경</td><td>임재황</td><td>정연두 (회계 최성광)</td></tr>
+                    <tr><td>22차</td><td>2021</td><td>대구 인터불고</td><td>진동식</td><td>최성광</td><td>백승한</td></tr>
+                    <tr><td>26차</td><td>2025</td><td>문경 행복한교회</td><td>신동진</td><td>황대원</td><td>백승한 (수석부회장 최성광)</td></tr>
+                    <tr class="total-row"><td>27차</td><td>2026</td><td>마산제일교회</td><td>신동진</td><td>황대원</td><td>백승한 (수석부회장 최성광)</td></tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PDF Floating Button -->
+    <a href="handbook_2026.pdf" class="pdf-btn" target="_blank" download>
+        📥 정식 책자 PDF 다운로드
+    </a>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        function filterFeeTable() {
+            let input = document.getElementById('feeSearch').value.toLowerCase();
+            let rows = document.querySelectorAll('#feeTable tbody tr');
+            rows.forEach(r => {
+                let name = r.cells[1].innerText.toLowerCase();
+                r.style.display = name.includes(input) ? '' : 'none';
+            });
+        }
+
+        function filterMembers() {
+            let input = document.getElementById('memberSearch').value.toLowerCase();
+            let rows = document.querySelectorAll('#memberTable tbody tr');
+            rows.forEach(r => {
+                let text = r.innerText.toLowerCase();
+                r.style.display = text.includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
