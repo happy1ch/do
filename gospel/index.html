@@ -114,6 +114,48 @@
       color: #fff;
     }
 
+    /* ── VERSION SWITCHER BAR ── */
+    .version-bar {
+      background: #152d54;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+    }
+
+    .version-label {
+      color: #94a3b8;
+      font-size: 0.82rem;
+    }
+
+    .version-links {
+      display: inline-flex;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 3px;
+      border-radius: 999px;
+      gap: 4px;
+    }
+
+    .version-link {
+      padding: 5px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      transition: all 0.2s;
+    }
+
+    .version-link.active {
+      background: var(--gold);
+      color: var(--navy);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
     /* ── HERO ── */
     .hero {
       background: linear-gradient(175deg, var(--deep) 0%, var(--navy) 60%, #173767 100%);
@@ -597,13 +639,22 @@
   <header>
     <a href="../index.html" class="brand">
       <span class="brand-logo">행복한교회</span>
-      <span class="brand-badge">디지털 복음 이야기</span>
+      <span class="brand-badge">길거리·일상 복음 전도지</span>
     </a>
     <div class="header-actions">
       <a href="../index.html" class="btn-top">교회 홈</a>
       <button type="button" class="btn-top" onclick="window.print()">인쇄/PDF</button>
     </div>
   </header>
+
+  <!-- VERSION SWITCHER -->
+  <nav class="version-bar" aria-label="전도지 버전 선택">
+    <span class="version-label">전도지 버전:</span>
+    <div class="version-links">
+      <a href="index.html" class="version-link active">🌱 길거리·일상 전도용 (구원의 밧줄)</a>
+      <a href="newcomer.html" class="version-link">🏛️ 새가족·교회 방문자용 (심층 복음)</a>
+    </div>
+  </nav>
 
   <!-- HERO -->
   <section class="hero">

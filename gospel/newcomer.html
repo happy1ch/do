@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>하나님을 만나는 길 | 행복한교회 새가족 복음 안내</title>
+  <meta name="description" content="교회에 처음 오신 당신을 환영합니다. 거룩하신 하나님, 우리의 죄, 그리고 십자가의 완전한 대속에 관한 개혁주의 복음 안내서." />
+  <meta name="keywords" content="새가족, 복음안내, 개혁주의, 행복한교회, 문경행복한교회, 최성광목사, 십자가대속, 구원" />
+  <link rel="canonical" href="https://happy1ch.github.io/gospel/newcomer.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="하나님을 만나는 길 | 행복한교회 새가족 복음 안내" />
+  <meta property="og:description" content="거룩하신 하나님, 우리의 죄, 그리고 십자가의 완전한 대속 은혜." />
+  <meta property="og:image" content="https://happy1ch.github.io/images/og-image.jpg" />
+  <meta property="og:url" content="https://happy1ch.github.io/gospel/newcomer.html" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0f2347;
+      --deep:   #0a1832;
+      --gold:   #c59b27;
+      --gold-light: #f7edd4;
+      --teal:   #008f82;
+      --cream:  #fbf9f5;
+      --card-bg:#ffffff;
+      --text:   #2d3748;
+      --muted:  #718096;
+      --border: #e2e8f0;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(15, 35, 71, 0.08);
+      --font-serif: 'Noto Serif KR', Georgia, serif;
+      --font-sans: 'Noto Sans KR', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--cream);
+      color: var(--text);
+      line-height: 1.85;
+      font-size: 18px;
+      word-break: keep-all;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 35, 71, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(197, 155, 39, 0.3);
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .brand-logo {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .brand-badge {
+      font-size: 0.72rem;
+      background: rgba(197, 155, 39, 0.25);
+      color: #f1cf72;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(197, 155, 39, 0.4);
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-top {
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.2s;
+    }
+    .btn-top:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    /* ── VERSION SWITCHER BAR ── */
+    .version-bar {
+      background: #152d54;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+    }
+
+    .version-label {
+      color: #94a3b8;
+      font-size: 0.82rem;
+    }
+
+    .version-links {
+      display: inline-flex;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 3px;
+      border-radius: 999px;
+      gap: 4px;
+    }
+
+    .version-link {
+      padding: 5px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      transition: all 0.2s;
+    }
+
+    .version-link.active {
+      background: var(--gold);
+      color: var(--navy);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(175deg, var(--deep) 0%, var(--navy) 60%, #173767 100%);
+      color: #fff;
+      padding: 70px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: #f1cf72;
+      font-weight: 600;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: 2.3rem;
+      font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #ffd875;
+      text-shadow: 0 0 20px rgba(197, 155, 39, 0.4);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      max-width: 640px;
+      margin: 0 auto 32px;
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-pill {
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 6px 14px;
+      border-radius: 999px;
+      color: #e2e8f0;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* ── STEP CARDS ── */
+    .step-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 40px 34px;
+      margin-bottom: 34px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .step-num::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .step-card h2 {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.4;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .step-card p {
+      font-size: 1.05rem;
+      color: #374151;
+      margin-bottom: 16px;
+      line-height: 1.95;
+    }
+
+    /* ── SCRIPTURE QUOTE BOX ── */
+    .scripture-box {
+      background: #fdfbf7;
+      border: 1px solid #ebdcc1;
+      border-left: 4px solid var(--gold);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 22px 0;
+      font-family: var(--font-serif);
+      font-size: 1.02rem;
+      line-height: 2;
+      color: #2a3442;
+    }
+
+    .scripture-ref {
+      display: block;
+      margin-top: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-align: right;
+    }
+
+    .doctrine-point {
+      background: #f8fafc;
+      border-left: 4px solid var(--navy);
+      padding: 16px 20px;
+      border-radius: 0 10px 10px 0;
+      margin: 18px 0;
+      font-size: 0.98rem;
+      color: #1e293b;
+    }
+
+    /* ── PURITAN VERSE GRID ── */
+    .verse-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .verse-card {
+      background: #fbfcfe;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 22px;
+      position: relative;
+    }
+
+    .verse-card-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .verse-card p {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+
+    /* ── PRAYER BOX ── */
+    .prayer-card {
+      background: linear-gradient(160deg, #0f2347 0%, #163666 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 44px 34px;
+      margin-bottom: 36px;
+      box-shadow: 0 20px 40px rgba(15, 35, 71, 0.25);
+    }
+
+    .prayer-card h2 {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      color: #ffd875;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .prayer-intro {
+      font-size: 0.98rem;
+      color: #cbd5e1;
+      text-align: center;
+      margin-bottom: 26px;
+      line-height: 1.7;
+    }
+
+    .prayer-body {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 28px 24px;
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      line-height: 2.15;
+      color: #f8fafc;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+    }
+
+    .prayer-body p {
+      margin-bottom: 14px;
+    }
+    .prayer-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .prayer-footer {
+      text-align: center;
+      font-size: 0.92rem;
+      color: #94a3b8;
+      line-height: 1.7;
+    }
+
+    /* ── CHURCH CONNECT ── */
+    .connect-card {
+      background: #ffffff;
+      border-radius: var(--radius);
+      padding: 38px 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .connect-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .connect-card p {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+    }
+
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-call { background: var(--navy); color: #fff; }
+    .btn-sms { background: var(--gold); color: var(--navy); }
+    .btn-print { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; cursor: pointer; }
+
+    .info-list {
+      list-style: none;
+      font-size: 0.92rem;
+      color: #4b5563;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 20px;
+      margin-top: 10px;
+      line-height: 1.95;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      color: #94a3b8;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    footer a { color: #cbd5e1; text-decoration: none; }
+
+    /* ── PRINT ── */
+    @media print {
+      header, .version-bar, footer, .contact-buttons, .btn-top { display: none !important; }
+      body { background: #fff; color: #000; font-size: 11pt; }
+      .container { padding: 0; max-width: 100%; }
+      .step-card, .prayer-card, .connect-card {
+        box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; margin-bottom: 20px; padding: 20px;
+      }
+      .hero { background: none; color: #000; padding: 20px 0; }
+      .hero h1, .hero h1 em { color: #000; text-shadow: none; }
+      .prayer-card { background: #f9f9f9; color: #000; }
+      .prayer-body { background: #fff; color: #000; border: 1px solid #ccc; }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.85rem; }
+      .step-card { padding: 28px 20px; }
+      .prayer-card { padding: 32px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="../index.html" class="brand">
+      <span class="brand-logo">행복한교회</span>
+      <span class="brand-badge">새가족 복음 안내</span>
+    </a>
+    <div class="header-actions">
+      <a href="../index.html" class="btn-top">교회 홈</a>
+      <button type="button" class="btn-top" onclick="window.print()">인쇄/PDF</button>
+    </div>
+  </header>
+
+  <!-- VERSION SWITCHER -->
+  <nav class="version-bar" aria-label="전도지 버전 선택">
+    <span class="version-label">전도지 버전:</span>
+    <div class="version-links">
+      <a href="index.html" class="version-link">🌱 길거리·일상 전도용 (구원의 밧줄)</a>
+      <a href="newcomer.html" class="version-link active">🏛️ 새가족·교회 방문자용 (심층 복음)</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">대한예수교장로회(고신) 행복한교회 새가족 안내</div>
+    <h1>하나님을 <em>만나는 길</em></h1>
+    <p class="hero-sub">
+      행복한교회에 처음 오신 당신을 주님의 이름으로 진심으로 환영합니다.<br>
+      거룩하신 하나님, 우리의 죄, 그리고 십자가의 완전한 대속 은혜를 성경 말씀으로 나눕니다.
+    </p>
+    <div class="hero-badge-row">
+      <span class="hero-pill">📖 성경적 복음의 정수</span>
+      <span class="hero-pill">⚖️ 하나님의 거룩과 공의</span>
+      <span class="hero-pill">✝️ 십자가의 복된 맞교환</span>
+    </div>
+  </section>
+
+  <!-- MAIN CONTAINER -->
+  <main class="container">
+
+    <!-- PART 1: 하나님은 어떤 분이신가 -->
+    <article class="step-card">
+      <div class="step-num">Part 01 · 창조주 하나님</div>
+      <h2>하나님은 어떤 분이신가</h2>
+      <p>
+        신앙의 시작은 '내가 무엇을 믿을까'가 아니라, <strong>'하나님은 본래 어떤 분이신가'</strong>를 아는 데서 출발합니다.
+      </p>
+      <p>
+        하나님은 온 우주와 우리의 생명을 지으신 창조주이시며 주권자이십니다. 
+        그분은 지극히 거룩하시며 공의로우셔서, 어떠한 죄와 부정함도 결코 용납하거나 가볍게 지나치실 수 없는 온전한 재판장이십니다.
+      </p>
+      <div class="doctrine-point">
+        그러나 거룩하신 하나님은 동시에 은혜와 자비가 풍성하신 사랑의 아버지이십니다. 
+        하나님의 사랑은 우리의 죄를 모른 척 덮어두는 값싼 동정이 아닙니다. 
+        당신의 거룩한 공의를 온전히 만족시키시면서도, 죄인인 우리를 구원해 내시기 위해 가장 귀한 독생자를 내어주신 <strong>'거룩하고 압도적인 사랑'</strong>입니다.
+      </div>
+
+      <div class="scripture-box">
+        "하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려 하심이라"
+        <span class="scripture-ref">— 요한복음 3장 16절</span>
+      </div>
+
+      <div class="scripture-box">
+        "우리가 아직 죄인 되었을 때에 그리스도께서 우리를 위하여 죽으심으로 하나님께서 우리에 대한 자기의 사랑을 확증하셨느니라"
+        <span class="scripture-ref">— 로마서 5장 8절</span>
+      </div>
+    </article>
+
+    <!-- PART 2: 하나님께 지은 죄의 본질 -->
+    <article class="step-card">
+      <div class="step-num">Part 02 · 율법의 거울</div>
+      <h2>우리가 하나님께 지은 죄의 본질</h2>
+      <p>
+        세상은 죄를 단순히 '남에게 피해를 주거나 도덕적 법을 어긴 것'으로 여깁니다. 
+        그러나 성경이 밝히는 죄의 가장 깊은 본질은 <strong>수직적인 반역</strong>입니다.
+      </p>
+      <p>
+        나를 지으시고 호흡을 주신 하나님을 마음에 두기 싫어하고, 내가 내 인생의 주인 행세를 하며, 
+        하나님의 뜻이 아닌 내 욕망과 고집을 따라 살아온 것이 인간의 가장 근원적인 죄입니다.
+      </p>
+      <div class="doctrine-point">
+        다윗은 끔찍한 죄를 짓고 통회할 때 이렇게 부르짖었습니다: 
+        <em>"내가 주께만 범죄하여 주의 목전에 악을 행하였사오니" (시 51:4).</em> 
+        인간의 죄는 궁극적으로 거룩하신 창조주 하나님을 향한 거역입니다. 
+        이 죄의 결과로 모든 인간은 영적으로 파산하였고, 하나님의 공의로운 진노 아래 영원한 죽음에 이를 수밖에 없게 되었습니다.
+      </div>
+
+      <div class="scripture-box">
+        "모든 사람이 죄를 범하였으매 하나님의 영광에 이르지 못하더니... 죄의 삯은 사망이요 하나님의 은사는 그리스도 예수 우리 주 안에 있는 영생이니라"
+        <span class="scripture-ref">— 로마서 3장 23절, 6장 23절</span>
+      </div>
+    </article>
+
+    <!-- PART 3: 십자가의 완전한 대속과 복된 맞교환 -->
+    <article class="step-card">
+      <div class="step-num">Part 03 · 그리스도의 십자가</div>
+      <h2>그 죄를 위해 예수님이 행하신 일</h2>
+      <p>
+        스스로 죄를 씻을 수도, 하나님의 공의로운 형벌을 피할 수도 없는 무력한 우리를 위해 
+        하나님의 아들 예수 그리스도께서 이 땅에 오셨습니다.
+      </p>
+      <p>
+        예수님은 죄 없는 완전한 생애로 율법을 다 이루셨고, 
+        마침내 십자가에 못 박히셔서 우리가 받아야 할 하나님의 저주와 형벌을 온몸으로 대신 받으셨습니다(형벌적 대속).
+      </p>
+      <div class="doctrine-point">
+        개혁주의 교회가 찬송하는 <strong>'복된 맞교환(The Wonderful Exchange)'</strong>이 바로 십자가에서 일어났습니다:
+        <ul style="margin-top:8px; margin-left:20px;">
+          <li>우리의 더럽고 부패한 모든 죄는 예수님께 넘겨졌고,</li>
+          <li>예수님의 흠 없는 완전한 의(義)의 옷이 우리에게 값없이 입혀졌습니다.</li>
+        </ul>
+      </div>
+
+      <div class="scripture-box">
+        "하나님이 죄를 알지도 못하신 이를 우리를 대신하여 죄로 삼으신 것은 우리로 하여금 그 안에서 하나님의 의가 되게 하려 하심이라"
+        <span class="scripture-ref">— 고린도후서 5장 21절</span>
+      </div>
+
+      <div class="scripture-box">
+        "그가 찔림은 우리의 허물 때문이요 그가 상함은 우리의 죄악 때문이라 그가 징계를 받으므로 우리는 평화를 누리고 그가 채찍에 맞으므로 우리는 나음을 받았도다"
+        <span class="scripture-ref">— 이사야 53장 5절</span>
+      </div>
+    </article>
+
+    <!-- PART 4: 청교도들이 전한 값없는 복음의 초청 -->
+    <article class="step-card">
+      <div class="step-num">Part 04 · 거저 주시는 은혜</div>
+      <h2>청교도들이 선포한 값없는 복음의 초청</h2>
+      <p>
+        복음은 <em>"네가 거룩한 사람이 되면 영접하겠다"</em>는 조건부가 아닙니다. 
+        자격 없고, 지쳤으며, 스스로 파산한 죄인들에게 아무 값없이 거저 주시는 하나님의 초청입니다. 
+        청교도들은 영혼들을 향해 항상 이 약속의 말씀을 선포했습니다:
+      </p>
+
+      <div class="verse-grid">
+        <div class="verse-card">
+          <div class="verse-card-tag">이사야 55장 1절 · 청교도 최고의 복음 초청</div>
+          <p>"오호라 너희 모든 목마른 자들아 물로 나아오라 돈 없는 자도 오라 너희는 와서 사 먹되 돈 없이 값 없이 와서 포도주와 젖을 사라"</p>
+        </div>
+
+        <div class="verse-card">
+          <div class="verse-card-tag">마태복음 11장 28절 · 참된 쉼의 약속</div>
+          <p>"수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라"</p>
+        </div>
+
+        <div class="verse-card">
+          <div class="verse-card-tag">요한복음 6장 37절 · 존 번연이 붙든 영원한 안전</div>
+          <p>"아버지께서 내게 주시는 자는 다 내게로 올 것이요 내게 오는 자는 내가 결코 내쫓지 아니하리라"</p>
+        </div>
+
+        <div class="verse-card">
+          <div class="verse-card-tag">요한계시록 22장 17절 · 종말론적 은혜의 부르심</div>
+          <p>"성령과 신부가 말씀하시기를 오라 하시는도다... 목마른 자도 올 것이요 또 원하는 자는 값없이 생명수를 받으라"</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- PART 5: 성령의 역사와 참된 영접 -->
+    <article class="step-card">
+      <div class="step-num">Part 05 · 효력 있는 부르심</div>
+      <h2>성령의 역사와 참된 영접</h2>
+      <p>
+        예수님을 영접한다는 것은 기계적으로 기도문을 따라 읊는 입술의 행위가 아닙니다. 
+        그것은 <strong>'내가 하나님을 믿어주는 선행'</strong>도 아닙니다.
+      </p>
+      <p>
+        말씀이 선포될 때, 성령 하나님께서 어두웠던 우리의 눈을 밝혀 그리스도를 보게 하시고, 
+        돌처럼 굳었던 우리의 의지를 부드럽게 녹여, 마침내 내 힘을 완전히 내려놓고 예수 그리스도께 나를 온전히 내던져 매달리게 하시는 하나님의 거룩한 선물입니다.
+      </p>
+      <div class="scripture-box">
+        "또 새 영을 너희 속에 두고 새 마음을 너희에게 주되 너희 육신에서 굳은 마음을 제거하고 부드러운 마음을 줄 것이며"
+        <span class="scripture-ref">— 에스겔 36장 26절</span>
+      </div>
+
+      <div class="scripture-box">
+        "너희는 그 은혜에 의하여 믿음으로 말미암아 구원을 받았으니 이것은 너희에게서 난 것이 아니요 하나님의 선물이라 행위에서 난 것이 아니니 이는 누구든지 자랑하지 못하게 함이라"
+        <span class="scripture-ref">— 에베소서 2장 8~9절</span>
+      </div>
+    </article>
+
+    <!-- PART 6: 새가족의 참된 고백 기도 -->
+    <section class="prayer-card">
+      <h2>하나님 앞에서의 진실한 신앙고백</h2>
+      <p class="prayer-intro">
+        오늘 예배당에 오셔서 복음의 말씀을 들으시며 마음에 거룩한 울림이 있으시다면,<br>
+        조용한 마음으로 하나님 앞에 무릎 꿇는 심정으로 이 고백을 올려드리십시오.
+      </p>
+      <div class="prayer-body">
+        <p>
+          "지극히 거룩하시고 자비로우신 하나님 아버지, 
+          저는 제 삶의 주인 노릇을 하며 하나님을 마음에 두지 않고 살아온 죄인임을 고백합니다. 
+          내 힘으로는 죄의 사슬과 영원한 심판에서 벗어날 수 없는 영적 파산자였습니다.
+        </p>
+        <p>
+          그러나 세상을 이처럼 사랑하사 독생자 예수 그리스도를 보내주시고, 
+          내가 받아야 할 십자가의 형벌과 저주를 예수님께 대신 담당시키시며, 
+          예수님의 의로운 생명을 제게 값없이 선물해 주시니 감사드립니다.
+        </p>
+        <p>
+          이제 내 자아의 고집과 헛된 자랑을 십자가 앞에 모두 내려놓습니다. 
+          성령께서 제 마음에 찾아오셔서 굳은 마음을 녹여주셨사오니, 
+          오직 예수 그리스도만을 저의 유일한 구원자요 주님으로 믿고 영접합니다.
+        </p>
+        <p>
+          제 남은 삶을 주님의 선하신 손에 온전히 맡겨드리오니, 
+          날마다 말씀과 은혜 안에서 주님을 예배하며 기뻐하는 참된 자녀로 살아가게 하옵소서.
+        </p>
+        <p style="text-align:right; font-weight:700;">
+          우리를 위해 목숨을 버리신 예수 그리스도의 이름으로 기도드립니다. 아멘."
+        </p>
+      </div>
+      <div class="prayer-footer">
+        이 고백은 당신이 구원을 스스로 쟁취했다는 증표가 아니라, 
+        성령 하나님께서 이미 당신 안에서 새로운 생명의 역사를 시작하셨다는 복된 증거입니다.
+      </div>
+    </section>
+
+    <!-- PART 7: 함께 자라가는 공동체 -->
+    <section class="connect-card">
+      <h3>행복한교회가 함께 걷겠습니다</h3>
+      <p>
+        교회는 구원받은 성도들이 함께 모여 거룩한 삼위 하나님을 예배하고,<br>
+        서로 사랑하며 그리스도의 장성한 분량까지 함께 자라가는 영적 가족입니다.
+      </p>
+
+      <div class="contact-buttons">
+        <a href="tel:010-9819-5199" class="btn-contact btn-call">
+          📞 담임목사 최성광 목사 직통 전화
+        </a>
+        <a href="sms:010-9819-5199?body=행복한교회%20새가족으로%20등록%20또는%20상담을%20원합니다." class="btn-contact btn-sms">
+          💬 새가족 등록 및 상담 문자
+        </a>
+        <button type="button" class="btn-contact btn-print" onclick="window.print()">
+          🖨️ 새가족 안내서 인쇄 / PDF
+        </button>
+      </div>
+
+      <ul class="info-list">
+        <li><strong>예배 시간:</strong> 주일 오전 예배 11:00 · 주일 오후 찬양예배 1:30 | 수요기도회 오후 7:30</li>
+        <li><strong>교회 위치:</strong> 경북 문경시 신흥시장길 23-4 (2층 행복한교회)</li>
+        <li><strong>소속 교단:</strong> 대한예수교장로회(고신) · 경북시찰</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>대한예수교장로회(고신) 행복한교회 · 담임목사 최성광</p>
+    <p style="margin-top:6px; font-size:0.8rem; color:#64748b;">
+      <a href="../index.html">교회 공식 홈페이지</a> · <a href="https://www.youtube.com/@happy1ch" target="_blank" rel="noopener">유튜브 채널</a>
+    </p>
+  </footer>
+
+</body>
+</html>
