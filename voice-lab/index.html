@@ -848,6 +848,79 @@
             </div>
         </div>
 
+        <!-- Director's In-Depth Explanatory Commentary Report -->
+        <div class="card in-depth-report" id="directorReportCard" style="margin-top: 24px; border: 2px solid #2563eb; background: #ffffff; border-radius: 16px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleDirectorReport()">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 1.8rem;">📜</span>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <h3 style="font-size: 1.2rem; font-weight: 800; color: #1e3a8a;">연구소장 Happy초이의 심층 해설 리포트</h3>
+                            <span style="background: #eff6ff; color: #1d4ed8; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px; border: 1px solid #bfdbfe;">동봉용 정식 해설서</span>
+                        </div>
+                        <p style="font-size: 0.88rem; color: #64748b; margin-top: 2px;">처음 진단서를 받아보신 목회자·발표자 분들을 위한 1:1 눈높이 음향음성학 해설</p>
+                    </div>
+                </div>
+                <button class="action-btn" style="padding: 8px 16px; font-size: 0.88rem; border-radius: 8px;" id="btnToggleReport">해설서 보기 ▼</button>
+            </div>
+
+            <div id="directorReportBody" style="display: block; margin-top: 20px; padding-top: 20px; border-top: 1px dashed #cbd5e1; font-size: 0.95rem; line-height: 1.8; color: #334155;">
+                <div style="background: #f8fafc; border-left: 4px solid #2563eb; padding: 14px 18px; border-radius: 0 10px 10px 0; margin-bottom: 20px;">
+                    <p style="font-weight: 700; color: #0f172a; margin-bottom: 4px;">💡 소장의 해설서 발행 원칙</p>
+                    <p style="font-size: 0.88rem; color: #475569;">"진단서의 헤르츠(Hz)나 데시벨(dB) 같은 숫자는 성대와 호흡의 거울입니다. 귀로만 듣는 막연한 칭찬 대신, <strong>성대의 실제 건강 상태와 성도들이 느끼는 전달력</strong>을 한눈에 알기 쉽게 풀어드립니다."</p>
+                </div>
+
+                <!-- 1. 호흡 -->
+                <div style="margin-bottom: 22px;">
+                    <h4 style="font-size: 1.05rem; font-weight: 700; color: #1e3a8a; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                        <span>🫁</span> 1. 복식호흡 점수 (지탱력) — "설교 끝까지 목소리가 살아있는가?"
+                    </h4>
+                    <p style="margin-bottom: 6px;">
+                        • <strong>숫자의 의미:</strong> 성대가 떨릴 때 발생하는 미세한 주기 흔들림(Jitter)을 역산한 값입니다. 가슴으로만 얕게 숨 쉬면 문장 끝에서 숨이 차 성대가 불규칙하게 떨리며 점수가 70점대로 떨어집니다.<br>
+                        • <strong>성광 목사님 진단 (90~96점):</strong> 아랫배(복압)가 공기 기둥을 단단히 받쳐주어 2분이 넘는 긴 본문을 읽어도 문장 끝까지 음높이가 안정적입니다. 성도들에게 깊은 신뢰감과 평안을 주는 전형적인 복식호흡형 발성입니다.
+                    </p>
+                </div>
+
+                <!-- 2. 기저음 -->
+                <div style="margin-bottom: 22px;">
+                    <h4 style="font-size: 1.05rem; font-weight: 700; color: #1e3a8a; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                        <span>🎯</span> 2. 강단 기저음 (F0 피치) — "성대가 가장 편안한 고유의 음높이"
+                    </h4>
+                    <p style="margin-bottom: 6px;">
+                        • <strong>숫자의 의미:</strong> 목소리의 평균 진동수입니다. 일상 대화(140~150Hz)보다 강단 선포에서는 약간 낮게 가라앉힌 <strong>125~131Hz (피아노 C3 '도')</strong> 대역이 가장 권위 있고 웅장하게 들립니다.<br>
+                        • <strong>성광 목사님 진단 (124.2~127.1Hz):</strong> 피아노 C3에 완벽히 적중해 있습니다. 특히 047 녹음에서는 10%~90% 변동폭이 <strong>32.4Hz</strong>로 직전보다 44%나 좁혀져, 성대가 들뜨지 않고 아주 묵직한 반석 위에 단단히 서 있습니다.
+                    </p>
+                </div>
+
+                <!-- 3. 투사력 -->
+                <div style="margin-bottom: 22px;">
+                    <h4 style="font-size: 1.05rem; font-weight: 700; color: #1e3a8a; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                        <span>📢</span> 3. 공간 투사력 (2~4kHz 에너지) — "본당 맨 뒷자리까지 꽂히는 울림"
+                    </h4>
+                    <p style="margin-bottom: 6px;">
+                        • <strong>숫자의 의미:</strong> 음향학에서 '스피커스 포만트(Speaker's Formant)'라 불리는 자음 명료도 대역입니다. 마이크 볼륨만 키운다고 뒷자리까지 잘 들리는 것이 아닙니다. 이 대역이 높을수록 자음(ㄱ, ㄷ, ㅂ)이 살아서 소리가 멀리 뻗어나갑니다.<br>
+                        • <strong>성광 목사님 진단 (21.1 ~ 22.7dB):</strong> 047 완본에서 <strong>22.7dB</strong>로 역대 최고치를 달성했습니다. 힘으로 지르는 소리가 아니라 구강 공명과 마이크 지향각이 완벽히 맞아떨어져 본당을 가득 채우는 소리입니다.
+                    </p>
+                </div>
+
+                <!-- 4. 조음 처방 -->
+                <div style="margin-bottom: 12px;">
+                    <h4 style="font-size: 1.05rem; font-weight: 700; color: #1e3a8a; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                        <span>✍️</span> 4. 공인 한국어 교원 맞춤 클리닉 — "소장님의 4대 자모 조음 처방"
+                    </h4>
+                    <div style="background: #fffbeb; border: 1px solid #fef3c7; padding: 14px; border-radius: 10px;">
+                        <ul style="padding-left: 20px; margin: 0;">
+                            <li style="margin-bottom: 8px;"><strong>'삼사 대까지' [삼사대] ㄷ 받침 완결 (특급 칭찬):</strong> 지난번 [삼사백]으로 흘렀던 종성이 완전히 교정되어 단단한 폐쇄음으로 끝까지 닫힙니다!</li>
+                            <li style="margin-bottom: 8px;"><strong>'망령되게' [망녕되게] (비음동화):</strong> [ㅇ+ㄹ] 자음동화와 [ㅚ] 이중모음이 겹칠 때는 4음절을 <strong>[망-녕-되-게]</strong>로 분리하여 '망'에서 콧소리를 살짝 울려주세요.</li>
+                            <li style="margin-bottom: 8px;"><strong>'안식일' [안시길] (마찰음 유지):</strong> [ㅅ]이 혀끝이 닿아 파찰음 [ㅊ]으로 변해 [안치길]로 들리지 않도록, 윗니 뒤쪽 틈으로 숨을 부드럽게 스쳐 내보내는 [시]를 의식해 주세요.</li>
+                            <li style="margin-bottom: 8px;"><strong>'네 이웃에' [네 | 이-우-세] (연어 연음):</strong> 앞 단어 '네'와 붙으면서 첫모음 [이]가 탈락하지 않도록 0.05초의 미세한 간격을 두어 <strong>[네 | 이-우-세]</strong>로 독립시켜 주시면 전달력이 배가됩니다.</li>
+                            <li><strong>'탐내지 말라' [탐-내-지] (ㅁ 비음성):</strong> 뒤의 ㄴ 앞에서 입술이 너무 일찍 닫혀 폐쇄음 [탑내지]가 되지 않도록, 입술을 붙인 채 코로 '음~' 비음을 넘겨주세요.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Official Seal & Footer -->
         <div class="cert-footer">
             <div class="cert-auth-info">
@@ -897,6 +970,19 @@
     const fill = document.getElementById('audioProgressFill');
     const curTimeTxt = document.getElementById('currentTimeDisplay');
     const durTimeTxt = document.getElementById('durationDisplay');
+
+
+    function toggleDirectorReport() {
+        const body = document.getElementById('directorReportBody');
+        const btn = document.getElementById('btnToggleReport');
+        if (body.style.display === 'none') {
+            body.style.display = 'block';
+            btn.textContent = '해설서 접기 ▲';
+        } else {
+            body.style.display = 'none';
+            btn.textContent = '해설서 보기 ▼';
+        }
+    }
 
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
