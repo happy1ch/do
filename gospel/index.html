@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>당신에게 던져진 구원의 밧줄 | 행복한교회 디지털 복음 전도지</title>
+  <meta name="description" content="지친 삶, 당신의 굳은 마음에 찾아온 하나님의 조용한 부르심. 문경 행복한교회가 전하는 개혁주의 복음 이야기." />
+  <meta name="keywords" content="복음, 전도지, 디지털전도지, 구원의밧줄, 개혁주의, 행복한교회, 문경행복한교회, 최성광목사" />
+  <link rel="canonical" href="https://happy1ch.github.io/gospel/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="당신에게 던져진 구원의 밧줄 | 행복한교회" />
+  <meta property="og:description" content="내가 믿어주는 것이 아닙니다. 성령께서 내 마비된 손에 밧줄을 쥐여주시는 은혜입니다." />
+  <meta property="og:image" content="https://happy1ch.github.io/images/og-image.jpg" />
+  <meta property="og:url" content="https://happy1ch.github.io/gospel/" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0f2347;
+      --deep:   #0a1832;
+      --gold:   #c59b27;
+      --gold-light: #f7edd4;
+      --teal:   #008f82;
+      --cream:  #fbf9f5;
+      --card-bg:#ffffff;
+      --text:   #2d3748;
+      --muted:  #718096;
+      --border: #e2e8f0;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(15, 35, 71, 0.08);
+      --font-serif: 'Noto Serif KR', Georgia, serif;
+      --font-sans: 'Noto Sans KR', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--cream);
+      color: var(--text);
+      line-height: 1.85;
+      font-size: 18px;
+      word-break: keep-all;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER & NAV ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 35, 71, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(197, 155, 39, 0.3);
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .brand-logo {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .brand-badge {
+      font-size: 0.72rem;
+      background: rgba(197, 155, 39, 0.25);
+      color: #f1cf72;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(197, 155, 39, 0.4);
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-top {
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.2s;
+    }
+    .btn-top:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(175deg, var(--deep) 0%, var(--navy) 60%, #173767 100%);
+      color: #fff;
+      padding: 70px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(197, 155, 39, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: #f1cf72;
+      font-weight: 600;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: 2.3rem;
+      font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #ffd875;
+      text-shadow: 0 0 20px rgba(197, 155, 39, 0.4);
+    }
+
+    .hero-sub {
+      font-size: 1.08rem;
+      color: #cbd5e1;
+      max-width: 620px;
+      margin: 0 auto 32px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-pill {
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 6px 14px;
+      border-radius: 999px;
+      color: #e2e8f0;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* ── CARD SECTIONS ── */
+    .step-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 38px 32px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .step-num::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .step-card h2 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.4;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .step-card p {
+      font-size: 1.05rem;
+      color: #374151;
+      margin-bottom: 16px;
+      line-height: 1.9;
+    }
+
+    .step-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--navy);
+      padding: 18px 22px;
+      border-radius: 0 12px 12px 0;
+      margin: 20px 0;
+      font-size: 1rem;
+      color: #1e293b;
+    }
+
+    .highlight-box.gold {
+      background: var(--gold-light);
+      border-left-color: var(--gold);
+      color: #634a07;
+    }
+
+    /* ── INTERACTIVE PARABLE TABS ── */
+    .parable-section {
+      background: #ffffff;
+      border: 2px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 36px 30px;
+      margin-bottom: 36px;
+      box-shadow: 0 15px 35px rgba(197, 155, 39, 0.12);
+    }
+
+    .parable-header {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .parable-header h2 {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .parable-tabs {
+      display: flex;
+      gap: 8px;
+      background: #f1f5f9;
+      padding: 6px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .parable-tab-btn {
+      flex: 1;
+      padding: 12px 8px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .parable-tab-btn.active {
+      background: var(--navy);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(15, 35, 71, 0.2);
+    }
+
+    .parable-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .parable-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .parable-story {
+      font-size: 1.05rem;
+      line-height: 1.95;
+      color: #1f2937;
+      margin-bottom: 18px;
+    }
+
+    .parable-insight {
+      background: #faf8f3;
+      border-radius: 12px;
+      padding: 16px 20px;
+      border-left: 4px solid var(--gold);
+      font-size: 0.95rem;
+      color: #553c07;
+      font-weight: 500;
+    }
+
+    /* ── PRAYER BOX ── */
+    .prayer-card {
+      background: linear-gradient(160deg, #0f2347 0%, #163666 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 44px 34px;
+      margin-bottom: 36px;
+      box-shadow: 0 20px 40px rgba(15, 35, 71, 0.25);
+      position: relative;
+    }
+
+    .prayer-card h2 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: #ffd875;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .prayer-intro {
+      font-size: 0.98rem;
+      color: #cbd5e1;
+      text-align: center;
+      margin-bottom: 26px;
+      line-height: 1.7;
+    }
+
+    .prayer-body {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 26px 22px;
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      line-height: 2.1;
+      color: #f8fafc;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+    }
+
+    .prayer-body p {
+      margin-bottom: 14px;
+    }
+    .prayer-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .prayer-footer {
+      text-align: center;
+      font-size: 0.92rem;
+      color: #94a3b8;
+    }
+
+    /* ── CHURCH CONNECT ── */
+    .connect-card {
+      background: #ffffff;
+      border-radius: var(--radius);
+      padding: 36px 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .connect-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .connect-card p {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+    }
+
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-call {
+      background: var(--navy);
+      color: #fff;
+    }
+    .btn-call:hover {
+      background: #173767;
+      transform: translateY(-2px);
+    }
+
+    .btn-sms {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .btn-sms:hover {
+      background: #dfb236;
+      transform: translateY(-2px);
+    }
+
+    .btn-share {
+      background: #fee500;
+      color: #191919;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-share:hover {
+      background: #fada0a;
+      transform: translateY(-2px);
+    }
+
+    .btn-print {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+    }
+    .btn-print:hover {
+      background: #e2e8f0;
+    }
+
+    .info-list {
+      list-style: none;
+      font-size: 0.92rem;
+      color: #4b5563;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 20px;
+      margin-top: 10px;
+      line-height: 1.9;
+    }
+
+    /* ── TOAST NOTIFICATION ── */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(15, 35, 71, 0.92);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      color: #94a3b8;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    footer a {
+      color: #cbd5e1;
+      text-decoration: none;
+    }
+
+    /* ── PRINT STYLES (A4 및 카드 전도지 최적화) ── */
+    @media print {
+      header, footer, .contact-buttons, .parable-tabs, .btn-top, #toast {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+        color: #000;
+        font-size: 12pt;
+      }
+      .container {
+        padding: 0;
+        max-width: 100%;
+      }
+      .step-card, .parable-section, .prayer-card, .connect-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+        padding: 20px;
+      }
+      .hero {
+        background: none;
+        color: #000;
+        padding: 20px 0;
+      }
+      .hero h1, .hero h1 em {
+        color: #000;
+        text-shadow: none;
+      }
+      .hero-sub {
+        color: #555;
+      }
+      .prayer-card {
+        background: #f9f9f9;
+        color: #000;
+      }
+      .prayer-card h2 {
+        color: #000;
+      }
+      .prayer-body {
+        background: #fff;
+        color: #000;
+        border: 1px solid #ccc;
+      }
+      .parable-content {
+        display: block !important;
+        margin-bottom: 15px;
+        border-bottom: 1px dashed #ccc;
+        padding-bottom: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.85rem; }
+      .step-card { padding: 28px 20px; }
+      .prayer-card { padding: 32px 20px; }
+      .parable-section { padding: 26px 18px; }
+      .parable-tab-btn { font-size: 0.85rem; padding: 10px 4px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="../index.html" class="brand">
+      <span class="brand-logo">행복한교회</span>
+      <span class="brand-badge">디지털 복음 이야기</span>
+    </a>
+    <div class="header-actions">
+      <a href="../index.html" class="btn-top">교회 홈</a>
+      <button type="button" class="btn-top" onclick="window.print()">인쇄/PDF</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">대한예수교장로회(고신) 행복한교회</div>
+    <h1>당신에게 던져진 <em>구원의 밧줄</em></h1>
+    <p class="hero-sub">
+      지친 하루의 끝, 마음의 무게를 견디고 계신 당신에게<br>
+      조용하지만 가장 분명한 생명의 소식을 전합니다.
+    </p>
+    <div class="hero-badge-row">
+      <span class="hero-pill">📖 개혁주의 구원관</span>
+      <span class="hero-pill">⚓ 하나님의 주권적 은혜</span>
+      <span class="hero-pill">🕊️ 성령의 효력 있는 부르심</span>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="container">
+
+    <!-- STEP 1: 지금 당신의 마음에 일어나는 일 -->
+    <article class="step-card">
+      <div class="step-num">Step 01 · 은혜의 시작</div>
+      <h2>지금 당신의 마음에 일어나는 일</h2>
+      <p>
+        이 글을 읽으시면서 마음 한구석이 뭉클하거나, <strong>"나도 예수님을 알고 싶다, 참된 평안을 얻고 싶다"</strong>는 생각이 스쳐 지나가시나요?
+      </p>
+      <p>
+        그것은 우연이 아니며, 당신이 문득 감상에 젖어 결심한 것도 아닙니다. 
+        온 세상을 지으신 하나님께서 바로 지금, 당신의 영혼에 찾아오셔서 마음의 문을 조용히 두드리고 계신다는 가장 확실한 증거입니다.
+      </p>
+      <div class="highlight-box gold">
+        "내가 믿어주려고 결심한 것이 아니라, 하나님께서 먼저 내 굳었던 마음에 빛을 비추어 주셨기에 비로소 그분을 바라보게 되는 것입니다."
+      </div>
+    </article>
+
+    <!-- STEP 2: 우리의 진짜 상태 : 영적 파산 -->
+    <article class="step-card">
+      <div class="step-num">Step 02 · 율법의 거울</div>
+      <h2>스스로를 구원할 수 없는 우리의 모습</h2>
+      <p>
+        우리는 모두 내 힘과 도덕성, 성실함으로 인생을 바르게 살아보려 애씁니다. 
+        그러나 문득 홀로 남겨질 때 찾아오는 깊은 공허함, 마음속 은밀한 죄책감, 그리고 죽음과 실패의 두려움을 내 힘으로는 결코 해결할 수 없습니다.
+      </p>
+      <p>
+        성경은 이것을 <strong>'영적 파산'</strong>이라고 부릅니다. 
+        마치 거센 파도가 몰아치는 깊은 바다에 빠져, 스스로는 아무리 허우적대도 헤엄쳐 나올 힘이 전혀 없는 사람과 같습니다. 
+        우리는 스스로 문을 열고 걸어 나올 수 없는 자들이었습니다.
+      </p>
+    </article>
+
+    <!-- STEP 3: 값없는 구원 : 십자가의 은혜 -->
+    <article class="step-card">
+      <div class="step-num">Step 03 · 값없는 복음</div>
+      <h2>하나님이 거저 주신 유일한 해결책, 십자가</h2>
+      <p>
+        하나님은 우리에게 <em>"네가 착한 사람이 되면 구원해 주겠다"</em>거나 <em>"네가 자격을 갖추어 오라"</em>고 조건을 달지 않으셨습니다.
+      </p>
+      <p>
+        파산한 우리를 위해, 하나님은 하나뿐인 아들 예수 그리스도를 이 땅에 보내셨습니다. 
+        예수님께서 십자가에서 흘리신 보혈로 우리가 감당할 수 없던 모든 죄의 빚을 100% 대신 갚아 주셨습니다. 
+        구원은 우리가 사거나 만드는 것이 아니라, 하나님께서 값없이 거저 건네주시는 선물입니다.
+      </p>
+      <div class="highlight-box">
+        "너희는 그 은혜에 의하여 믿음으로 말미암아 구원을 받았으니 이것은 너희에게서 난 것이 아니요 하나님의 선물이라" (에베소서 2장 8절)
+      </div>
+    </article>
+
+    <!-- STEP 4: INTERACTIVE PARABLE TABS -->
+    <section class="parable-section">
+      <div class="parable-header">
+        <div class="step-num">Step 04 · 깊은 이해</div>
+        <h2>마치 ~처럼 : 복음의 3대 비유</h2>
+        <p style="color:var(--muted); font-size:0.95rem;">세 가지 비유를 탭하여 읽어보세요.</p>
+      </div>
+
+      <div class="parable-tabs">
+        <button type="button" class="parable-tab-btn active" onclick="switchParable(0)">⚓ 던져진 밧줄</button>
+        <button type="button" class="parable-tab-btn" onclick="switchParable(1)">💓 멈춘 심장</button>
+        <button type="button" class="parable-tab-btn" onclick="switchParable(2)">🗝️ 녹아내리는 빗장</button>
+      </div>
+
+      <!-- TAB 1: 밧줄 -->
+      <div class="parable-content active" id="parable-0">
+        <p class="parable-story">
+          거센 풍랑 속에 빠져 온몸이 마비되어 가던 사람이 있었습니다. 
+          그때 저 배 위에서 굵은 구명 밧줄이 머리 위로 떨어졌습니다. 
+          차갑게 굳어 있던 그의 손가락에 기적처럼 피가 돌며 그 밧줄을 필사적으로 꽉 붙잡았습니다.
+        </p>
+        <div class="parable-insight">
+          💡 <strong>복음의 진실:</strong> 나를 살린 것은 내 손아귀의 힘(믿음의 공로)이 아니라, 위에서 던져진 밧줄(예수 그리스도의 십자가)입니다. 
+          그리고 마비되었던 손에 힘을 불어넣어 그 밧줄을 쥐게 하신 분은 바로 성령 하나님이십니다.
+        </div>
+      </div>
+
+      <!-- TAB 2: 제세동기 -->
+      <div class="parable-content" id="parable-1">
+        <p class="parable-story">
+          심장이 멎어 응급실로 실려 온 환자가 있습니다. 
+          의사가 제세동기로 강한 전기 충격을 가하자, 멈췄던 심장이 다시 쿵쾅쿵쾅 뛰기 시작하며 환자가 눈을 뜨고 숨을 쉽니다. 
+          그는 눈앞의 의사를 보며 "살려주셔서 감사합니다"라고 부르짖습니다.
+        </p>
+        <div class="parable-insight">
+          💡 <strong>복음의 진실:</strong> 영적으로 죽어 있던 우리가 스스로 하나님을 찾아갈 수는 없습니다. 
+          성령께서 먼저 내 죽은 영혼에 생명의 호흡을 불어넣으셨기에, 비로소 내 마음에 "예수님이 필요하다"는 갈망이 살아 움직이는 것입니다.
+        </div>
+      </div>
+
+      <!-- TAB 3: 녹슨 빗장 -->
+      <div class="parable-content" id="parable-2">
+        <p class="parable-story">
+          수십 년간 사람의 발길이 끊겨 녹슬고 얼어붙은 철문이 있었습니다. 
+          안에서도 밖에서도 인간의 힘으로는 그 육중한 쇠빗장을 열 수 없었습니다. 
+          그런데 바깥에서 주인의 따스한 음성이 들려오고 햇살 같은 빛이 문틈으로 스며들자, 얼어붙었던 쇠빗장이 안쪽에서 스르르 녹아내리며 문이 활짝 열렸습니다.
+        </p>
+        <div class="parable-insight">
+          💡 <strong>복음의 진실:</strong> 영접은 내가 억지로 결심해서 쇠문을 연 것이 아닙니다. 
+          주님의 복음과 성령의 따뜻한 은혜가 내 고집스러운 마음에 닿아, '그분을 맞이하고 싶다'는 소원을 일으켜 주셨기에 문이 열린 것입니다.
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5: 영접이란 무엇인가 -->
+    <article class="step-card">
+      <div class="step-num">Step 05 · 참된 영접</div>
+      <h2>영접이란 무엇인가 : 붙잡힘의 신비</h2>
+      <p>
+        세상의 어떤 전도지는 "지금 당신이 영접 기도 한 번 따라 하시면 구원을 얻습니다"라며 마치 구원이 나의 결심에 달린 것처럼 말합니다. 
+        하지만 개혁주의 복음은 그렇게 값싸지 않습니다.
+      </p>
+      <p>
+        예수님을 영접한다는 것은 <strong>'내가 하나님을 믿어주는 선행'이 아닙니다.</strong><br>
+        나의 의와 고집을 완전히 내려놓고, 나를 위해 던져진 유일한 구원의 밧줄이신 예수 그리스도를 온 힘을 다해 붙잡으며 나를 내던지는 거룩한 항복입니다.
+      </p>
+      <div class="highlight-box gold">
+        "내가 그리스도를 붙잡은 것이 아니라, 실상은 그리스도께서 나를 붙잡아 주신 것입니다." (빌립보서 3장 12절)
+      </div>
+    </article>
+
+    <!-- STEP 6: PRAYER -->
+    <section class="prayer-card">
+      <h2>마음을 열어 드리는 조용한 고백</h2>
+      <p class="prayer-intro">
+        지금 당신의 마음에 작은 울림이 있다면,<br>
+        조용한 마음으로 아래의 고백을 하나님께 올려드려 보세요.
+      </p>
+      <div class="prayer-body">
+        <p>
+          "하나님, 저는 제 힘으로는 제 삶을 구원할 수 없는 죄인임을 고백합니다. 
+          인생의 파도 속에서 제 고집과 힘으로 허우적대며 살아왔습니다.
+        </p>
+        <p>
+          그러나 오늘, 제 차가운 마음에 찾아오셔서 복음의 말씀을 들려주시고, 
+          예수님을 향해 마음의 문을 열 수 있는 은혜를 주시니 감사합니다.
+        </p>
+        <p>
+          값없이 십자가에서 나를 위해 생명을 내어주신 예수 그리스도를 바라봅니다. 
+          내 손에 쥐여주신 구원의 밧줄을 꼭 붙잡고, 
+          이제 제 삶 전체를 주님의 선하신 손에 맡겨드립니다.
+        </p>
+        <p style="text-align:right; font-weight:700;">
+          예수 그리스도의 이름으로 기도드립니다. 아멘."
+        </p>
+      </div>
+      <div class="prayer-footer">
+        이 고백은 당신이 구원을 이루어낸 공로가 아니라, 이미 당신 안에서 일하기 시작하신 성령 하나님의 아름다운 열매입니다.
+      </div>
+    </section>
+
+    <!-- STEP 7: CHURCH CONNECT -->
+    <section class="connect-card">
+      <h3>문경 행복한교회가 함께 걷겠습니다</h3>
+      <p>
+        혼자 걷는 신앙은 외롭고 흔들리기 쉽습니다.<br>
+        날마다 예수 그리스도로 참된 행복을 경험하는 말씀의 공동체로 당신을 초대합니다.
+      </p>
+
+      <div class="contact-buttons">
+        <a href="tel:010-9819-5199" class="btn-contact btn-call">
+          📞 담임목사 전화하기
+        </a>
+        <a href="sms:010-9819-5199?body=행복한교회%20디지털%20전도지를%20보고%20연락드립니다." class="btn-contact btn-sms">
+          💬 문자로 이야기 나누기
+        </a>
+        <button type="button" class="btn-contact btn-share" onclick="shareKakao()">
+          💛 카톡으로 이 이야기 전하기
+        </button>
+        <button type="button" class="btn-contact btn-print" onclick="copyLink()">
+          🔗 링크 복사
+        </button>
+      </div>
+
+      <ul class="info-list">
+        <li><strong>예배 시간:</strong> 주일 오전 11:00 · 오후 1:30 | 수요기도회 오후 7:30</li>
+        <li><strong>교회 위치:</strong> 경북 문경시 신흥시장길 23-4 (2층 행복한교회)</li>
+        <li><strong>담임목사:</strong> 최성광 목사 (고려신학대학원 54회)</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- TOAST -->
+  <div id="toast">링크가 복사되었습니다.</div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>대한예수교장로회(고신) 행복한교회 · 담임목사 최성광</p>
+    <p style="margin-top:6px; font-size:0.8rem; color:#64748b;">
+      <a href="../index.html">교회 공식 홈페이지</a> · <a href="https://www.youtube.com/@happy1ch" target="_blank" rel="noopener">유튜브 채널</a>
+    </p>
+  </footer>
+
+  <script>
+    // Tab switching for 3 Parables
+    function switchParable(index) {
+      const tabs = document.querySelectorAll('.parable-tab-btn');
+      const contents = document.querySelectorAll('.parable-content');
+
+      tabs.forEach((tab, i) => {
+        if (i === index) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      contents.forEach((content, i) => {
+        if (i === index) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+    }
+
+    // Toast helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    // Copy Link
+    function copyLink() {
+      const url = window.location.href;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('🔗 복음 전도지 링크가 복사되었습니다!');
+        }).catch(() => {
+          fallbackCopy(url);
+        });
+      } else {
+        fallbackCopy(url);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const input = document.createElement('input');
+      input.value = text;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      showToast('🔗 복음 전도지 링크가 복사되었습니다!');
+    }
+
+    // Share via Web Share API or Copy
+    function shareKakao() {
+      const shareData = {
+        title: '당신에게 던져진 구원의 밧줄 | 행복한교회',
+        text: '지친 하루의 끝, 당신에게 건네는 따뜻한 복음 이야기',
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        copyLink();
+      }
+    }
+  </script>
+</body>
+</html>
