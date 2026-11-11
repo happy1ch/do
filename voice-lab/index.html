@@ -848,23 +848,48 @@
             </div>
         </div>
 
-        <!-- Director's In-Depth Explanatory Commentary Report -->
-        <div class="card in-depth-report" id="directorReportCard" style="margin-top: 24px; border: 2px solid #2563eb; background: #ffffff; border-radius: 16px; padding: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleDirectorReport()">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <span style="font-size: 1.8rem;">📜</span>
-                    <div>
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <h3 style="font-size: 1.2rem; font-weight: 800; color: #1e3a8a;">연구소장 Happy초이의 심층 해설 리포트</h3>
-                            <span style="background: #eff6ff; color: #1d4ed8; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px; border: 1px solid #bfdbfe;">동봉용 정식 해설서</span>
-                        </div>
-                        <p style="font-size: 0.88rem; color: #64748b; margin-top: 2px;">처음 진단서를 받아보신 목회자·발표자 분들을 위한 1:1 눈높이 음향음성학 해설</p>
-                    </div>
+        <!-- Director's In-Depth Explanatory Commentary Report (Founder Protected) -->
+        <div class="card in-depth-report" id="directorReportCard" style="margin-top: 24px; border: 2px solid #2563eb; background: var(--card-bg); border-radius: 16px; padding: 22px;">
+            
+            <!-- LOCKED STATE (로그인 전 공개 화면) -->
+            <div id="directorReportLocked" style="text-align: center; padding: 32px 16px;">
+                <div style="font-size: 2.2rem; margin-bottom: 12px;">🔒</div>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 6px;">
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: #1e3a8a;">연구소장 Happy초이의 심층 해설 리포트</h3>
+                    <span style="background: #fef2f2; color: #dc2626; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px; border: 1px solid #fecaca;">설립자 전용 구역</span>
                 </div>
-                <button class="action-btn" style="padding: 8px 16px; font-size: 0.88rem; border-radius: 8px;" id="btnToggleReport">해설서 보기 ▼</button>
+                <p style="font-size: 0.9rem; color: #64748b; max-width: 480px; margin: 0 auto 18px auto; line-height: 1.6;">
+                    진단서에 따른 연구소장의 1:1 심층 음향음성학 분석 및 해설 리포트는 <strong>바른소리 목회연구소 설립자(최성광 목사)</strong> 로그인 후에만 열람·발급할 수 있습니다.
+                </p>
+                <button class="action-btn" onclick="openLoginModal()" style="padding: 10px 24px; font-size: 0.95rem; border-radius: 10px; background: #2563eb; color: #ffffff; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(37,99,235,0.35);">
+                    🔐 설립자 로그인
+                </button>
             </div>
 
-            <div id="directorReportBody" style="display: block; margin-top: 20px; padding-top: 20px; border-top: 1px dashed #cbd5e1; font-size: 0.95rem; line-height: 1.8; color: #334155;">
+            <!-- UNLOCKED STATE (설립자 로그인 후 해설서 노출) -->
+            <div id="directorReportUnlocked" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 1.8rem;">📜</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <h3 style="font-size: 1.2rem; font-weight: 800; color: #1e3a8a;">연구소장 Happy초이의 심층 해설 리포트</h3>
+                                <span style="background: #ecfdf5; color: #059669; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px; border: 1px solid #a7f3d0;">👑 설립자 인증됨</span>
+                            </div>
+                            <p style="font-size: 0.88rem; color: #64748b; margin-top: 2px;">처음 진단서를 받아보신 목회자·발표자 분들을 위한 1:1 눈높이 음향음성학 해설</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="action-btn" onclick="copyKakaoReport()" style="padding: 7px 14px; font-size: 0.82rem; background: #fef08a; color: #854d0e; border: 1px solid #fde047; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                            📋 카톡 전송용 복사
+                        </button>
+                        <button class="action-btn" onclick="founderLogout()" style="padding: 7px 14px; font-size: 0.82rem; background: var(--bg-color); color: var(--text-dim); border: 1px solid var(--border); border-radius: 8px; cursor: pointer;">
+                            로그아웃
+                        </button>
+                    </div>
+                </div>
+
+                <div id="directorReportBody" style="margin-top: 20px; font-size: 0.95rem; line-height: 1.8; color: var(--text-sub);">
                 <div style="background: #f8fafc; border-left: 4px solid #2563eb; padding: 14px 18px; border-radius: 0 10px 10px 0; margin-bottom: 20px;">
                     <p style="font-weight: 700; color: #0f172a; margin-bottom: 4px;">💡 소장의 해설서 발행 원칙</p>
                     <p style="font-size: 0.88rem; color: #475569;">"진단서의 헤르츠(Hz)나 데시벨(dB) 같은 숫자는 성대와 호흡의 거울입니다. 귀로만 듣는 막연한 칭찬 대신, <strong>성대의 실제 건강 상태와 성도들이 느끼는 전달력</strong>을 한눈에 알기 쉽게 풀어드립니다."</p>
@@ -918,8 +943,9 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div> <!-- end directorReportBody -->
+            </div> <!-- end directorReportUnlocked -->
+        </div> <!-- end directorReportCard -->
 
         <!-- Official Seal & Footer -->
         <div class="cert-footer">
@@ -939,6 +965,26 @@
         </div>
     </div>
 </div>
+
+    <!-- Founder Login Modal -->
+    <div id="loginModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: var(--card-bg); border-radius: 18px; width: 100%; max-width: 380px; padding: 28px; box-shadow: var(--shadow-lg); border: 1px solid var(--border); text-align: center;">
+            <div style="font-size: 2.2rem; margin-bottom: 10px;">👑</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">바른소리 목회연구소</h3>
+            <p style="font-size: 0.88rem; color: var(--text-dim); margin-bottom: 20px;">설립자(최성광 목사) 전용 로그인</p>
+            
+            <input type="password" id="founderPinInput" placeholder="비밀번호를 입력하세요" 
+                   style="width: 100%; padding: 12px 14px; font-size: 1rem; border: 2px solid var(--border); border-radius: 10px; margin-bottom: 8px; text-align: center; letter-spacing: 2px; outline: none; background: var(--bg-color); color: var(--text-main);"
+                   onkeydown="if(event.key==='Enter') submitFounderLogin()">
+            <div id="loginErrorMsg" style="color: #dc2626; font-size: 0.82rem; margin-bottom: 12px; display: none;">비밀번호가 올바르지 않습니다.</div>
+
+            <div style="display: flex; gap: 8px; margin-top: 10px;">
+                <button onclick="closeLoginModal()" style="flex: 1; padding: 12px; font-size: 0.92rem; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-color); color: var(--text-sub); cursor: pointer; font-weight: 600;">취소</button>
+                <button onclick="submitFounderLogin()" style="flex: 2; padding: 12px; font-size: 0.92rem; border-radius: 10px; border: none; background: #2563eb; color: #ffffff; cursor: pointer; font-weight: 700; box-shadow: 0 4px 10px rgba(37,99,235,0.3);">로그인</button>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 14px;">※ 등록된 기기에서는 한 번 로그인하면 유지됩니다.</p>
+        </div>
+    </div>
 
 <div id="toast">링크가 복사되었습니다!</div>
 
@@ -1404,6 +1450,7 @@
     }
 
     window.addEventListener('load', () => {
+        initFounderAuth();
         selectStage(2);
     });
 
