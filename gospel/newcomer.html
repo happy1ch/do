@@ -475,6 +475,46 @@
       .prayer-body { background: #fff; color: #000; border: 1px solid #ccc; }
     }
 
+    .art-banner {
+      max-width: 640px;
+      margin: -40px auto 40px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(15, 35, 71, 0.25);
+      border: 3px solid #fff;
+      background: #000;
+    }
+    .art-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .qr-section {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 24px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .qr-img {
+      width: 140px;
+      height: 140px;
+      display: block;
+      border-radius: 8px;
+      background: #fff;
+      padding: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .qr-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin: 0 !important;
+    }
+
     @media (max-width: 600px) {
       .hero h1 { font-size: 1.85rem; }
       .step-card { padding: 28px 20px; }
@@ -523,6 +563,11 @@
 
   <!-- MAIN CONTAINER -->
   <main class="container">
+
+    <!-- HERO ARTWORK -->
+    <div class="art-banner">
+      <img src="../images/gospel-cross-light.jpg" alt="거룩하신 하나님과 십자가의 은혜" class="art-img" />
+    </div>
 
     <!-- PART 1: 하나님은 어떤 분이신가 -->
     <article class="step-card">
@@ -726,6 +771,11 @@
         <li><strong>교회 위치:</strong> 경북 문경시 신흥시장길 23-4 (2층 행복한교회)</li>
         <li><strong>소속 교단:</strong> 대한예수교장로회(고신) · 경북시찰</li>
       </ul>
+
+      <div class="qr-section">
+        <img src="../images/qr-newcomer-gospel.png" alt="새가족 복음 안내 QR코드" class="qr-img" />
+        <p class="qr-caption">📷 스마트폰 카메라로 비추면 새가족 복음 안내를 모바일에서 편하게 읽으실 수 있습니다</p>
+      </div>
     </section>
 
   </main>

@@ -623,6 +623,46 @@
       }
     }
 
+    .art-banner {
+      max-width: 640px;
+      margin: -40px auto 40px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(15, 35, 71, 0.25);
+      border: 3px solid #fff;
+      background: #000;
+    }
+    .art-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .qr-section {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 24px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .qr-img {
+      width: 140px;
+      height: 140px;
+      display: block;
+      border-radius: 8px;
+      background: #fff;
+      padding: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .qr-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin: 0 !important;
+    }
+
     @media (max-width: 600px) {
       .hero h1 { font-size: 1.85rem; }
       .step-card { padding: 28px 20px; }
@@ -673,6 +713,11 @@
 
   <!-- MAIN CONTENT CONTAINER -->
   <main class="container">
+
+    <!-- HERO ARTWORK -->
+    <div class="art-banner">
+      <img src="../images/gospel-lifeline.jpg" alt="당신에게 던져진 구원의 밧줄" class="art-img" />
+    </div>
 
     <!-- STEP 1: 지금 당신의 마음에 일어나는 일 -->
     <article class="step-card">
@@ -851,6 +896,11 @@
         <li><strong>교회 위치:</strong> 경북 문경시 신흥시장길 23-4 (2층 행복한교회)</li>
         <li><strong>담임목사:</strong> 최성광 목사 (고려신학대학원 54회)</li>
       </ul>
+
+      <div class="qr-section">
+        <img src="../images/qr-street-gospel.png" alt="디지털 전도지 QR코드" class="qr-img" />
+        <p class="qr-caption">📷 스마트폰 카메라로 비추면 이 전도지를 모바일에서 언제든 다시 읽으실 수 있습니다</p>
+      </div>
     </section>
 
   </main>
